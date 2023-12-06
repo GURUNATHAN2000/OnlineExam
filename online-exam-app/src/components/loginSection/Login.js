@@ -13,7 +13,10 @@ const Login = () => {
                 USER LOGIN
               </h1>
               <div className="mb-3">
-                <label htmlFor="username" className="form-label fw-bold custom-login-label">
+                <label
+                  htmlFor="username"
+                  className="form-label fw-bold custom-login-label"
+                >
                   Username
                 </label>
                 <input
@@ -27,7 +30,10 @@ const Login = () => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="password" className="form-label  fw-bold custom-login-label">
+                <label
+                  htmlFor="password"
+                  className="form-label  fw-bold custom-login-label"
+                >
                   Password
                 </label>
                 <input
@@ -42,6 +48,12 @@ const Login = () => {
               </div>
               <div className="d-grid">
                 <input type="submit" className="btn-login" value="Login" />
+              </div>
+              <div className="pt-3 text-center">
+                <small>
+                  Don't have an account?
+                  <a href="">Register now</a>
+                </small>
               </div>
             </form>
           </div>
