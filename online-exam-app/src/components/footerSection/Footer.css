@@ -1,0 +1,6 @@
+:root{
+    --bgcolor : #245c8d;
+}
+.custom-footer{
+    background-color: var(--bgcolor);
+  }
