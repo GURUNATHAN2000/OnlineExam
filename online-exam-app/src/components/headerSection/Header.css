@@ -1,14 +1,14 @@
-:root{
-    --bgcolor : #245c8d;
+:root {
+  --bgcolor: #245c8d;
 }
 
-.custom-logo{
-    margin-left: 20px;
-    height: 75px;
-    
-  }
-  .custom-navbar{
-    background-color: var(--bgcolor);
-    color: white;
-    font-family: calc(var(--bgcolor));
-  }
+.custom-logo {
+  margin-left: 20px;
+  height: 75px;
+}
+.custom-navbar {
+  background-color: var(--bgcolor);
+  color: white;
+  font-family: calc(var(--bgcolor));
+  user-select: none;
+}
