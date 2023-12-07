@@ -1,5 +1,5 @@
-import React from "react";
-import "./Footer.css";
+import React from "react"
+import './Footer.css'
 
 const Footer = () => {
   return (
@@ -8,7 +8,8 @@ const Footer = () => {
         <p className="lead">Copyright &copy; 2021 VastPro Online Exam</p>
       </div>
     </footer>
-  );
-};
+    
+  )
+}
 
-export default Footer;
+export default Footer
