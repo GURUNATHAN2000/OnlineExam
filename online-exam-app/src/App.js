@@ -4,12 +4,16 @@ import Header from "./components/headerSection/Header";
 import Login from "./components/loginSection/Login";
 import Footer from "./components/footerSection/Footer";
 
+
+
 function App() {
   return (
     <div>
-      <Header />
-      <Login />
-      <Footer />
+       <Header/>
+       
+        <Login/> 
+       
+       <Footer/> 
     </div>
   );
 }
