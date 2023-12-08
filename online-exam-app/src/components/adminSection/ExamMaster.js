@@ -5,7 +5,7 @@ const ExamMaster = () => {
     <div>
       <div className="container mt-4">
         <form class="row gx-5 gy-2">
-          <h1 className=" text-center login-heading fw-bold">CREATE EXAM!</h1>
+          <h1 className=" text-center login-heading fw-bold">EXAM MASTER</h1>
           <div class="col-md-6">
             <label for="examid" className="form-label fw-bold">
               Exam id
