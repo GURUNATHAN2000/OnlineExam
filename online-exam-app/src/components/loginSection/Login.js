@@ -53,8 +53,13 @@ const Login = (props) => {
       <div className="container">
         <div className="row vh-100 align-items-center">
           <div className="col-md-4"></div>
+<<<<<<< HEAD
           <div className="container col-md-4 mt-4 p-4 shadow-lg rounded ">
             <form id="loginForm" onSubmit={handleSubmit}>
+=======
+          <div className="col-md-4 p-5">
+            <form >
+>>>>>>> d319fd6 (done)
               <h1 className="mb-3 text-center login-heading fw-bold">
                 USER LOGIN
               </h1>
@@ -71,9 +76,14 @@ const Login = (props) => {
                   placeholder="enter username"
                   id="exampleInputEmail1"
                   name="username"
+<<<<<<< HEAD
                   onChange={handleChange}
                   // value={username}
                   // onChange={handler}
+=======
+                  //  value={username}
+                  //  onChange={handler}
+>>>>>>> d319fd6 (done)
                 />
                 <div>
                   <p id="userEmpty"></p>
@@ -91,9 +101,14 @@ const Login = (props) => {
                   id="password"
                   placeholder="enter password"
                   name="password"
+<<<<<<< HEAD
 
                   // value={password}
                   // onChange={handler}
+=======
+                  //  value={password}
+                  //  onChange={handler}
+>>>>>>> d319fd6 (done)
                 />
                 <div>
                   <p id="passwordEmpty"></p>
