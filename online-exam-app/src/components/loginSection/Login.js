@@ -20,10 +20,10 @@ const Login = (props) => {
     //alert for empty
 
     if (form.get("username") === "") {
-      console.log("inside if statement");
       userEmpty.innerHTML = "PLEASE ENTER THE USERNAME";
       passwordEmpty.innerHTML = "";
     } else if (form.get("password") === "") {
+      l;
       userEmpty.innerHTML = "";
       passwordEmpty.innerHTML = "PLEASE ENTER THE PASSWORD";
     }
@@ -72,8 +72,6 @@ const Login = (props) => {
                   id="exampleInputEmail1"
                   name="username"
                   onChange={handleChange}
-                  // value={username}
-                  // onChange={handler}
                 />
                 <div>
                   <p id="userEmpty"></p>
@@ -91,9 +89,6 @@ const Login = (props) => {
                   id="password"
                   placeholder="enter password"
                   name="password"
-
-                  // value={password}
-                  // onChange={handler}
                 />
                 <div>
                   <p id="passwordEmpty"></p>
