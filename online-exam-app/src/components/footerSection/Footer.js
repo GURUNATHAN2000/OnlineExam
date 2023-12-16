@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Footer.css";
 
-const Footer = () => {
+const Footer = (props) => {
+  useEffect(() => {
+    {
+      props.page === "login"
+        ? document.getElementById("foot").classList.add("fixed-bottom")
+        : document.getElementById("foot").classList.remove("fixed-bottom");
+    }
+  });
+
   return (
-    <footer className="text-light text-center footer fixed-bottom custom-footer">
-      <div className="container">
-        <p className="lead">Copyright &copy; 2023 VastPRO Online Exam</p>
-      </div>
+    <footer
+      id="foot"
+      className="text-center footer p-1 shadow-lg custom-footer rounded-top-5 ">
+      <p className="lead">Copyright &copy; 2023 VastPRO Online Exam</p>
     </footer>
   );
 };

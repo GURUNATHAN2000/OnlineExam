@@ -1,107 +1,192 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import useStateRef from "react-usestateref";
+
 import "./Login.css";
-// import axios from "axios";
-// import Header from "../headerSection/Header";
-// import Footer from "../footerSection/Footer";
+import { validateLoginForm } from "./LoginValidator";
 
 const Login = (props) => {
+  const [noError, setNoError, currentRef] = useStateRef(true);
+  const [password, showPassword] = useState("password");
+
   //to set the header for login
   useEffect(() => {
     props.setPage("login");
   }, []);
 
+  const navigate = useNavigate();
+
+  const makeErrorNone = () => {
+    console.log("makeErrorNone Worked!");
+
+    document.getElementById("userEmpty").classList.remove("d-block");
+    document.getElementById("userEmpty").classList.add("d-none");
+    document.getElementById("userEmpty").innerHTML = "";
+
+    document.getElementById("passwordEmpty").classList.remove("d-block");
+    document.getElementById("passwordEmpty").classList.add("d-none");
+    document.getElementById("passwordEmpty").innerHTML = "";
+
+    document.getElementById("invalidCredentials").classList.remove("d-block");
+    document.getElementById("invalidCredentials").classList.add("d-none");
+    document.getElementById("invalidCredentials").innerHTML = "";
+
+    setNoError(true);
+  };
+
   //form submit
-  var userEmpty = document.getElementById("userEmpty");
-  var passwordEmpty = document.getElementById("passwordEmpty");
   const handleSubmit = (event) => {
+    console.log("entered");
     event.preventDefault();
-    console.log("inside the handlesumbit");
-    const form = new FormData(document.getElementById("loginForm"));
-    //alert for empty
+    makeErrorNone();
+    console.log("noerror :: ", noError);
 
-    if (form.get("username") === "") {
-      userEmpty.innerHTML = "PLEASE ENTER THE USERNAME";
-      passwordEmpty.innerHTML = "";
-    } else if (form.get("password") === "") {
-      l;
-      userEmpty.innerHTML = "";
-      passwordEmpty.innerHTML = "PLEASE ENTER THE PASSWORD";
-    }
+    const form = new FormData(event.target);
+    console.log(form);
+    const myObject = Object.fromEntries(form.entries());
 
-    //fetch call
-    fetch("https://localhost:8443/onlineexam/control/userlogin", {
-      // mode: "nocors",
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
-      .then((result) => {
-        console.log("result :: ", result);
+    Object.entries(myObject).map(([key, value], keyIndex) => {
+      validateLoginForm(key, value, setNoError);
+    });
+
+    //if form has no error then make a call to axios
+    currentRef.current
+      ? axiosCall(myObject)
+      : console.log("Error Occured.... LOGIN form");
+  };
+
+  const axiosCall = (myObject) => {
+    axios
+      .post(
+        "https://" +
+          window.location.hostname +
+          ":8443/onlineexam/control/userlogin",
+        myObject
+      )
+      .then((res) => {
+        return res.data;
+      })
+      .then((data) => {
+        console.log("Data :: ", data);
+        handleRoleType(data);
+        console.log("roleTypeId :: ", data.roleTypeId);
       })
       .catch((err) => {
-        console.log("err :: ", err);
+        console.log("ERROR FROM LOGIN FETCH :: ", err);
       });
   };
-  const handleChange = () => {
-    userEmpty.innerHTML = "";
-    passwordEmpty.innerHTML = "";
+
+  //navigating based on the back-end data
+  const handleRoleType = (data) => {
+    data.roleTypeId === "ADMIN"
+      ? navigate("/admin")
+      : data.roleTypeId === "PERSON_ROLE"
+      ? navigate("/user")
+      : checkValidCredentials();
   };
+
+  //password Incorrect
+  const checkValidCredentials = () => {
+    console.log("checkValidCredentials  in");
+    document.getElementById("invalidCredentials").classList.remove("d-none");
+    document.getElementById("invalidCredentials").classList.add("d-block");
+    document.getElementById("invalidCredentials").innerHTML =
+      "INVALID CREDENTIALS";
+  };
+
+  //toggle for showpassword
+  const handleToggle = (event) => {
+    if (event.target.checked) {
+      console.log(event.target.checked);
+      showPassword("text");
+    } else {
+      showPassword("password");
+    }
+  };
+
+  //component
   return (
-    <div>
-      <div className="container">
-        <div className="row vh-100 align-items-center">
-          <div className="col-md-4"></div>
-          <div className="container col-md-4 mt-4 p-4 shadow-lg rounded ">
-            <form id="loginForm" onSubmit={handleSubmit}>
-              <h1 className="mb-3 text-center login-heading fw-bold">
-                USER LOGIN
-              </h1>
-              <div className="mb-3">
-                <label
-                  htmlFor="username"
-                  className="form-label fw-bold custom-login-label">
-                  Username
-                </label>
-                <input
-                  autoFocus
-                  type="text"
-                  className="form-control"
-                  placeholder="enter username"
-                  id="exampleInputEmail1"
-                  name="username"
-                  onChange={handleChange}
-                />
-                <div>
-                  <p id="userEmpty"></p>
-                </div>
-              </div>
-              <div className="mb-3">
-                <label
-                  htmlFor="password"
-                  className="form-label  fw-bold custom-login-label">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="password"
-                  placeholder="enter password"
-                  name="password"
-                />
-                <div>
-                  <p id="passwordEmpty"></p>
-                </div>
-              </div>
-              <div className="d-grid">
-                <input type="submit" className="btn-login" value="Login" />
-              </div>
-            </form>
+    <div className="row g-0 align-items-center justify-content-center">
+      {/* empty div */}
+      <div className="col-md-4"></div>
+
+      <div className="col-md-4 col-10 p-4 mt-4 shadow-lg rounded custom-form">
+        <form id="loginForm " className="custom-form" onSubmit={handleSubmit}>
+          <h1 className="mb-3 text-center login-heading fw-bold">USER LOGIN</h1>
+
+          {/* invalid Credentials */}
+          <span id="invalidCredentials" className="empty custom-alert"></span>
+
+          {/* username */}
+          <div className="mb-3">
+            <label
+              htmlFor="emailid"
+              className="form-label fw-bold custom-login-label">
+              E-MAIL ID
+            </label>
+            <input
+              autoFocus
+              type="text"
+              className="form-control"
+              placeholder="enter e-mail"
+              id="emailid"
+              name="USERNAME"
+              onChange={makeErrorNone}
+            />
+
+            {/* username empty alert */}
+            <span id="userEmpty" className="empty custom-alert"></span>
           </div>
-          <div className="col-md-4"></div>
-        </div>
+
+          {/* password */}
+          <div className="mb-3">
+            <label
+              htmlFor="password"
+              className="form-label  fw-bold custom-login-label">
+              PASSWORD
+            </label>
+            <input
+              type={password}
+              className="form-control"
+              id="password"
+              placeholder="enter password"
+              name="PASSWORD"
+              onChange={makeErrorNone}
+            />
+            <span id="passwordEmpty" className="empty custom-alert"></span>
+          </div>
+
+          {/* password empty alert */}
+
+          {/* checkbox for show password */}
+          <div className="mb-3">
+            <input
+              type="checkbox"
+              className="mx-1 form-control-check"
+              id="showPassword"
+              onChange={handleToggle}
+            />
+            <label
+              htmlFor="showPassword"
+              className="form-label  fw-bold custom-login-label">
+              Show Password
+            </label>
+          </div>
+
+          {/* submit button */}
+          <div className="d-grid">
+            <input
+              type="submit"
+              className="btn-login custom-button"
+              value="LOGIN"
+            />
+          </div>
+        </form>
       </div>
+
+      {/* empty div */}
+      <div className="col-md-4"></div>
     </div>
   );
 };

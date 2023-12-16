@@ -1,10 +1,11 @@
-.label{
-    color:#245c8d; 
-}
+/* 
 :root{
     --bgcolor : #245c8d;
 }
-.btn-login{
+.label{
+  color:#245c8d; 
+} */
+/* .btn-login{
     background-color: var(--bgcolor);
     color: white;
     padding: 9px;
@@ -13,4 +14,4 @@
   }
   .btn-login:hover{
     background-color: #153a5a;
-  }
+  } */

@@ -1,7 +1,8 @@
 :root {
-  --bgcolor: #245c8d;
+  --bgcolor: #303841;
 }
 .custom-footer {
-  background-color: var(--bgcolor);
+  background-color: #303841;
+  color: white;
   user-select: none;
 }
