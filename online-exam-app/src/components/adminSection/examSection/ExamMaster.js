@@ -14,7 +14,6 @@ const ExamMaster = () => {
       },
     })
       .then((response) => {
-        //alert("response is coming...");
         return response.json();
       })
       .then((data) => {

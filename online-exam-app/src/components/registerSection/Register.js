@@ -98,7 +98,6 @@ const Register = () => {
         } else {
           handleNavigate(data.SERVICE_SUCCESS_MESSAGE);
         }
-        // console.log("messager", data.SERVICE_SUCCESS_MESSAGE);
         console.log("DATA :: ", data);
       })
       .catch((error) => {

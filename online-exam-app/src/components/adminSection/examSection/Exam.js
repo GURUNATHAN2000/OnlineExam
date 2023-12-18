@@ -23,23 +23,22 @@ const Exam = () => {
       });
   }, []);
 
-
   return (
     <div className="container-fluid ">
-      {/* <MainContent /> */}
       <Header title="EXAM" next="addExams" back="/admin/exams" />
+  
       <Outlet />
-      {exams &&
+      {/* {exams &&
         exams.map((exam) => {
           console.log("in");
           return (
-            <div key={exam.examId}>
+            <div key={exam.examId} className="p-5 m-5">
               {exam.examId}
               {exam.examName}
             </div>
           );
-        })}
-      {/* <AccordionMaker object={exams} /> */}
+        })} */}
+      <AccordionMaker object={exams} />
     </div>
   );
 };
