@@ -25,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login setPage={setPage} />} />
         <Route path="/register" element={<Register setPage={setPage} />} />
         <Route path="/admin" element={<Admin setPage={setPage} />}>
+
           <Route path="exams" element={<Exam />}>
             <Route path="addExams" element={<ExamMaster />} />
           </Route>
@@ -36,6 +37,7 @@ function App() {
           <Route path="questions" element={<Question />}>
             <Route path="addQuestions" element={<QuestionMaster />} />
           </Route>
+          
         </Route>
         <Route path="user" element={<User setPage={setPage} />}></Route>
         <Route path="*" element={<NoMatch />}></Route>

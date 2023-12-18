@@ -6,7 +6,7 @@ import logo from "../../img/vastpro-logo-right.png";
 import "./Header.css";
 import { Link } from "react-router-dom";
 
-const Header = (props) => {
+const Header = ({ page }) => {
   return (
     <nav className="navbar navbar-expand-sm navbar-dark custom-navbar rounded-bottom-5 shadow-lg sticky-top">
       <div className="container-fluid">
@@ -19,9 +19,9 @@ const Header = (props) => {
             width="140px"
           />
         </Link>
-        {props.page === "login" ? (
+        {page === "login" ? (
           <p className="text-lg-center fs-3 fw-bold">Online Exam Login!</p>
-        ) : props.page === "admin" ? (
+        ) : page === "admin" ? (
           <>
             <button
               className="navbar-toggler "

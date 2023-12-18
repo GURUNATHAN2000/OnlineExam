@@ -158,10 +158,9 @@ const Login = (props) => {
               name="PASSWORD"
               onChange={makeErrorNone}
             />
+            {/* password empty alert */}
             <span id="passwordEmpty" className="empty custom-alert"></span>
           </div>
-
-          {/* password empty alert */}
 
           {/* checkbox for show password */}
           <div className="mb-3">
