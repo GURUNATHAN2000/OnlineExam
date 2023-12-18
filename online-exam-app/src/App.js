@@ -39,7 +39,7 @@ function App() {
           </Route>
           
         </Route>
-        <Route path="user" element={<User setPage={setPage} />}></Route>
+        <Route path="/user" element={<User setPage={setPage} />}></Route>
         <Route path="*" element={<NoMatch />}></Route>
       </Routes>
       <Footer page={page} />
