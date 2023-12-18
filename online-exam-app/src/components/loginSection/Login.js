@@ -132,6 +132,10 @@ const Login = (props) => {
               placeholder="enter e-mail"
               id="emailid"
               name="USERNAME"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              data-bs-custom-class="custom-tooltip"
+              data-bs-title="This top tooltip is themed via CSS variables."
               onChange={makeErrorNone}
             />
 

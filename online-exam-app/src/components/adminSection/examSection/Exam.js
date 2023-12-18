@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import AccordionMaker from "../accordions/AccordionMaker";
+import AccordionMaker from "../../accordions/AccordionMaker";
+import Header from "../Header";
+import { Outlet, useNavigate } from "react-router";
+
 // import MainContent from "../MainContent";
 // import AccordionMaker from "../AccordionMaker";
 
@@ -15,8 +18,10 @@ const Exam = () => {
     },
   ]);
   return (
-    <div className="container-fluid">
+    <div className="container-fluid ">
       {/* <MainContent /> */}
+      <Header title="EXAM" next="addExams" back="/admin/exams" />
+      <Outlet />
       <AccordionMaker object={exams} />
     </div>
   );

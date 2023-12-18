@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-// import SideBar from "./components/sideBar/SideBar";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 const Admin = (props) => {
@@ -7,17 +6,10 @@ const Admin = (props) => {
   useEffect(() => {
     props.setPage("admin");
   }, []);
-  
+
   return (
     <div className="container-fluid ">
-      <div className="row">
-        <div className="col-2 p-0  container-fluid">
-          {/* <SideBar /> */}
-        </div>
-        <div className="col-10">
-          <Outlet />
-        </div>
-      </div>
+      <Outlet />
     </div>
   );
 };

@@ -7,11 +7,14 @@ import Footer from "./components/footerSection/Footer";
 import Login from "./components/loginSection/Login";
 import Register from "./components/registerSection/Register";
 import Admin from "./components/adminSection/Admin";
-import Exam from "./components/examSection/Exam";
-import QuestionMaster from "./components/questionMaster/QuestionMaster";
-import Topic from "./components/topicSection/TopicMaster";
+import Exam from "./components/adminSection/examSection/Exam";
+import ExamMaster from "./components/adminSection/examSection/ExamMaster";
+import QuestionMaster from "./components/adminSection/questionSection/QuestionMaster";
+import Topic from "./components/adminSection/topicSection/Topic";
 import User from "./components/userSection/User";
 import NoMatch from "./components/NoMatch/NoMatch";
+import TopicMaster from "./components/adminSection/topicSection/TopicMaster";
+import Question from "./components/adminSection/questionSection/Question";
 
 function App() {
   const [page, setPage] = useState("");
@@ -23,10 +26,16 @@ function App() {
         <Route path="/register" element={<Register setPage={setPage} />} />
         <Route path="/admin" element={<Admin setPage={setPage} />}>
           <Route path="exams" element={<Exam />}>
-            <Route path="addexam" element={<QuestionMaster />} />
+            <Route path="addExams" element={<ExamMaster />} />
           </Route>
-          {/* <Route path="questions" element={<Question />}></Route> */}
-          <Route path="topics" element={<Topic />}></Route>
+
+          <Route path="topics" element={<Topic />}>
+            <Route path="addTopics" element={<TopicMaster />} />
+          </Route>
+
+          <Route path="questions" element={<Question />}>
+            <Route path="addQuestions" element={<QuestionMaster />} />
+          </Route>
         </Route>
         <Route path="user" element={<User setPage={setPage} />}></Route>
         <Route path="*" element={<NoMatch />}></Route>

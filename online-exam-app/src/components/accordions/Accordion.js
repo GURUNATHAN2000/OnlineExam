@@ -13,7 +13,7 @@ const Accordion = ({ object, index }) => {
               data-bs-target={`#panelsStayOpen-collapseOne${index}`}
               aria-expanded="true"
               aria-controls="panelsStayOpen-collapseOne">
-              Accordion Item #1
+              {object.name}
             </button>
           </h2>
           <div
