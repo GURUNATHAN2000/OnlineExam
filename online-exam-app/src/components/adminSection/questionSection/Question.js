@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import AccordionMaker from "../../accordions/AccordionMaker";
 import Header from "../Header";
-import { Outlet, useNavigate } from "react-router";
-
-// import MainContent from "../MainContent";
-// import AccordionMaker from "../AccordionMaker";
+import { Outlet } from "react-router";
 
 const Question = () => {
   const [question, setQuestion] = useState([
