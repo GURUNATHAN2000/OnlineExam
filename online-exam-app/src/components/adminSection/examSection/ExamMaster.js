@@ -1,9 +1,11 @@
 import axios from "axios";
 import "./ExamMaster.css";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Swal from "sweetalert2";
+import { ExamContext } from "./Exam";
 
 const ExamMaster = () => {
+  const { exams, setExams } = useContext(ExamContext);
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -16,6 +18,9 @@ const ExamMaster = () => {
       })
       .then((data) => {
         console.log("data: ", data);
+        const { examMap } = data;
+        console.log("examMap", examMap);
+        setExams([...exams, examMap]);
         Swal.fire({
           position: "center",
           icon: "success",

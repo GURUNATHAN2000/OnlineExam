@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import Header from "../Header";
 import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+export const ExamContext = createContext(null);
 
 const Exam = () => {
-  const navigate = useNavigate();
-
   const [exams, setExams] = useState([]);
   const [updateExam, setUpdateExam] = useState(0);
 
@@ -72,59 +71,61 @@ const Exam = () => {
   };
 
   return (
-    <div className="container">
-      {/* <MainContent /> */}
-      <Header title="EXAM" next="addExams" back="/admin/exams" />
-      
-      <Outlet />
+    <ExamContext.Provider value={{ exams, setExams }}>
+      <div className="container">
+        {/* <MainContent /> */}
+        <Header title="EXAM" next="addExams" back="/admin/exams" />
 
-      <div className="card text-center">
-        <div className="card-title">
-          <h2 className="text-center">Exam Listing</h2>
-        </div>
-        <div className="card-body">
-          {exams && exams.length > 0 ? (
-            <table className="table table-bordered border-dark table-striped table-hover">
-              <thead className="table-dark ">
-                <tr>
-                  <td>Exam Id</td>
-                  <td>Exam Name</td>
-                  <td>No of Questions</td>
-                  <td>Duration Minutes</td>
-                  <td>Pass Percentage</td>
-                  <td>Action</td>
-                </tr>
-              </thead>
-              <tbody>
-                {exams.map((exam) => (
-                  <tr key={exam.examId}>
-                    <td className="fw-bolder">{exam.examId}</td>
-                    <td>{exam.examName}</td>
-                    <td>{exam.noOfQuestions}</td>
-                    <td>{exam.durationMinutes}</td>
-                    <td>{exam.passPercentage}</td>
-                    <td>
-                      <button
-                        className="btn btn-outline-success m-1"
-                        onClick={() => handleUpdate(exam.examId)}>
-                        Edit
-                      </button>
-                      <button
-                        className="btn btn-outline-danger m-1"
-                        onClick={() => handleDelete(exam.examId)}>
-                        Delete
-                      </button>
-                    </td>
+        <Outlet />
+
+        <div className="card text-center">
+          <div className="card-title">
+            <h2 className="text-center">Exam Listing</h2>
+          </div>
+          <div className="card-body">
+            {exams && exams.length > 0 ? (
+              <table className="table table-bordered border-dark table-striped table-hover">
+                <thead className="table-dark ">
+                  <tr>
+                    <td>Exam Id</td>
+                    <td>Exam Name</td>
+                    <td>No of Questions</td>
+                    <td>Duration Minutes</td>
+                    <td>Pass Percentage</td>
+                    <td>Action</td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p className="lead text-danger fw-bold">NO EXAMS TO DISPLAY</p>
-          )}
+                </thead>
+                <tbody>
+                  {exams.map((exam) => (
+                    <tr key={exam.examId}>
+                      <td className="fw-bolder">{exam.examId}</td>
+                      <td>{exam.examName}</td>
+                      <td>{exam.noOfQuestions}</td>
+                      <td>{exam.durationMinutes}</td>
+                      <td>{exam.passPercentage}</td>
+                      <td>
+                        <button
+                          className="btn btn-outline-success m-1"
+                          onClick={() => handleUpdate(exam.examId)}>
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-outline-danger m-1"
+                          onClick={() => handleDelete(exam.examId)}>
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="lead text-danger fw-bold">NO EXAMS TO DISPLAY</p>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </ExamContext.Provider>
   );
 };
 
