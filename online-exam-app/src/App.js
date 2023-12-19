@@ -15,14 +15,16 @@ import User from "./components/userSection/User";
 import NoMatch from "./components/NoMatch/NoMatch";
 import TopicMaster from "./components/adminSection/topicSection/TopicMaster";
 import Question from "./components/adminSection/questionSection/Question";
+import UserMaster from "./components/adminSection/listUser/UserMaster";
 
 function App() {
   const [page, setPage] = useState("");
+  const [name, setName] = useState("")
   return (
     <>
-      <Header page={page} />
+      <Header page={page} name={name} />
       <Routes>
-        <Route path="/login" element={<Login setPage={setPage} />} />
+        <Route path="/login" element={<Login setPage={setPage} setName={setName} />} />
         <Route path="/register" element={<Register setPage={setPage} />} />
         <Route path="/admin" element={<Admin setPage={setPage} />}>
 
@@ -37,6 +39,8 @@ function App() {
           <Route path="questions" element={<Question />}>
             <Route path="addQuestions" element={<QuestionMaster />} />
           </Route>
+          
+          <Route path="users" element={<UserMaster />}></Route>
           
         </Route>
         <Route path="/user" element={<User setPage={setPage} />}></Route>

@@ -8,6 +8,7 @@ import { validateLoginForm } from "./LoginValidator";
 
 const Login = (props) => {
   const [noError, setNoError, currentRef] = useStateRef(true);
+
   const [password, showPassword] = useState("password");
 
   //to set the header for login
@@ -70,6 +71,7 @@ const Login = (props) => {
       .then((data) => {
         console.log("Data :: ", data);
         handleRoleType(data);
+        props.setName(data.userNameLogin);
         console.log("roleTypeId :: ", data.roleTypeId);
       })
       .catch((err) => {
@@ -125,6 +127,7 @@ const Login = (props) => {
               className="form-label fw-bold custom-login-label">
               E-MAIL ID
             </label>
+
             <input
               autoFocus
               type="text"
@@ -150,6 +153,7 @@ const Login = (props) => {
               className="form-label  fw-bold custom-login-label">
               PASSWORD
             </label>
+
             <input
               type={password}
               className="form-control"
