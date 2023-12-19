@@ -3,16 +3,12 @@ import Header from "../Header";
 import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const Exam = () => {
-<<<<<<< HEAD
   const navigate = useNavigate();
   const [exams, setExams] = useState([""]);
   const [updateExam, setUpdateExam] = useState(-1);
-=======
-  const [exams, setExams] = useState([]);
-  const [updateExam, setUpdateExam] = useState(0);
->>>>>>> bd851b4a2aa9d0cfa72ba1f9301d1df5d671e367
   useEffect(() => {
     axios
       .get("https://"+
@@ -31,7 +27,18 @@ const Exam = () => {
   }, []);
 
   const handleDelete = (examId) => {
-    axios
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //------------
+        axios
       .get(
         `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`
       )
@@ -45,6 +52,15 @@ const Exam = () => {
         console.log("error: ", error);
       });
       setUpdateExam(updateExam+1);
+      //------------
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
+      }
+    });
+      
   };
 
   const handleUpdate = (examId) => {

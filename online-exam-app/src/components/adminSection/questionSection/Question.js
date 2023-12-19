@@ -76,10 +76,10 @@ const Question = () => {
            </tr>
         </thead>
         <tbody>
-          {
+          { questions &&
             questions.map((question)=>(
             <tr key={question.questionId}>
-              <td>{question.questionId}</td>
+            <td>{question.questionId}</td>
             <td>{question.questionDetail}</td>
             <td>{question.optionA}</td>
             <td>{question.optionB}</td>
