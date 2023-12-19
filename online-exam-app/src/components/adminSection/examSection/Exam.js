@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import Header from "../Header";
 import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+export const ExamContext = createContext(null);
 
 const Exam = () => {
-  const navigate = useNavigate();
- 
   const [exams, setExams] = useState([]);
   const [updateExam, setUpdateExam] = useState(0);
+
   useEffect(() => {
     axios
-      .get("https://"+
-      window.location.hostname +":8443/onlineexam/control/display-all-exam")
+      .get(
+        "https://" +
+          window.location.hostname +
+          ":8443/onlineexam/control/display-all-exam"
+      )
       .then((response) => {
         return response.data;
       })
@@ -27,20 +31,39 @@ const Exam = () => {
   }, []);
 
   const handleDelete = (examId) => {
-    axios
-      .get(
-        `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`
-      )
-      .then((response) => {
-        return response.data;
-      })
-      .then((data) => {
-        console.log("data: ", data);
-      })
-      .catch((error) => {
-        console.log("error: ", error);
-      });
-      setUpdateExam(updateExam+1);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //------------
+        axios
+          .get(
+            `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`
+          )
+          .then((response) => {
+            return response.data;
+          })
+          .then((data) => {
+            console.log("data: ", data);
+          })
+          .catch((error) => {
+            console.log("error: ", error);
+          });
+        setUpdateExam(updateExam + 1);
+        //------------
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
   };
 
   const handleUpdate = (examId) => {
@@ -48,57 +71,61 @@ const Exam = () => {
   };
 
   return (
-    <div className="container">
-      {/* <MainContent /> */}
-      <Header title="EXAM" next="addExams" back="/admin/exams" />
-      <Outlet />
-      
-      <div className="card text-center">
-        <div className="card-title">
-          <h2 className="text-center">Exam Listing</h2>
-        </div>
-        <div className="card-body">
-          <table className="table table-bordered border-dark table-striped table-hover">
-            <thead className="table-dark ">
-              <tr>
-                <td>Exam Id</td>
-                <td>Exam Name</td>
-                <td>No of Questions</td>
-                <td>Duration Minutes</td>
-                <td>Pass Percentage</td>
-                <td>Action</td>
-              </tr>
-            </thead>
-            <tbody>
-              {exams &&
-                exams.map((exam) => (
-                  <tr key={exam.examId}>
-                    <td className="fw-bolder">{exam.examId}</td>
-                    <td>{exam.examName}</td>
-                    <td>{exam.noOfQuestions}</td>
-                    <td>{exam.durationMinutes}</td>
-                    <td>{exam.passPercentage}</td>
-                    <td>
-                     <Link to="admin/editExams"> <button
-                        className="btn btn-success m-1"
-                        onClick={() => handleUpdate(exam.examId)}
-                      >
-                        Edit
-                      </button></Link>
-                      <button
-                        className="btn btn-danger m-1"
-                        onClick={() => handleDelete(exam.examId)}
-                      >
-                        Delete
-                      </button>
-                    </td>
+    <ExamContext.Provider value={{ exams, setExams }}>
+      <div className="container">
+        {/* <MainContent /> */}
+        <Header title="EXAM" next="addExams" back="/admin/exams" />
+
+        <Outlet />
+
+        <div className="card text-center">
+          <div className="card-title">
+            <h2 className="text-center">Exam Listing</h2>
+          </div>
+          <div className="card-body">
+            {exams && exams.length > 0 ? (
+              <table className="table table-bordered border-dark table-striped table-hover">
+                <thead className="table-dark ">
+                  <tr>
+                    <td>Exam Id</td>
+                    <td>Exam Name</td>
+                    <td>No of Questions</td>
+                    <td>Duration Minutes</td>
+                    <td>Pass Percentage</td>
+                    <td>Action</td>
                   </tr>
-                ))}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  {exams.map((exam) => (
+                    <tr key={exam.examId}>
+                      <td className="fw-bolder">{exam.examId}</td>
+                      <td>{exam.examName}</td>
+                      <td>{exam.noOfQuestions}</td>
+                      <td>{exam.durationMinutes}</td>
+                      <td>{exam.passPercentage}</td>
+                      <td>
+                        <button
+                          className="btn btn-outline-success m-1"
+                          onClick={() => handleUpdate(exam.examId)}>
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-outline-danger m-1"
+                          onClick={() => handleDelete(exam.examId)}>
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="lead text-danger fw-bold">NO EXAMS TO DISPLAY</p>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </ExamContext.Provider>
   );
 };
 

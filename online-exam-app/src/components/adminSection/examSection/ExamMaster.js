@@ -1,35 +1,42 @@
-import { useNavigate } from "react-router";
+import axios from "axios";
 import "./ExamMaster.css";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import Swal from "sweetalert2";
+import { ExamContext } from "./Exam";
 
 const ExamMaster = () => {
+  const { exams, setExams } = useContext(ExamContext);
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const value = Object.fromEntries(formData.entries());
 
-    fetch("https://localhost:8443/onlineexam/control/insert-exam", {
-      method: "POST",
-      credentials: "include",
-      body: JSON.stringify(value),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    axios
+      .post("https://localhost:8443/onlineexam/control/insert-exam", value)
       .then((response) => {
-        return response.json();
+        return response.data;
       })
       .then((data) => {
         console.log("data: ", data);
+        const { examMap } = data;
+        console.log("examMap", examMap);
+        setExams([...exams, examMap]);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Exam Added Successfully !",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => {
         console.log("error: ", error);
       });
+    document.getElementById("examMaster").reset();
   };
-
   return (
-    <div className="container mt-4 mb-3 p-3 text-light custom-form">
-      <form className="row g-4 p-3" onSubmit={handleSubmit}>
+    <div className="container shadow-lg rounded-2 mt-4 mb-3 p-3 text-light custom-form">
+      <form className="row g-4 p-3" onSubmit={handleSubmit} id="examMaster">
         <div className="col-md-6">
           <label htmlFor="examName" className="form-label fw-bold">
             Exam name
