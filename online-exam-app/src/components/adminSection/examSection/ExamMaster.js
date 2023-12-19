@@ -5,7 +5,7 @@ const ExamMaster = () => {
     const formData = new FormData(event.target);
     const value = Object.fromEntries(formData.entries());
 
-    fetch("https://localhost:8443/onlineexam/control/display-all-exam", {
+    fetch("https://localhost:8443/onlineexam/control/insert-exam", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify(value),
