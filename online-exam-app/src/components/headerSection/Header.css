@@ -12,3 +12,10 @@
   /* font-family: calc(var(--bgcolor)); */
   user-select: none;
 }
+ 
+li:hover{
+  color: rgb(129, 90, 90);
+}
+li:active{
+  color: aquamarine;
+}

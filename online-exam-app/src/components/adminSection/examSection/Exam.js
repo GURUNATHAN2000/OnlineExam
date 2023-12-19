@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import AccordionMaker from "../../accordions/AccordionMaker";
 import Header from "../Header";
 import { Outlet } from "react-router";
 import axios from "axios";
 
 const Exam = () => {
-  const [exams, setExams] = useState([""]);
-  const [updateExam, setUpdateExam] = useState(-1);
+  const [exams, setExams] = useState([]);
+  const [updateExam, setUpdateExam] = useState(0);
   useEffect(() => {
     axios
       .get("https://localhost:8443/onlineexam/control/display-all-exam")
@@ -37,6 +36,7 @@ const Exam = () => {
       .catch((error) => {
         console.log("error: ", error);
       });
+      setUpdateExam(updateExam+1);
   };
 
   const handleUpdate = (examId) => {};

@@ -71,7 +71,7 @@ const Login = (props) => {
       .then((data) => {
         console.log("Data :: ", data);
         handleRoleType(data);
-        props.setName(data.firstName, data.lastName);
+        props.setName(data.userNameLogin);
         console.log("roleTypeId :: ", data.roleTypeId);
       })
       .catch((err) => {
