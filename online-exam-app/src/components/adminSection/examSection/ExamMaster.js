@@ -16,7 +16,6 @@ const ExamMaster = () => {
       },
     })
       .then((response) => {
-        alert("Saved successfully!");
         return response.json();
       })
       .then((data) => {

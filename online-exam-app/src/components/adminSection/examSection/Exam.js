@@ -23,6 +23,7 @@ const Exam = () => {
       });
   }, []);
 
+<<<<<<< HEAD
   const handleDelete = (examId) => {
     axios
       .get(
@@ -48,8 +49,14 @@ const Exam = () => {
   return (
     <div className="container">
       {/* <MainContent /> */}
+=======
+  return (
+    <div className="container-fluid ">
+>>>>>>> abf64a0afea93bf9961f04dc705f1e4a1afc2a39
       <Header title="EXAM" next="addExams" back="/admin/exams" />
+  
       <Outlet />
+<<<<<<< HEAD
       <div className="card text-center">
         <div className="card-title">
           <h2 className="text-center">Exam Listing</h2>
@@ -98,6 +105,19 @@ const Exam = () => {
           </table>
         </div>
       </div>
+=======
+      {/* {exams &&
+        exams.map((exam) => {
+          console.log("in");
+          return (
+            <div key={exam.examId} className="p-5 m-5">
+              {exam.examId}
+              {exam.examName}
+            </div>
+          );
+        })} */}
+      <AccordionMaker object={exams} />
+>>>>>>> abf64a0afea93bf9961f04dc705f1e4a1afc2a39
     </div>
   );
 };

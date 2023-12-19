@@ -6,7 +6,7 @@ import logo from "../../img/vastpro-logo-right.png";
 import "./Header.css";
 import { Link } from "react-router-dom";
 
-const Header = ({ page }) => {
+const Header = ({ page, name }) => {
   return (
     <nav className="navbar navbar-expand-sm navbar-dark custom-navbar rounded-bottom-5 shadow-lg sticky-top">
       <div className="container-fluid">
@@ -64,8 +64,10 @@ const Header = ({ page }) => {
               </ul>
             </div>
           </>
+        ) : page === "user" ? (
+          <p className="text-lg-center fs-3 fw-bold">WELCOME {name} !</p>
         ) : (
-          <>{/* user header */}</>
+          <></>
         )}
       </div>
     </nav>

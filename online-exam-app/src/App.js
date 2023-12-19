@@ -18,11 +18,12 @@ import Question from "./components/adminSection/questionSection/Question";
 
 function App() {
   const [page, setPage] = useState("");
+  const [name, setName] = useState("")
   return (
     <>
-      <Header page={page} />
+      <Header page={page} name={name} />
       <Routes>
-        <Route path="/login" element={<Login setPage={setPage} />} />
+        <Route path="/login" element={<Login setPage={setPage} setName={setName} />} />
         <Route path="/register" element={<Register setPage={setPage} />} />
         <Route path="/admin" element={<Admin setPage={setPage} />}>
 
