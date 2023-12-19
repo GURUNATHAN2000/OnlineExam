@@ -1,6 +1,5 @@
-import { useNavigate } from "react-router";
+import axios from "axios";
 import "./ExamMaster.css";
-import { useEffect } from "react";
 
 const ExamMaster = () => {
   const handleSubmit = (event) => {
@@ -8,16 +7,10 @@ const ExamMaster = () => {
     const formData = new FormData(event.target);
     const value = Object.fromEntries(formData.entries());
 
-    fetch("https://localhost:8443/onlineexam/control/insert-exam", {
-      method: "POST",
-      credentials: "include",
-      body: JSON.stringify(value),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    axios
+      .post("https://localhost:8443/onlineexam/control/insert-exam", value)
       .then((response) => {
-        return response.json();
+        return response.data;
       })
       .then((data) => {
         console.log("data: ", data);
@@ -28,7 +21,7 @@ const ExamMaster = () => {
   };
 
   return (
-    <div className="container mt-4 mb-3 p-3 text-light custom-form">
+    <div className="container mt-4 mb-3 p-3 shadow-lg rounded-2 text-light custom-form">
       <form className="row g-4 p-3" onSubmit={handleSubmit}>
         <div className="col-md-6">
           <label htmlFor="examName" className="form-label fw-bold">

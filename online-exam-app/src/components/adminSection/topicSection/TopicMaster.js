@@ -24,7 +24,7 @@ const TopicMaster = () => {
       });
   };
   return (
-    <div className="container mt-4 p-3 text-light custom-form">
+    <div className="container shadow-lg rounded-2 mt-4 p-3 text-light custom-form">
       <form className="row g-4 p-3" onSubmit={handleSubmit}>
         <div className="col-md-6">
           <label htmlFor="topicId" className="form-label fw-bold">
@@ -52,7 +52,9 @@ const TopicMaster = () => {
           />
         </div>
         <div className="col-12 text-center">
-          <button type="submit" className="btn-login  custom-button">Submit</button>
+          <button type="submit" className="btn-login  custom-button">
+            Submit
+          </button>
         </div>
       </form>
     </div>

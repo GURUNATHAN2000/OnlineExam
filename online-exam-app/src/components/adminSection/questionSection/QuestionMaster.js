@@ -1,35 +1,30 @@
 import React from "react";
 import "./questionMaster.css";
+import axios from "axios";
 
 const QuestionMaster = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = new FormData(document.getElementById("questionForm"));
     const formData = Object.fromEntries(form.entries());
-    var url = window.location.protocol + "://" + window.location.hostname;
-    console.log("url", url);
-    fetch(
-      "https://" +
-        window.location.hostname +
-        ":8443/onlineexam/control/userquestion",
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      }
-    )
+
+    axios
+      .post(
+        "https://" +
+          window.location.hostname +
+          ":8443/onlineexam/control/userquestion",
+        formData
+      )
       .then((result) => {
         console.log("result::", result);
-        return result.json();
+        return result.data;
       })
       .catch((err) => {
         console.log("error::", err);
       });
   };
   return (
-    <div className="container mt-4 mb-3 p-3 text-light custom-form">
+    <div className="container shadow-lg rounded-2 mt-4 mb-3 p-3 text-light custom-form">
       <form id="questionForm" className="row g-4 p-3" onSubmit={handleSubmit}>
         <div className="col-md-6">
           <label htmlFor="questionId" className="form-label fw-bold">
@@ -206,7 +201,7 @@ const QuestionMaster = () => {
         </div>
 
         <div className="col-12 text-center">
-        <button type="submit" className="btn-login custom-button">
+          <button type="submit" className="btn-login custom-button">
             Submit
           </button>
         </div>
