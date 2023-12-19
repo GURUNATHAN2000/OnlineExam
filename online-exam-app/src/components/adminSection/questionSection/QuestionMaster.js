@@ -216,7 +216,7 @@ const QuestionMaster = () => {
             </div>
 
             <div className="mb-5 d-grid">
-              <input type="submit" value="update" className="btn-login" />
+              <input type="submit" value="submit" className="btn-login" />
             </div>
           </form>
         </div>
