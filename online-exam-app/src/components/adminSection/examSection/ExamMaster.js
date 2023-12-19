@@ -1,11 +1,13 @@
+import { useNavigate } from "react-router";
 import "./ExamMaster.css";
+import { useEffect } from "react";
 const ExamMaster = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const value = Object.fromEntries(formData.entries());
 
-    fetch("https://localhost:8443/onlineexam/control/display-all-exam", {
+    fetch("https://localhost:8443/onlineexam/control/insert-exam", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify(value),
@@ -14,7 +16,7 @@ const ExamMaster = () => {
       },
     })
       .then((response) => {
-        //alert("response is coming...");
+        alert("Saved successfully!");
         return response.json();
       })
       .then((data) => {
@@ -24,13 +26,10 @@ const ExamMaster = () => {
         console.log("error: ", error);
       });
   };
-  const handleDisplay = () => {
-    console.log("Display clicked");
-  };
 
   return (
-    <div className="container mt-4 p-3 bg-dark w-50 text-light">
-      <form className="row g-2 p-3" onSubmit={handleSubmit}>
+    <div className="container mt-4 p-3 text-light custom-form">
+      <form className="row g-4 p-3" onSubmit={handleSubmit}>
         <div className="col-md-6">
           <label htmlFor="examName" className="form-label fw-bold">
             Exam name
@@ -168,9 +167,7 @@ const ExamMaster = () => {
           <button type="submit" className="btn btn-danger">
             Submit
           </button>
-          <button onClick={handleDisplay}>DisplayAll</button>
         </div>
-        <div id="display"></div>
       </form>
     </div>
   );

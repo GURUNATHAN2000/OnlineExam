@@ -1,13 +1,13 @@
-/* :root{
-    --bgcolor : #245c8d;
+:root {
+    --bgcolor: #d6e6f2;
 }
-.custom-heading{
-    color: var(--bgcolor);
-} */
+.custom-form{
+    background-color: var(--bgcolor);
+}
 
-/* label{
-    color: var(--bgcolor);
-} */
+label{
+    color: #303841;
+}
 
 /* .container{
     height: -600px;
