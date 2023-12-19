@@ -22,18 +22,27 @@ const ExamMaster = () => {
       })
       .then((data) => {
         console.log("data: ", data);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Exam Added Successfully !",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        data.EVENT_SUCCESS_MESSAGE === "SUCCESS"
+          ? Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Exam Added Successfully!",
+              showConfirmButton: false,
+              timer: 1500,
+            })
+          : data.EVENT_ERROR_MESSAGE === "ERROR" &&
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Invalid Form Submission!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
       })
       .catch((error) => {
         console.log("error: ", error);
       });
-      document.getElementById('examMaster').reset();
+    document.getElementById("examMaster").reset();
   };
   return (
     <div className="container mt-4 mb-3 p-3 text-light custom-form">
@@ -130,7 +139,11 @@ const ExamMaster = () => {
           <label htmlFor="questionsRandomized" className="form-label fw-bold">
             Questions randomized
           </label>
-          <select className="form-control" name="questionsRandomized">
+          <select
+            className="form-control"
+            name="questionsRandomized"
+            defaultValue="Y"
+          >
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>
@@ -141,7 +154,7 @@ const ExamMaster = () => {
           <label htmlFor="answersMust" className="form-label fw-bold">
             Answers must
           </label>
-          <select className="form-control" name="answersMust">
+          <select className="form-control" name="answersMust" defaultValue="Y">
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>
@@ -152,7 +165,11 @@ const ExamMaster = () => {
           <label htmlFor="enableNegativeMark" className="form-label fw-bold">
             Enable negative mark
           </label>
-          <select className="form-control" name="enableNegativeMark">
+          <select
+            className="form-control"
+            name="enableNegativeMark"
+            defaultValue="Y"
+          >
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>
