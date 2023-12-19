@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import AccordionMaker from "../../accordions/AccordionMaker";
 import Header from "../Header";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Exam = () => {
+  const navigate = useNavigate();
   const [exams, setExams] = useState([""]);
   const [updateExam, setUpdateExam] = useState(-1);
   useEffect(() => {
@@ -39,13 +41,14 @@ const Exam = () => {
       });
   };
 
-  const handleUpdate = (examId) => {};
+  const handleUpdate = (examId) => {
+    //navigate("");
+  };
 
   return (
     <div className="container">
       {/* <MainContent /> */}
       <Header title="EXAM" next="addExams" back="/admin/exams" />
-
       <Outlet />
       <div className="card text-center">
         <div className="card-title">
@@ -82,12 +85,12 @@ const Exam = () => {
                     <td>{exam.durationMinutes}</td>
                     <td>{exam.passPercentage}</td>
                     <td>
-                      <button
+                     <Link to="admin/editExams"> <button
                         className="btn btn-success m-1"
                         onClick={() => handleUpdate(exam.examId)}
                       >
                         Edit
-                      </button>
+                      </button></Link>
                       <button
                         className="btn btn-danger m-1"
                         onClick={() => handleDelete(exam.examId)}

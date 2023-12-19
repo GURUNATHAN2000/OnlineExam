@@ -15,6 +15,7 @@ import User from "./components/userSection/User";
 import NoMatch from "./components/NoMatch/NoMatch";
 import TopicMaster from "./components/adminSection/topicSection/TopicMaster";
 import Question from "./components/adminSection/questionSection/Question";
+import ExamTopicMapping from "./components/adminSection/examSection/ExamTopicMapping";
 
 function App() {
   const [page, setPage] = useState("");
@@ -29,8 +30,9 @@ function App() {
 
           <Route path="exams" element={<Exam />}>
             <Route path="addExams" element={<ExamMaster />} />
+            
           </Route>
-
+          <Route path="editExams" elements={<ExamTopicMapping/>}></Route>
           <Route path="topics" element={<Topic />}>
             <Route path="addTopics" element={<TopicMaster />} />
           </Route>
