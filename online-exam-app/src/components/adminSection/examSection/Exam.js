@@ -7,8 +7,9 @@ import Swal from 'sweetalert2';
 
 const Exam = () => {
   const navigate = useNavigate();
-  const [exams, setExams] = useState([""]);
-  const [updateExam, setUpdateExam] = useState(-1);
+ 
+  const [exams, setExams] = useState([]);
+  const [updateExam, setUpdateExam] = useState(0);
   useEffect(() => {
     axios
       .get("https://"+
