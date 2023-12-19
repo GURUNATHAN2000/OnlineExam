@@ -5,46 +5,47 @@ import { Outlet } from "react-router";
 import axios from "axios";
 
 const Question = () => {
- 
   const [questions, setQuestions] = useState([]);
-  useEffect(()=>{
-    axios.get("https://"+
-    window.location.hostname +":8443/onlineexam/control/finduserquestion")
-    .then((response)=>{
-      return response.data;
-    })
-    .then((data)=>{
-      console.log(data.listQuestions);
-      console.log("data:",data);
-      setQuestions(data.listQuestions);
-    })
-    .catch((error)=>{
-      console.log("error:",error);
-    })
-    
-  },[]) 
-
-
-  const handleDelete=(questionId)=>{
-    
-    fetch(`https://localhost:8443/onlineexam/control/deleteuserquestion?questionId=${questionId}`,{
-        method:"GET",
-        headers:{
-          "Content-type":"application/json"
-        },
-      //   body:JSON.stringify(formData),
+  useEffect(() => {
+    axios
+      .get(
+        "https://" +
+          window.location.hostname +
+          ":8443/onlineexam/control/finduserquestion"
+      )
+      .then((response) => {
+        return response.data;
       })
-      .then((result)=>{
-        console.log("result::",result);
+      .then((data) => {
+        console.log(data.listQuestions);
+        console.log("data:", data);
+        setQuestions(data.listQuestions);
+      })
+      .catch((error) => {
+        console.log("error:", error);
+      });
+  }, []);
+
+  const handleDelete = (questionId) => {
+    fetch(
+      `https://localhost:8443/onlineexam/control/deleteuserquestion?questionId=${questionId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+        },
+        //   body:JSON.stringify(formData),
+      }
+    )
+      .then((result) => {
+        console.log("result::", result);
         return result.json();
       })
-      .catch((err)=>{
-        console.log("error::",err);
+      .catch((err) => {
+        console.log("error::", err);
       });
+  };
 
-}
-
- 
   return (
     <div className="container-fluid ">
       {/* <MainContent /> */}
@@ -55,58 +56,65 @@ const Question = () => {
           <h2 className="text-center">Question Listing</h2>
         </div>
         <div className="card-body">
-      <table className="table table-bordered border-dark table-striped table-hover">
-        <thead className="table-dark">
-        <tr>
-           <td>Question Id</td>
-           <td>Question Detail</td>
-           <td>Option A</td>
-           <td>Option B</td>
-           <td>Option C</td>
-           <td>Option D</td>
-           <td>Option E</td>
-           <td>Answer</td>
-           <td>Num Answer</td>
-           <td>Question Type</td>
-           <td>Difficulty Level</td>
-           <td>Answer Value</td>
-           <td>Topic Id</td>
-           <td>Negative Mark Value</td>
-           <td>Action</td>
-           </tr>
-        </thead>
-        <tbody>
-          { questions &&
-            questions.map((question)=>(
-            <tr key={question.questionId}>
-            <td>{question.questionId}</td>
-            <td>{question.questionDetail}</td>
-            <td>{question.optionA}</td>
-            <td>{question.optionB}</td>
-            <td>{question.optionC}</td>
-            <td>{question.optionD}</td>
-            <td>{question.optionE}</td>
-            <td> {question.answer}</td>
-            <td> {question.numAnswers}</td>
-            <td> {question.questionType}</td>
-            <td> {question.difficultyLevel}</td>
-            <td>{question.answerValue}</td>
-            <td>{question.topicId}</td>
-            <td>{question.negativeMarkValue}</td>
-            <td><button className="btn btn-danger m-1" onClick={()=>{handleDelete(question.questionId)}}>Delete</button>
-            
-            </td>
-            
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+          {questions && questions.length > 0 ? (
+            <table className="table table-bordered border-dark table-striped table-hover">
+              <thead className="table-dark">
+                <tr>
+                  <td>Question Id</td>
+                  <td>Question Detail</td>
+                  <td>Option A</td>
+                  <td>Option B</td>
+                  <td>Option C</td>
+                  <td>Option D</td>
+                  <td>Option E</td>
+                  <td>Answer</td>
+                  <td>Num Answer</td>
+                  <td>Question Type</td>
+                  <td>Difficulty Level</td>
+                  <td>Answer Value</td>
+                  <td>Topic Id</td>
+                  <td>Negative Mark Value</td>
+                  <td>Action</td>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  questions.map((question) => (
+                    <tr key={question.questionId}>
+                      <td>{question.questionId}</td>
+                      <td>{question.questionDetail}</td>
+                      <td>{question.optionA}</td>
+                      <td>{question.optionB}</td>
+                      <td>{question.optionC}</td>
+                      <td>{question.optionD}</td>
+                      <td>{question.optionE}</td>
+                      <td> {question.answer}</td>
+                      <td> {question.numAnswers}</td>
+                      <td> {question.questionType}</td>
+                      <td> {question.difficultyLevel}</td>
+                      <td>{question.answerValue}</td>
+                      <td>{question.topicId}</td>
+                      <td>{question.negativeMarkValue}</td>
+                      <td>
+                        <button
+                          className="btn btn-danger m-1"
+                          onClick={() => {
+                            handleDelete(question.questionId);
+                          }}>
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="lead text-danger fw-bold">NO QUESTIONS TO DISPLAY</p>
+          )}
+        </div>
       </div>
-      </div>
-      </div>
-      
-  )
+    </div>
+  );
 };
 
 export default Question;

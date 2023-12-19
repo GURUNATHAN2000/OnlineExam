@@ -29,12 +29,16 @@ const Header = ({ title, next, back }) => {
           <div className="col-4">
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
               <button
-                className="btn btn-primary"
-                style={
+                className={
                   showAddForm
-                    ? { backgroundColor: "red" }
-                    : { backgroundColor: "green" }
+                    ? "btn btn-danger"
+                    : "btn btn-success"
                 }
+                // style={
+                //   showAddForm
+                //     ? { backgroundColor: "red" }
+                //     : { backgroundColor: "green" }
+                // }
                 type="button"
                 onClick={handleClick}>
                 {showAddForm ? "CLOSE" : `ADD ${title}`}

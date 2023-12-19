@@ -7,9 +7,51 @@ const UserAttemptMaster = () => {
     <div className="col-md-4 p-5">
         <form>
         <h3 className="text-center fw-bold label">User Attempt Master</h3>
-          <div>
+        <div className="mb-3">
+            <label htmlFor="performanceId"className="form-label fw-bold label" >Performance Id</label>
+            <input type="text" id="performanceId" className="form-control" placeholder="enter performanceId" name="performanceId"/>
+        </div>
 
-          </div>
+         <div className="mb-3">
+            <label htmlFor="attemptNumber" className="form-label fw-bold label">Attempt Number</label>
+            <input type="number" id="attemptNumber" className="form-control" placeholder="enter attemptNumber" name="attemptNumber"/>
+         </div>
+
+         <div className="mb-3">
+            <label htmlFor="partyId" className="form-label fw-bold label">Party Id</label>
+            <input type="text" id="partyId" className="form-control" placeholder="enter partyId" name="partyId"/>
+         </div>
+
+         <div className="mb-3">
+           <label htmlFor="examId" className="form-label fw-bold label">Exam Id</label>
+           <input type="text" id="examId" className="form-control" placeholder="enter examId" name="examId"/>
+         </div>
+
+         <div className="mb-3">
+           <label htmlFor="score" className="form-label fw-bold label">Score</label>
+           <input type="number" id="score" className="form-control" placeholder="enter score" name="score"/>
+         </div>
+         
+         <div className="mb-3">
+            <label htmlFor="completedDate" className="form-label fw-bold label">Completed Date</label>
+            <input type="date" id="completedDate" className="form-control" placeholder="enter completedDate" name="completedDate"/>
+         </div>
+
+         <div className="mb-3">
+          <label htmlFor="noOfQuestions" className="form-label fw-bold label">No Of Questions</label>
+          <input type="number" id="noOfQuestions" className="form-control" placeholder="enter noOfQuestions" name="noOfQuestions"/>
+         </div>
+
+         <div className="mb-3">
+            <label htmlFor="totalCorrect" className="form-label fw-bold label">Total Correct</label>
+            <input type="number" id="totalCorrect" className="form-control" placeholder="enter totalCorrect" name="totalCorrect"/>
+         </div>
+
+         <div className="mb-3">
+            <label htmlFor="totalWrong" className="form-label fw-bold label">Total Wrong</label>
+            <input type="number" id="totalCorrect" className="form-control" placeholder="enter totalWrong" name="totalWrong"/>
+         </div>
+
         </form>
     </div>
     </div>
