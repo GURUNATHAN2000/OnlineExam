@@ -1,16 +1,10 @@
-/* .label{
-    color:#245c8d; 
+:root {
+  --bgcolor: #d6e6f2;
 }
-:root{
-    --bgcolor : #245c8d;
-} */
-/* .btn-login{
-    background-color: var(--bgcolor);
-    color: white;
-    padding: 9px;
-    border-radius: 5px;
-    transition: background-color 0.10s;
-  }
-  .btn-login:hover{
-    background-color: #153a5a;
-  } */
+.custom-form{
+  background-color: var(--bgcolor);
+}
+
+label{
+  color: #303841;
+}

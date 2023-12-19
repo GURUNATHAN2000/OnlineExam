@@ -25,6 +25,7 @@ const UserMaster = () => {
           <table className="table table-bordered border-dark table-striped table-hover">
             <thead className="table-dark ">
               <tr>
+                <td>No.</td>
                 <td>LIST OF USERS</td>
                 <td>ACTION</td>
               </tr>
@@ -34,6 +35,7 @@ const UserMaster = () => {
                 userNameList.map((user, index) => (
           
                   <tr key={index}>
+                    <td className="fw-bolder">{index+1}</td>
                     <td className="fw-bolder">{user}</td>
                     <td>
                       <button
