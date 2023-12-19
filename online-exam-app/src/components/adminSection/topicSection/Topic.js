@@ -9,22 +9,25 @@ import axios from "axios";
 
 const Topic = () => {
   const [topics, setTopics] = useState([]);
-  useEffect(()=>{
-    axios.get("https://"+
-    window.location.hostname +":8443/onlineexam/control/findusertopic")
-    .then((response)=>{
-      return response.data;
-    })
-    .then((data)=>{
-      console.log(data.listTopics);
-      console.log("data:",data);
-      setTopics(data.listTopics);
-    })
-    .catch((error)=>{
-      console.log("error:",error);
-    })
-    
-  },[]) 
+  useEffect(() => {
+    axios
+      .get(
+        "https://" +
+          window.location.hostname +
+          ":8443/onlineexam/control/findusertopic"
+      )
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        console.log(data.listTopics);
+        console.log("data:", data);
+        setTopics(data.listTopics);
+      })
+      .catch((error) => {
+        console.log("error:", error);
+      });
+  }, []);
 
   return (
     <div className="container-fluid ">
@@ -36,30 +39,29 @@ const Topic = () => {
           <h2 className="text-center">Topic Listing</h2>
         </div>
         <div className="card-body">
-      <table className="table table-bordered border-dark table-striped table-hover">
-        <thead className="table-dark">
-        <tr>
-           <td>Topic Id</td>
-           <td>Topic Name</td>
-           
-           </tr>
-        </thead>
-        <tbody>
-          {topics&&
-            topics.map((topic)=>(
-            <tr key={topic.topicId}>
-              <td>{topic.topicId}</td>
-            <td>{topic.topicName}</td>
-          </tr>
-            ))
-          }
-        </tbody>
-      </table>
+          {topics && topics.length > 0 ? (
+            <table className="table table-bordered border-dark table-striped table-hover">
+              <thead className="table-dark">
+                <tr>
+                  <td>Topic Id</td>
+                  <td>Topic Name</td>
+                </tr>
+              </thead>
+              <tbody>
+                {topics.map((topic) => (
+                  <tr key={topic.topicId}>
+                    <td>{topic.topicId}</td>
+                    <td>{topic.topicName}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="lead text-danger fw-bold">NO TOPICS TO DISPLAY</p>
+          )}
+        </div>
       </div>
-      </div>
-      </div>
-      
-   
+    </div>
   );
 };
 
