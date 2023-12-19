@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Header";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const Exam = () => {
+  const navigate = useNavigate();
+ 
   const [exams, setExams] = useState([]);
   const [updateExam, setUpdateExam] = useState(0);
 
@@ -28,7 +32,18 @@ const Exam = () => {
   }, []);
 
   const handleDelete = (examId) => {
-    axios
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //------------
+        axios
       .get(
         `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`
       )
@@ -41,16 +56,26 @@ const Exam = () => {
       .catch((error) => {
         console.log("error: ", error);
       });
-    setUpdateExam(updateExam + 1);
+      setUpdateExam(updateExam+1);
+      //------------
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
+      }
+    });
+      
   };
 
-  const handleUpdate = (examId) => {};
+  const handleUpdate = (examId) => {
+    //navigate("");
+  };
 
   return (
     <div className="container">
       {/* <MainContent /> */}
       <Header title="EXAM" next="addExams" back="/admin/exams" />
-
       <Outlet />
 
       <div className="card text-center">

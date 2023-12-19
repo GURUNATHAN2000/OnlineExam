@@ -1,5 +1,7 @@
 import axios from "axios";
 import "./ExamMaster.css";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 const ExamMaster = () => {
   const handleSubmit = (event) => {
@@ -14,15 +16,22 @@ const ExamMaster = () => {
       })
       .then((data) => {
         console.log("data: ", data);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Exam Added Successfully !",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => {
         console.log("error: ", error);
       });
+      document.getElementById('examMaster').reset();
   };
-
   return (
-    <div className="container mt-4 mb-3 p-3 shadow-lg rounded-2 text-light custom-form">
-      <form className="row g-4 p-3" onSubmit={handleSubmit}>
+    <div className="container mt-4 mb-3 p-3 text-light custom-form">
+      <form className="row g-4 p-3" onSubmit={handleSubmit} id="examMaster">
         <div className="col-md-6">
           <label htmlFor="examName" className="form-label fw-bold">
             Exam name
@@ -44,7 +53,8 @@ const ExamMaster = () => {
             className="form-control"
             row="4"
             id="description"
-            name="description"></textarea>
+            name="description"
+          ></textarea>
         </div>
 
         <div className="col-md-6">

@@ -13,7 +13,7 @@ const Footer = (props) => {
   return (
     <footer
       id="foot"
-      className="text-center footer p-1 shadow-lg custom-footer fixed-bottom rounded-top-5 ">
+      className="text-center footer p-1 shadow-lg custom-footer rounded-top-5 ">
       <p className="lead">Copyright &copy; 2023 VastPRO Online Exam</p>
     </footer>
   );
