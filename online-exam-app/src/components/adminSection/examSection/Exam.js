@@ -8,7 +8,8 @@ const Exam = () => {
   const [updateExam, setUpdateExam] = useState(0);
   useEffect(() => {
     axios
-      .get("https://localhost:8443/onlineexam/control/display-all-exam")
+      .get("https://"+
+      window.location.hostname +":8443/onlineexam/control/display-all-exam")
       .then((response) => {
         return response.data;
       })
