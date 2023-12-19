@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
-import AccordionMaker from "../../accordions/AccordionMaker";
 import Header from "../Header";
 import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Exam = () => {
+<<<<<<< HEAD
   const navigate = useNavigate();
   const [exams, setExams] = useState([""]);
   const [updateExam, setUpdateExam] = useState(-1);
+=======
+  const [exams, setExams] = useState([]);
+  const [updateExam, setUpdateExam] = useState(0);
+>>>>>>> bd851b4a2aa9d0cfa72ba1f9301d1df5d671e367
   useEffect(() => {
     axios
-      .get("https://localhost:8443/onlineexam/control/display-all-exam")
+      .get("https://"+
+      window.location.hostname +":8443/onlineexam/control/display-all-exam")
       .then((response) => {
         return response.data;
       })
@@ -39,6 +44,7 @@ const Exam = () => {
       .catch((error) => {
         console.log("error: ", error);
       });
+      setUpdateExam(updateExam+1);
   };
 
   const handleUpdate = (examId) => {
@@ -50,6 +56,7 @@ const Exam = () => {
       {/* <MainContent /> */}
       <Header title="EXAM" next="addExams" back="/admin/exams" />
       <Outlet />
+      
       <div className="card text-center">
         <div className="card-title">
           <h2 className="text-center">Exam Listing</h2>
@@ -69,15 +76,6 @@ const Exam = () => {
             <tbody>
               {exams &&
                 exams.map((exam) => (
-                  // exam.examId === updateExam ?
-                  // <tr>
-                  //   <td>{exam.examId}</td>
-                  //   <td><input type="text" value={exam.examName} /></td>
-                  //   <td><input type="text" value={exam.noOfQuestions} /></td>
-                  //   <td><input type="text" value={exam.durationMinutes} /></td>
-                  //   <td><input type="text" value={exam.passPercentage} /></td>
-                  //   <td><button className="btn btn-success">Update</button></td>
-                  // </tr> :
                   <tr key={exam.examId}>
                     <td className="fw-bolder">{exam.examId}</td>
                     <td>{exam.examName}</td>

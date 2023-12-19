@@ -61,11 +61,18 @@ const Header = ({ page, name }) => {
                     QUESTIONS
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link
+                    to="admin/users"
+                    className="list-group-item list-group-item-action px-2">
+                    USERS
+                  </Link>
+                </li>
               </ul>
             </div>
           </>
         ) : page === "user" ? (
-          <p className="text-lg-center fs-3 fw-bold">WELCOME {name} !</p>
+          <p className="text-lg-center fw-bold">WELCOME {name} !</p>
         ) : (
           <></>
         )}

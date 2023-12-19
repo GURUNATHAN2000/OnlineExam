@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import "./ExamMaster.css";
 import { useEffect } from "react";
+
 const ExamMaster = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,7 +28,7 @@ const ExamMaster = () => {
   };
 
   return (
-    <div className="container mt-4 p-3 text-light custom-form">
+    <div className="container mt-4 mb-3 p-3 text-light custom-form">
       <form className="row g-4 p-3" onSubmit={handleSubmit}>
         <div className="col-md-6">
           <label htmlFor="examName" className="form-label fw-bold">
@@ -163,7 +164,7 @@ const ExamMaster = () => {
         </div>
 
         <div className="col-12 text-center">
-          <button type="submit" className="btn btn-danger">
+          <button type="submit" className="btn-login custom-button">
             Submit
           </button>
         </div>
