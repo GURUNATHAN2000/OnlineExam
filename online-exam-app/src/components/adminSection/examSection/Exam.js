@@ -5,14 +5,10 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Exam = () => {
-<<<<<<< HEAD
   const navigate = useNavigate();
-  const [exams, setExams] = useState([""]);
-  const [updateExam, setUpdateExam] = useState(-1);
-=======
+ 
   const [exams, setExams] = useState([]);
   const [updateExam, setUpdateExam] = useState(0);
->>>>>>> bd851b4a2aa9d0cfa72ba1f9301d1df5d671e367
   useEffect(() => {
     axios
       .get("https://"+
