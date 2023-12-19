@@ -3,11 +3,11 @@ import Header from "../Header";
 import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 const Exam = () => {
   const navigate = useNavigate();
- 
+
   const [exams, setExams] = useState([]);
   const [updateExam, setUpdateExam] = useState(0);
 
@@ -39,33 +39,32 @@ const Exam = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
         //------------
         axios
-      .get(
-        `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`
-      )
-      .then((response) => {
-        return response.data;
-      })
-      .then((data) => {
-        console.log("data: ", data);
-      })
-      .catch((error) => {
-        console.log("error: ", error);
-      });
-      setUpdateExam(updateExam+1);
-      //------------
+          .get(
+            `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`
+          )
+          .then((response) => {
+            return response.data;
+          })
+          .then((data) => {
+            console.log("data: ", data);
+          })
+          .catch((error) => {
+            console.log("error: ", error);
+          });
+        setUpdateExam(updateExam + 1);
+        //------------
         Swal.fire({
           title: "Deleted!",
           text: "Your file has been deleted.",
-          icon: "success"
+          icon: "success",
         });
       }
     });
-      
   };
 
   const handleUpdate = (examId) => {
@@ -76,6 +75,7 @@ const Exam = () => {
     <div className="container">
       {/* <MainContent /> */}
       <Header title="EXAM" next="addExams" back="/admin/exams" />
+      
       <Outlet />
 
       <div className="card text-center">
@@ -83,20 +83,20 @@ const Exam = () => {
           <h2 className="text-center">Exam Listing</h2>
         </div>
         <div className="card-body">
-          <table className="table table-bordered border-dark table-striped table-hover">
-            <thead className="table-dark ">
-              <tr>
-                <td>Exam Id</td>
-                <td>Exam Name</td>
-                <td>No of Questions</td>
-                <td>Duration Minutes</td>
-                <td>Pass Percentage</td>
-                <td>Action</td>
-              </tr>
-            </thead>
-            <tbody>
-              {exams &&
-                exams.map((exam) => (
+          {exams && exams.length > 0 ? (
+            <table className="table table-bordered border-dark table-striped table-hover">
+              <thead className="table-dark ">
+                <tr>
+                  <td>Exam Id</td>
+                  <td>Exam Name</td>
+                  <td>No of Questions</td>
+                  <td>Duration Minutes</td>
+                  <td>Pass Percentage</td>
+                  <td>Action</td>
+                </tr>
+              </thead>
+              <tbody>
+                {exams.map((exam) => (
                   <tr key={exam.examId}>
                     <td className="fw-bolder">{exam.examId}</td>
                     <td>{exam.examName}</td>
@@ -117,8 +117,11 @@ const Exam = () => {
                     </td>
                   </tr>
                 ))}
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          ) : (
+            <p className="lead text-danger fw-bold">NO EXAMS TO DISPLAY</p>
+          )}
         </div>
       </div>
     </div>

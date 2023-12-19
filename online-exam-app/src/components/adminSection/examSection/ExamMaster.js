@@ -27,10 +27,10 @@ const ExamMaster = () => {
       .catch((error) => {
         console.log("error: ", error);
       });
-      document.getElementById('examMaster').reset();
+    document.getElementById("examMaster").reset();
   };
   return (
-    <div className="container mt-4 mb-3 p-3 text-light custom-form">
+    <div className="container shadow-lg rounded-2 mt-4 mb-3 p-3 text-light custom-form">
       <form className="row g-4 p-3" onSubmit={handleSubmit} id="examMaster">
         <div className="col-md-6">
           <label htmlFor="examName" className="form-label fw-bold">
@@ -53,8 +53,7 @@ const ExamMaster = () => {
             className="form-control"
             row="4"
             id="description"
-            name="description"
-          ></textarea>
+            name="description"></textarea>
         </div>
 
         <div className="col-md-6">
