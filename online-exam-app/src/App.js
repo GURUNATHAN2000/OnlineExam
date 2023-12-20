@@ -11,29 +11,33 @@ import Exam from "./components/adminSection/examSection/Exam";
 import ExamMaster from "./components/adminSection/examSection/ExamMaster";
 import QuestionMaster from "./components/adminSection/questionSection/QuestionMaster";
 import Topic from "./components/adminSection/topicSection/Topic";
-import User from "./components/userSection/User";
+import UserList from "./components/adminSection/listUserSection/UserList";
 import NoMatch from "./components/NoMatch/NoMatch";
 import TopicMaster from "./components/adminSection/topicSection/TopicMaster";
 import Question from "./components/adminSection/questionSection/Question";
 import ExamTopicMapping from "./components/adminSection/examSection/ExamTopicMapping";
-import UserMaster from "./components/adminSection/listUser/UserMaster";
+import Home from "./components/homeSection/Home";
+import UserHome from "./components/userSection/UserHome";
 
 function App() {
   const [page, setPage] = useState("");
-  const [name, setName] = useState("")
+  const [name, setName] = useState("");
+
   return (
     <>
       <Header page={page} name={name} />
       <Routes>
-        <Route path="/login" element={<Login setPage={setPage} setName={setName} />} />
+        <Route path="/" element={<Home setPage={setPage} />} />
+        <Route
+          path="login"
+          element={<Login setPage={setPage} setName={setName} />}
+        />
         <Route path="/register" element={<Register setPage={setPage} />} />
         <Route path="/admin" element={<Admin setPage={setPage} />}>
-
           <Route path="exams" element={<Exam />}>
             <Route path="addExams" element={<ExamMaster />} />
-            
           </Route>
-          <Route path="editExams" elements={<ExamTopicMapping/>}></Route>
+          <Route path="editExams" elements={<ExamTopicMapping />}></Route>
           <Route path="topics" element={<Topic />}>
             <Route path="addTopics" element={<TopicMaster />} />
           </Route>
@@ -41,11 +45,12 @@ function App() {
           <Route path="questions" element={<Question />}>
             <Route path="addQuestions" element={<QuestionMaster />} />
           </Route>
-          
-          <Route path="users" element={<UserMaster />}></Route>
-          
+
+          <Route path="users" element={<UserList />}>
+            <Route path="addUsers" element={<Register setPage={setPage} />} />
+          </Route>
         </Route>
-        <Route path="/user" element={<User setPage={setPage} />}></Route>
+        <Route path="/user" element={<UserHome setPage={setPage} />}></Route>
         <Route path="*" element={<NoMatch />}></Route>
       </Routes>
       <Footer page={page} />

@@ -78,7 +78,7 @@ const Exam = () => {
 
         <Outlet />
 
-        <div className="card text-center">
+        <div className="card text-center shadow-lg">
           <div className="card-title">
             <h2 className="text-center">Exam Listing</h2>
           </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import useStateRef from "react-usestateref";
 
@@ -9,7 +9,9 @@ import { validateLoginForm } from "./LoginValidator";
 const Login = (props) => {
   const [noError, setNoError, currentRef] = useStateRef(true);
 
-  const [password, showPassword] = useState("password");
+  const [password, setPassword] = useState("password");
+
+  const [isLoading, setIsLoading] = useState(false);
 
   //to set the header for login
   useEffect(() => {
@@ -58,6 +60,7 @@ const Login = (props) => {
   };
 
   const axiosCall = (myObject) => {
+    setIsLoading(true);
     axios
       .post(
         "https://" +
@@ -66,6 +69,7 @@ const Login = (props) => {
         myObject
       )
       .then((res) => {
+        setIsLoading(false);
         return res.data;
       })
       .then((data) => {
@@ -75,6 +79,7 @@ const Login = (props) => {
         console.log("roleTypeId :: ", data.roleTypeId);
       })
       .catch((err) => {
+        setIsLoading(true);
         console.log("ERROR FROM LOGIN FETCH :: ", err);
       });
   };
@@ -101,9 +106,9 @@ const Login = (props) => {
   const handleToggle = (event) => {
     if (event.target.checked) {
       console.log(event.target.checked);
-      showPassword("text");
+      setPassword("text");
     } else {
-      showPassword("password");
+      setPassword("password");
     }
   };
 
@@ -113,84 +118,100 @@ const Login = (props) => {
       {/* empty div */}
       <div className="col-md-4"></div>
 
-      <div className="col-md-4 col-10 p-4 mt-4 shadow-lg rounded custom-form">
-        <form id="loginForm " className="custom-form" onSubmit={handleSubmit}>
-          <h1 className="mb-3 text-center login-heading fw-bold">USER LOGIN</h1>
+      {isLoading ? (
+        <div className="col-md-6 col-7 m-5">
+          <img
+            className="m-5"
+            style={{ height: "100px" }}
+            src="rotateload.gif"
+            alt="loading..."
+          />
+        </div>
+      ) : (
+        <div className="col-md-4 col-10 p-4 mt-4 mb-3 shadow-lg rounded custom-form">
+          <form id="loginForm " className="custom-form" onSubmit={handleSubmit}>
+            <h1 className="mb-3 text-center login-heading fw-bold">
+              USER LOGIN
+            </h1>
 
-          {/* invalid Credentials */}
-          <span id="invalidCredentials" className="empty custom-alert"></span>
+            {/* invalid Credentials */}
+            <span id="invalidCredentials" className="empty custom-alert"></span>
 
-          {/* username */}
-          <div className="mb-3">
-            <label
-              htmlFor="emailid"
-              className="form-label fw-bold custom-login-label">
-              E-MAIL ID
-            </label>
+            {/* username */}
+            <div className="mb-3">
+              <label
+                htmlFor="emailid"
+                className="form-label fw-bold custom-login-label">
+                E-MAIL ID
+              </label>
 
-            <input
-              autoFocus
-              type="text"
-              className="form-control"
-              placeholder="enter e-mail"
-              id="emailid"
-              name="USERNAME"
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              data-bs-custom-class="custom-tooltip"
-              data-bs-title="This top tooltip is themed via CSS variables."
-              onChange={makeErrorNone}
-            />
+              <input
+                autoFocus
+                type="text"
+                className="form-control"
+                placeholder="enter e-mail"
+                id="emailid"
+                name="USERNAME"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                data-bs-custom-class="custom-tooltip"
+                data-bs-title="This top tooltip is themed via CSS variables."
+                onChange={makeErrorNone}
+              />
 
-            {/* username empty alert */}
-            <span id="userEmpty" className="empty custom-alert"></span>
-          </div>
+              {/* username empty alert */}
+              <span id="userEmpty" className="empty custom-alert"></span>
+            </div>
 
-          {/* password */}
-          <div className="mb-3">
-            <label
-              htmlFor="password"
-              className="form-label  fw-bold custom-login-label">
-              PASSWORD
-            </label>
+            {/* password */}
+            <div className="mb-3">
+              <label
+                htmlFor="password"
+                className="form-label  fw-bold custom-login-label">
+                PASSWORD
+              </label>
 
-            <input
-              type={password}
-              className="form-control"
-              id="password"
-              placeholder="enter password"
-              name="PASSWORD"
-              onChange={makeErrorNone}
-            />
-            {/* password empty alert */}
-            <span id="passwordEmpty" className="empty custom-alert"></span>
-          </div>
+              <input
+                type={password}
+                className="form-control"
+                id="password"
+                placeholder="enter password"
+                name="PASSWORD"
+                onChange={makeErrorNone}
+              />
+              {/* password empty alert */}
+              <span id="passwordEmpty" className="empty custom-alert"></span>
+            </div>
 
-          {/* checkbox for show password */}
-          <div className="mb-3">
-            <input
-              type="checkbox"
-              className="mx-1 form-control-check"
-              id="showPassword"
-              onChange={handleToggle}
-            />
-            <label
-              htmlFor="showPassword"
-              className="form-label  fw-bold custom-login-label">
-              Show Password
-            </label>
-          </div>
+            {/* checkbox for show password */}
+            <div className="mb-3">
+              <input
+                type="checkbox"
+                className="mx-1 form-control-check"
+                id="showPassword"
+                onChange={handleToggle}
+              />
+              <label
+                htmlFor="showPassword"
+                className="form-label  fw-bold custom-login-label">
+                Show Password
+              </label>
+            </div>
 
-          {/* submit button */}
-          <div className="d-grid">
-            <input
-              type="submit"
-              className="btn-login custom-button"
-              value="LOGIN"
-            />
-          </div>
-        </form>
-      </div>
+            {/* submit button */}
+            <div className="d-grid mb-3">
+              <input
+                type="submit"
+                className="btn-login custom-button"
+                value="LOGIN"
+              />
+            </div>
+          </form>
+          <p className="text-center">
+            don't you have an account? <Link to="/register">register</Link>
+          </p>
+        </div>
+      )}
 
       {/* empty div */}
       <div className="col-md-4"></div>
