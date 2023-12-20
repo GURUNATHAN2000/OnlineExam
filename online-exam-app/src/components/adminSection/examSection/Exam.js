@@ -4,11 +4,11 @@ import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+
 export const ExamContext = createContext(null);
 
 const Exam = () => {
   const [exams, setExams] = useState([]);
-  const [updateExam, setUpdateExam] = useState(0);
 
   useEffect(() => {
     axios
@@ -28,7 +28,7 @@ const Exam = () => {
       .catch((error) => {
         console.log("error: ", error);
       });
-  }, []);
+  }, [exams]);
 
   const handleDelete = (examId) => {
     Swal.fire({
@@ -55,7 +55,6 @@ const Exam = () => {
           .catch((error) => {
             console.log("error: ", error);
           });
-        setUpdateExam(updateExam + 1);
         //------------
         Swal.fire({
           title: "Deleted!",
@@ -66,9 +65,7 @@ const Exam = () => {
     });
   };
 
-  const handleUpdate = (examId) => {
-    //navigate("");
-  };
+  const handleEdit = (examId) => {};
 
   return (
     <ExamContext.Provider value={{ exams, setExams }}>
@@ -78,7 +75,7 @@ const Exam = () => {
 
         <Outlet />
 
-        <div className="card text-center">
+        <div className="card text-center shadow-lg">
           <div className="card-title">
             <h2 className="text-center">Exam Listing</h2>
           </div>
@@ -97,25 +94,45 @@ const Exam = () => {
                 </thead>
                 <tbody>
                   {exams.map((exam) => (
-                    <tr key={exam.examId}>
-                      <td className="fw-bolder">{exam.examId}</td>
-                      <td>{exam.examName}</td>
-                      <td>{exam.noOfQuestions}</td>
-                      <td>{exam.durationMinutes}</td>
-                      <td>{exam.passPercentage}</td>
-                      <td>
-                        <button
-                          className="btn btn-outline-success m-1"
-                          onClick={() => handleUpdate(exam.examId)}>
-                          Edit
-                        </button>
-                        <button
-                          className="btn btn-outline-danger m-1"
-                          onClick={() => handleDelete(exam.examId)}>
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
+                    <>
+                      <tr key={exam.examId}>
+                        <td className="fw-bolder">{exam.examId}</td>
+                        <td>{exam.examName}</td>
+                        <td>{exam.noOfQuestions}</td>
+                        <td>{exam.durationMinutes}</td>
+                        <td>{exam.passPercentage}</td>
+                        <td>
+                          <button
+                            className="btn btn-outline-success m-1"
+                            onClick={() => handleEdit(exam.examId)}>
+                            Edit
+                          </button>
+                          <button
+                            className="btn btn-outline-danger m-1"
+                            onClick={() => handleDelete(exam.examId)}>
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                      <div className="d-none">
+                        <table className="table table-bordered border-dark table-striped table-hover">
+                          <thead className="table-dark">
+                            <tr>
+                              <td>Exam ID</td>
+                              <td>Topic Id</td>
+                              <td>Percentage</td>
+                              <td>Topic Pass Percentage</td>
+                              <td>Questions per Exam</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{exam.examId}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </>
                   ))}
                 </tbody>
               </table>

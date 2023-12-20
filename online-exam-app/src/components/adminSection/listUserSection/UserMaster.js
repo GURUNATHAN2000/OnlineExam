@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+
+import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import useStateRef from "react-usestateref";
 
-import "./register.css";
 import { validateRegisterForm } from "./RegisterValidator";
 
-const Register = ({ setPage }) => {
+const UserMaster = ({ setPage }) => {
   const [noError, setNoError, currentRef] = useStateRef(true);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setPage("register");
-  });
 
   const makeErrorNone = () => {
     document.getElementById("firstNameEmpty").classList.remove("d-block");
@@ -142,10 +139,6 @@ const Register = ({ setPage }) => {
             id="registerForm"
             className="custom-form"
             onSubmit={handleSubmit}>
-            <h1 className="text-center register-heading fw-bold label">
-              REGISTER
-            </h1>
-
             {/* to set roleType */}
             <div className="mb-3">
               <input type="hidden" name="roleTypeId" value="PERSON_ROLE" />
@@ -251,13 +244,10 @@ const Register = ({ setPage }) => {
             <div className="d-grid g-5 mb-3">
               <input
                 type="submit"
-                value="Register"
+                value="Add User"
                 className="btn-login custom-button"
               />
             </div>
-            <p className="text-center">
-              Already have an account? <Link to="/login">login</Link>
-            </p>
           </form>
         </div>
       )}
@@ -265,4 +255,5 @@ const Register = ({ setPage }) => {
     </div>
   );
 };
-export default Register;
+
+export default UserMaster;
