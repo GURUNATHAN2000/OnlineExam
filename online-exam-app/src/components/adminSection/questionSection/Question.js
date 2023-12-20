@@ -3,6 +3,7 @@ import AccordionMaker from "../../accordions/AccordionMaker";
 import Header from "../Header";
 import { Outlet } from "react-router";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Question = () => {
   const [questions, setQuestions] = useState([]);
@@ -27,23 +28,41 @@ const Question = () => {
   }, []);
 
   const handleDelete = (questionId) => {
-    fetch(
-      `https://localhost:8443/onlineexam/control/deleteuserquestion?questionId=${questionId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-        },
-        //   body:JSON.stringify(formData),
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(
+          `https://localhost:8443/onlineexam/control/deleteuserquestion?questionId=${questionId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json",
+            },
+            //   body:JSON.stringify(formData),
+          }
+        )
+          .then((result) => {
+            console.log("result::", result);
+            return result.json();
+          })
+          .catch((err) => {
+            console.log("error::", err);
+          });
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
       }
-    )
-      .then((result) => {
-        console.log("result::", result);
-        return result.json();
-      })
-      .catch((err) => {
-        console.log("error::", err);
-      });
+    });
+    
   };
 
   return (

@@ -36,7 +36,7 @@ const Topic = () => {
       <Outlet />
       <div className="card text-center">
         <div className="card-title">
-          <h2 className="text-center">Question Listing</h2>
+          <h2 className="text-center">Topic Listing</h2>
         </div>
         <div className="card-body">
           {topics && topics.length > 0 ? (

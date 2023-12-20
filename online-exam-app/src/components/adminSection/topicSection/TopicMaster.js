@@ -26,7 +26,7 @@ const TopicMaster = () => {
   return (
     <div className="container shadow-lg rounded-2 mt-4 p-3 text-light custom-form">
       <form className="row g-4 p-3" onSubmit={handleSubmit}>
-        <div className="col-md-6">
+        {/* <div className="col-md-6">
           <label htmlFor="topicId" className="form-label fw-bold">
             Topic Id
           </label>
@@ -37,7 +37,7 @@ const TopicMaster = () => {
             placeholder="enter topic id"
             name="topicId"
           />
-        </div>
+        </div> */}
 
         <div className="col-md-6">
           <label htmlFor="topicName" className="form-label fw-bold label">

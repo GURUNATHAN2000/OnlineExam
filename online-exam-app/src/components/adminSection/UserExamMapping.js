@@ -34,7 +34,7 @@ const UserExamMapping = () => {
 
                 <div className="mb-3">
                   <label htmlFor="timeoutDays" className="form-label fw-bold label">Timeout Days</label>
-                  <input type="number" id="timeoutDays" className="form-controller" placeholder="enter timeout days" name="timeoutDays" defaultValue="30"/>
+                  <input type="number" id="timeoutDays" className="form-controller"  name="timeoutDays" defaultValue="30"/>
                 </div>
 
                 <div className="mb-3">
@@ -48,7 +48,7 @@ const UserExamMapping = () => {
 
                 <div className="mb-3">
                  <label htmlFor="canSplitExams" className="form-label fw-bold label">Can Split Exams</label>
-                 <select className="form-control" name="canSplitExams">
+                 <select className="form-control" name="canSplitExams" defaultValue="Y">
                     
                     <option>Y</option>
                     <option>N</option>
