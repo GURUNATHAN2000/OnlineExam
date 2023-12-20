@@ -29,7 +29,7 @@ const UserAttemptMaster = () => {
 
          <div className="mb-3">
            <label htmlFor="score" className="form-label fw-bold label">Score</label>
-           <input type="number" id="score" className="form-control" placeholder="enter score" name="score"/>
+           <input type="number" id="score" className="form-control" defaultValue="0.00" name="score"/>
          </div>
          
          <div className="mb-3">
@@ -39,19 +39,27 @@ const UserAttemptMaster = () => {
 
          <div className="mb-3">
           <label htmlFor="noOfQuestions" className="form-label fw-bold label">No Of Questions</label>
-          <input type="number" id="noOfQuestions" className="form-control" placeholder="enter noOfQuestions" name="noOfQuestions"/>
+          <input type="number" id="noOfQuestions" className="form-control" defaultValue="0" name="noOfQuestions"/>
          </div>
 
          <div className="mb-3">
             <label htmlFor="totalCorrect" className="form-label fw-bold label">Total Correct</label>
-            <input type="number" id="totalCorrect" className="form-control" placeholder="enter totalCorrect" name="totalCorrect"/>
+            <input type="number" id="totalCorrect" className="form-control" defaultValue="0" name="totalCorrect"/>
          </div>
 
          <div className="mb-3">
             <label htmlFor="totalWrong" className="form-label fw-bold label">Total Wrong</label>
-            <input type="number" id="totalCorrect" className="form-control" placeholder="enter totalWrong" name="totalWrong"/>
+            <input type="number" id="totalCorrect" className="form-control" defaultValue="0" name="totalWrong"/>
          </div>
-
+          
+          <div className="mb-3">
+          <label htmlFor="userPassed" className="form-label fw-bold label">User Passed</label>
+                 <select className="form-control" name="canSplitExams" defaultValue="  N">
+                    
+                    <option>Y</option>
+                    <option>N</option>
+                  </select>
+          </div>
         </form>
     </div>
     </div>

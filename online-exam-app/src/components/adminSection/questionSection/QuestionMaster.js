@@ -26,7 +26,7 @@ const QuestionMaster = () => {
   return (
     <div className="container shadow-lg rounded-2 mt-4 mb-3 p-3 text-light custom-form">
       <form id="questionForm" className="row g-4 p-3" onSubmit={handleSubmit}>
-        <div className="col-md-6">
+        {/* <div className="col-md-6">
           <label htmlFor="questionId" className="form-label fw-bold">
             Question Id
           </label>
@@ -37,7 +37,7 @@ const QuestionMaster = () => {
             placeholder="enter question id"
             name="questionId"
           />
-        </div>
+        </div> */}
 
         <div className="col-md-6">
           <label htmlFor="questionDetail" className="form-label fw-bold label">
@@ -59,7 +59,7 @@ const QuestionMaster = () => {
           <textarea
             className="form-control"
             placeholder="optionA"
-            rows="3"
+            // rows="3"
             name="optionA"></textarea>
         </div>
 
@@ -193,7 +193,7 @@ const QuestionMaster = () => {
           </label>
           <input
             type="number"
-            id="answerValue"
+            id="negativeMarkValue"
             className="form-control "
             placeholder="enter negative mark value"
             name="negativeMarkValue"
