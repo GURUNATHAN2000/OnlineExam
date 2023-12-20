@@ -1,12 +1,15 @@
 import axios from "axios";
 import "./ExamMaster.css";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { ExamContext } from "./Exam";
 import useStateRef from "react-usestateref";
+import { ValidateExamMasterForm } from "./ExamMasterValidator";
 
 const ExamMaster = () => {
   const [noError, setNoError, currentRef] = useStateRef(true);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const makeErrorNone = () => {
     console.log("EXAM MASTER makeErrorNone() working!!!");
@@ -37,12 +40,21 @@ const ExamMaster = () => {
     const myObject = Object.fromEntries(formData.entries());
 
     Object.entries(myObject).map(([key, value], keyIndex) => {
-      validateExamMasterForm(key, value, setNoError);
+      ValidateExamMasterForm(key, value, setNoError);
     });
 
+    //if ExamMaster form has no error then make a call to axios...
+    currentRef.current
+      ? axiosCall(myObject)
+      : console.log("Error Occured.... EXAM MASTER form");
+  };
+
+  const axiosCall = (myObject) => {
+    setIsLoading(true);
     axios
-      .post("https://localhost:8443/onlineexam/control/insert-exam", value)
+      .post("https://localhost:8443/onlineexam/control/insert-exam", myObject)
       .then((response) => {
+        setIsLoading(false);
         return response.data;
       })
       .then((data) => {
@@ -76,6 +88,7 @@ const ExamMaster = () => {
       })
       .catch((error) => {
         console.log("error: ", error);
+        setIsLoading(true);
       });
     document.getElementById("examMaster").reset();
   };
