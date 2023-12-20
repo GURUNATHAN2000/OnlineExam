@@ -3,13 +3,42 @@ import "./ExamMaster.css";
 import { useContext, useEffect } from "react";
 import Swal from "sweetalert2";
 import { ExamContext } from "./Exam";
+import useStateRef from "react-usestateref";
 
 const ExamMaster = () => {
+  const [noError, setNoError, currentRef] = useStateRef(true);
+
+  const makeErrorNone = () => {
+    console.log("EXAM MASTER makeErrorNone() working!!!");
+
+    document.getElementById("noOfQuestionsEmpty").classList.remove("d-block");
+    document.getElementById("noOfQuestionsEmpty").classList.add("d-none");
+    document.getElementById("noOfQuestions").innerHTML = "";
+
+    document.getElementById("durationMinutesEmpty").classList.remove("d-block");
+    document.getElementById("durationMinutesEmpty").classList.add("d-none");
+    document.getElementById("durationMinutesEmpty").innerHTML = "";
+
+    document.getElementById("passPercentageEmpty").classList.remove("d-block");
+    document.getElementById("passPercentageEmpty").classList.add("d-none");
+    document.getElementById("passPercentageEmpty").innerHTML = "";
+
+    setNoError(true);
+  };
+
   const { exams, setExams } = useContext(ExamContext);
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    makeErrorNone();
+    console.log("NO ERROR:::", noError);
+
     const formData = new FormData(event.target);
-    const value = Object.fromEntries(formData.entries());
+    const myObject = Object.fromEntries(formData.entries());
+
+    Object.entries(myObject).map(([key, value], keyIndex) => {
+      validateExamMasterForm(key, value, setNoError);
+    });
 
     axios
       .post("https://localhost:8443/onlineexam/control/insert-exam", value)
@@ -53,6 +82,9 @@ const ExamMaster = () => {
   return (
     <div className="container shadow-lg rounded-2 mt-4 mb-3 p-3 text-light custom-form">
       <form className="row g-4 p-3" onSubmit={handleSubmit} id="examMaster">
+        {/* invalid credentials */}
+        <span id="invalidCredentials" className="empty custom-alert"></span>
+
         <div className="col-md-6">
           <label htmlFor="examName" className="form-label fw-bold">
             Exam name
@@ -74,7 +106,8 @@ const ExamMaster = () => {
             className="form-control"
             row="4"
             id="description"
-            name="description"></textarea>
+            name="description"
+          ></textarea>
         </div>
 
         <div className="col-md-6">
@@ -113,7 +146,10 @@ const ExamMaster = () => {
             id="noOfQuestions"
             placeholder="number of questions"
             name="noOfQuestions"
+            onChange={makeErrorNone}
           />
+          {/* noOfQuestions empty alert */}
+          <span id="noOfQuestionsEmpty" className="empty custom-alert"></span>
         </div>
         <div className="col-md-6">
           <label htmlFor="durationMinutes" className="form-label fw-bold">
@@ -125,7 +161,10 @@ const ExamMaster = () => {
             id="durationMinutes"
             placeholder="enter duration minutes"
             name="durationMinutes"
+            onChange={makeErrorNone}
           />
+          {/* durationMinutes empty alert */}
+          <span id="durationMinutesEmpty" className="empty custom-alert"></span>
         </div>
         <div className="col-6">
           <label htmlFor="passPercentage" className="form-label fw-bold">
@@ -138,7 +177,10 @@ const ExamMaster = () => {
             id="passPercentage"
             placeholder="pass percentage"
             name="passPercentage"
+            onChange={makeErrorNone}
           />
+          {/* passPercentage empty alert */}
+          <span id="passPercentageEmpty" className="empty custom-alert"></span>
         </div>
         <div className="col-6">
           <label htmlFor="questionsRandomized" className="form-label fw-bold">
@@ -159,7 +201,7 @@ const ExamMaster = () => {
           <label htmlFor="answersMust" className="form-label fw-bold">
             Answers must
           </label>
-          <select className="form-control" name="answersMust" defaultValue="Y">
+          <select className="form-control" name="answersMust" defaultValue="N">
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>
@@ -173,7 +215,7 @@ const ExamMaster = () => {
           <select
             className="form-control"
             name="enableNegativeMark"
-            defaultValue="Y"
+            defaultValue="N"
           >
             <option>Select your answer</option>
             <option>Y</option>
