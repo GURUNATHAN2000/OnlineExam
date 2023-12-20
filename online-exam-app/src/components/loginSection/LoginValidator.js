@@ -6,7 +6,6 @@ export const validateLoginForm = (key, value, setNoError) => {
       {
         if (value === "" || value === null) {
           console.log(value);
-          //console.log(value === "", value === null, ValidEmail.test(value));
           document.getElementById("userEmpty").classList.remove("d-none");
           document.getElementById("userEmpty").classList.add("d-block");
           document.getElementById("userEmpty").innerHTML =
@@ -27,7 +26,6 @@ export const validateLoginForm = (key, value, setNoError) => {
       {
         if (value === "" || value === null) {
           console.log(value);
-          //console.log(value === "", value === null, ValidEmail.test(value));
           document.getElementById("passwordEmpty").classList.remove("d-none");
           document.getElementById("passwordEmpty").classList.add("d-block");
           document.getElementById("passwordEmpty").innerHTML =

@@ -1,8 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Header from "../Header";
+import { Outlet } from "react-router";
 
-const UserMaster = () => {
+const UserList = () => {
   const [userNameList, setUserNameList] = useState([]);
+
   useEffect(() => {
     axios
       .get("https://localhost:8443/onlineexam/control/getUserList")
@@ -17,10 +20,12 @@ const UserMaster = () => {
       .catch((error) => {
         console.log("Error From UserMaster Fetch : ", error);
       });
-  },[]);
+  }, []);
   return (
+    <div className="container-fluid ">
+      <Header title="USER" next="addUsers" back="/admin/users" />
+      <Outlet/>
       <div className="card text-center">
-        
         <div className="card-body">
           <table className="table table-bordered border-dark table-striped table-hover">
             <thead className="table-dark ">
@@ -33,19 +38,14 @@ const UserMaster = () => {
             <tbody>
               {userNameList &&
                 userNameList.map((user, index) => (
-          
                   <tr key={index}>
-                    <td className="fw-bolder">{index+1}</td>
+                    <td className="fw-bolder">{index + 1}</td>
                     <td className="fw-bolder">{user}</td>
                     <td>
-                      <button
-                        className="btn btn-success m-1"
-                       >
+                      <button className="btn btn-outline-success m-1">
                         Edit
                       </button>
-                      <button
-                        className="btn btn-danger m-1"
-                        >
+                      <button className="btn btn-outline-danger m-1">
                         Delete
                       </button>
                     </td>
@@ -55,7 +55,8 @@ const UserMaster = () => {
           </table>
         </div>
       </div>
+    </div>
   );
 };
 
-export default UserMaster;
+export default UserList;
