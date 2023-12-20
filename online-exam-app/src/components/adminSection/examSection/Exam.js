@@ -4,11 +4,11 @@ import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+
 export const ExamContext = createContext(null);
 
 const Exam = () => {
   const [exams, setExams] = useState([]);
-  const [updateExam, setUpdateExam] = useState(0);
 
   useEffect(() => {
     axios
@@ -28,7 +28,7 @@ const Exam = () => {
       .catch((error) => {
         console.log("error: ", error);
       });
-  }, []);
+  }, [exams]);
 
   const handleDelete = (examId) => {
     Swal.fire({
@@ -55,7 +55,6 @@ const Exam = () => {
           .catch((error) => {
             console.log("error: ", error);
           });
-        setUpdateExam(updateExam + 1);
         //------------
         Swal.fire({
           title: "Deleted!",
@@ -105,12 +104,12 @@ const Exam = () => {
                       <td>{exam.passPercentage}</td>
                       <td>
                         <button
-                          className="btn btn-outline-success m-1"
+                          className="btn btn-outline-success btn-sm m-1"
                           onClick={() => handleUpdate(exam.examId)}>
                           Edit
                         </button>
                         <button
-                          className="btn btn-outline-danger m-1"
+                          className="btn btn-outline-danger btn-sm"
                           onClick={() => handleDelete(exam.examId)}>
                           Delete
                         </button>

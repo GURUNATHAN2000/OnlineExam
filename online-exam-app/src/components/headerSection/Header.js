@@ -1,6 +1,6 @@
 import React from "react";
 
-import { RiAdminFill } from "react-icons/ri";
+import { RiAdminFill, RiLogoutBoxRLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 
 import logo from "../../img/vastpro-logo-right.png";
@@ -79,6 +79,7 @@ const Header = ({ page, name }) => {
                     USERS
                   </Link>
                 </li>
+                <RiLogoutBoxRLine className="mt-2 mx-2"/>
                 <li className="nav-item">
                   <button
                     className="btn btn-outline-light btn-sm"

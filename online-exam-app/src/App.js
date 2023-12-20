@@ -18,6 +18,7 @@ import Question from "./components/adminSection/questionSection/Question";
 import ExamTopicMapping from "./components/adminSection/examSection/ExamTopicMapping";
 import Home from "./components/homeSection/Home";
 import UserHome from "./components/userSection/UserHome";
+import UserMaster from "./components/adminSection/listUserSection/UserMaster";
 
 function App() {
   const [page, setPage] = useState("");
@@ -47,7 +48,7 @@ function App() {
           </Route>
 
           <Route path="users" element={<UserList />}>
-            <Route path="addUsers" element={<Register setPage={setPage} />} />
+            <Route path="addUsers" element={<UserMaster setPage={setPage} />} />
           </Route>
         </Route>
         <Route path="/user" element={<UserHome setPage={setPage} />}></Route>
