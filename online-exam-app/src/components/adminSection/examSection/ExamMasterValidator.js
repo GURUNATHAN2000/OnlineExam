@@ -8,8 +8,6 @@ export const ValidateExamMasterForm = (key, value, setNoError) => {
         document.getElementById("examNameEmpty").innerHTML =
           "*please enter exam name";
         setNoError(false);
-      } else {
-        setNoError(true);
       }
       break;
 
@@ -22,13 +20,12 @@ export const ValidateExamMasterForm = (key, value, setNoError) => {
         document.getElementById("noOfQuestionsEmpty").innerHTML =
           "*please enter no of questions";
         setNoError(false);
-      } else {
-        setNoError(true);
       }
       break;
 
     case "durationMinutes":
       if (value === "" || value === null) {
+        console.log("value", value);
         document
           .getElementById("durationMinutesEmpty")
           .classList.remove("d-none");
@@ -38,8 +35,6 @@ export const ValidateExamMasterForm = (key, value, setNoError) => {
         document.getElementById("durationMinutesEmpty").innerHTML =
           "*please enter duration minutes";
         setNoError(false);
-      } else {
-        setNoError(true);
       }
       break;
 
@@ -52,13 +47,10 @@ export const ValidateExamMasterForm = (key, value, setNoError) => {
         document.getElementById("passPercentageEmpty").innerHTML =
           "*please enter pass percentage";
         setNoError(false);
-      } else {
-        setNoError(true);
       }
       break;
 
     default:
-      setNoError(true);
       console.log("EXAM MASTER FORM VALIDATED SUCCESSFULLY!!");
   }
 };

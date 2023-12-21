@@ -15,6 +15,10 @@ const ExamMaster = () => {
   const makeErrorNone = () => {
     console.log("EXAM MASTER makeErrorNone() working!!!");
 
+    document.getElementById("examNameEmpty").classList.remove("d-block");
+    document.getElementById("examNameEmpty").classList.add("d-none");
+    document.getElementById("examNameEmpty").innerHTML = "";
+
     document.getElementById("noOfQuestionsEmpty").classList.remove("d-block");
     document.getElementById("noOfQuestionsEmpty").classList.add("d-none");
     document.getElementById("noOfQuestionsEmpty").innerHTML = "";
@@ -38,12 +42,15 @@ const ExamMaster = () => {
 
     const formData = new FormData(event.target);
     const myObject = Object.fromEntries(formData.entries());
+    console.log(myObject);
 
+    console.log("CURRENT REF.CURRENT:::::", currentRef.current);
     Object.entries(myObject).map(([key, value], keyIndex) => {
       console.log("VALIDATION IN");
+      console.log("CURRENT REF.CURRENT IN:::::", currentRef.current);
       ValidateExamMasterForm(key, value, setNoError);
     });
-
+    console.log("current value ::: ", currentRef.current);
     //if ExamMaster form has no error then make a call to axios...
     currentRef.current
       ? axiosCall(myObject)
@@ -78,13 +85,13 @@ const ExamMaster = () => {
             });
         const examMap = data.examMap;
         console.log("examMap", examMap);
-        setExams([...exams, examMap]);
+        examMap && setExams([...exams, examMap]);
       })
       .catch((error) => {
         console.log("error: ", error);
         setIsLoading(true);
       });
-    //document.getElementById("examMaster").reset();
+    document.getElementById("examMaster").reset();
   };
   return (
     <div className="container shadow-lg rounded-2 mt-4 mb-3 p-3 text-light custom-form">
@@ -115,7 +122,8 @@ const ExamMaster = () => {
             className="form-control"
             row="4"
             id="description"
-            name="description"></textarea>
+            name="description"
+          ></textarea>
         </div>
 
         <div className="col-md-6">
@@ -196,7 +204,8 @@ const ExamMaster = () => {
           <select
             className="form-control"
             name="questionsRandomized"
-            defaultValue="Y">
+            defaultValue="Y"
+          >
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>
@@ -221,7 +230,8 @@ const ExamMaster = () => {
           <select
             className="form-control"
             name="enableNegativeMark"
-            defaultValue="N">
+            defaultValue="N"
+          >
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>

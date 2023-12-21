@@ -56,11 +56,11 @@ const Exam = () => {
             console.log("error: ", error);
           });
         //------------
-        // Swal.fire({
-        //   title: "Deleted!",
-        //   text: "Your file has been deleted.",
-        //   icon: "success",
-        // });
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
       }
     });
   };
@@ -71,6 +71,7 @@ const Exam = () => {
     <ExamContext.Provider value={{ exams, setExams }}>
       <div className="container">
         {/* <MainContent /> */}
+
         <Header title="EXAM" next="addExams" back="/admin/exams" />
 
         <Outlet />
