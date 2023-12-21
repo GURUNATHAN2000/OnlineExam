@@ -56,11 +56,11 @@ const Exam = () => {
             console.log("error: ", error);
           });
         //------------
-        // Swal.fire({
-        //   title: "Deleted!",
-        //   text: "Your file has been deleted.",
-        //   icon: "success",
-        // });
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
       }
     });
   };
@@ -71,6 +71,7 @@ const Exam = () => {
     <ExamContext.Provider value={{ exams, setExams }}>
       <div className="container-fluid">
         {/* <MainContent /> */}
+
         <Header title="EXAM" next="addExams" back="/admin/exams" />
 
         <Outlet />
@@ -106,12 +107,14 @@ const Exam = () => {
                         <td>
                           <button
                             className="btn btn-outline-success m-1"
-                            onClick={() => handleEdit(exam.examId)}>
+                            onClick={() => handleEdit(exam.examId)}
+                          >
                             Edit
                           </button>
                           <button
                             className="btn btn-outline-danger m-1"
-                            onClick={() => handleDelete(exam.examId)}>
+                            onClick={() => handleDelete(exam.examId)}
+                          >
                             Delete
                           </button>
                         </td>

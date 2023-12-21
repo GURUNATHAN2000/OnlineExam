@@ -9,6 +9,11 @@ label{
     color: #303841;
 }
 
+.custom-alert {
+    color: rgb(194, 75, 75);
+    font-size: small;
+  }
+
 /* .container{
     height: -600px;
 } */
