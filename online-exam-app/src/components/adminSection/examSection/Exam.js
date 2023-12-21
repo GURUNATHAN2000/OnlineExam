@@ -3,6 +3,7 @@ import Header from "../Header";
 import { Outlet } from "react-router";
 import axios from "axios";
 import Swal from "sweetalert2";
+import EditModal from "./EditModal";
 
 export const ExamContext = createContext(null);
 
@@ -72,11 +73,14 @@ const Exam = () => {
     });
   };
 
-  const handleEdit = (examId) => {};
+  // const handleEdit = (examId) => {
+  //   console.log("FOR handleEdit => EXAM ID:::::" + examId);
+  // };
 
   return (
     <ExamContext.Provider value={{ exams, setExams }}>
-      <div className="container-fluid">
+      <EditModal />
+      <div className="container">
         <Header title="EXAM" next="addExams" back="/admin/exams" />
 
         <Outlet />
@@ -99,27 +103,30 @@ const Exam = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {exams.map((exam) => (
-                    <tr key={exam.examId}>
-                      <td className="fw-bolder">{exam.examId}</td>
-                      <td>{exam.examName}</td>
-                      <td>{exam.noOfQuestions}</td>
-                      <td>{exam.durationMinutes}</td>
-                      <td>{exam.passPercentage}</td>
-                      <td>
-                        <button
-                          className="btn btn-outline-success m-1"
-                          onClick={() => handleEdit(exam.examId)}>
-                          Edit
-                        </button>
-                        <button
-                          className="btn btn-outline-danger m-1"
-                          onClick={() => handleDelete(exam.examId)}>
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {console.log("exams", exams)}
+                  {exams &&
+                    exams.length > 0 &&
+                    exams.map((exam) => (
+                      <tr key={exam.examId}>
+                        <td className="fw-bolder">{exam.examId}</td>
+                        <td>{exam.examName}</td>
+                        <td>{exam.noOfQuestions}</td>
+                        <td>{exam.durationMinutes}</td>
+                        <td>{exam.passPercentage}</td>
+                        <td>
+                          <button
+                            className="btn btn-outline-success m-1"
+                            onClick={() => handleEdit(exam.examId)}>
+                            Edit
+                          </button>
+                          <button
+                            className="btn btn-outline-danger m-1"
+                            onClick={() => handleDelete(exam.examId)}>
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             ) : (

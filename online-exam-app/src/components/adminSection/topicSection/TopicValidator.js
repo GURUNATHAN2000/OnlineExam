@@ -12,7 +12,7 @@ export  const ValidateTopicMasterForm=(key,value,setNoError)=>{
             }
             break;
             default:
-            setNoError(true);
+            // setNoError(true);
             console.log("TOPIC MASTER FORM VALIDTED SUCCESSFULLY");
     }
     

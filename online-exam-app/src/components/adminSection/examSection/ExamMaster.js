@@ -159,7 +159,8 @@ const ExamMaster = () => {
             Number of questions
           </label>
           <input
-            type="text"
+            type="number"
+            min="0"
             className="form-control"
             id="noOfQuestions"
             placeholder="number of questions"
@@ -174,7 +175,8 @@ const ExamMaster = () => {
             Duration minutes
           </label>
           <input
-            type="text"
+            type="number"
+            min="0"
             className="form-control"
             id="durationMinutes"
             placeholder="enter duration minutes"
@@ -189,7 +191,8 @@ const ExamMaster = () => {
             Pass percentage
           </label>
           <input
-            type="text"
+            type="number"
+            min="0"
             className="form-control"
             id="passPercentage"
             placeholder="pass percentage"

@@ -49,6 +49,11 @@ const QuestionMaster = () => {
     document.getElementById("topicIdIsEmpty").classList.add("d-none");
     document.getElementById("topicIdIsEmpty").innerHTML="";
     setNoError(true);
+
+    document.getElementById("answerIsEmpty").classList.remove("d-block");
+    document.getElementById("answerIsEmpty").classList.add("d-none");
+    document.getElementById("answerIsEmpty").innerHTML="";
+    setNoError(true);
   }
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -227,6 +232,7 @@ const QuestionMaster = () => {
             placeholder="enter difficulty level"
             name="difficultyLevel"
             defaultValue="0"
+            min="0"
           />
         </div>
 
@@ -241,6 +247,7 @@ const QuestionMaster = () => {
             placeholder="enter answer value"
             name="answerValue"
             defaultValue="0"
+            min="0"
           />
         </div>
 
@@ -271,6 +278,7 @@ const QuestionMaster = () => {
             placeholder="enter negative mark value"
             name="negativeMarkValue"
             defaultValue="0"
+            min="0"
           />
         </div>
 
