@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 import logo from "../../img/vastpro-logo-right.png";
 import "./Header.css";
-import userEvent from "@testing-library/user-event";
 
 const Header = ({ page, name }) => {
   const navigate = useNavigate();
@@ -49,12 +48,12 @@ const Header = ({ page, name }) => {
             <div className="collapse navbar-collapse" id="navmenu">
               <Link
                 to="admin"
-                className="list-group-item list-group-item-action  active m-2">
-                <RiAdminFill size="20" className="mx-3 " />
+                className="list-group-item list-group-item-action  active">
+                <RiAdminFill size="20" className="mx-3" />
                 <p
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
-                  title="ADMIN">
+                  title="ADMIN" >
                   ADMIN
                 </p>
               </Link>

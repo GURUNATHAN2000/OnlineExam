@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import AccordionMaker from "../../accordions/AccordionMaker";
 import Header from "../Header";
 import { Outlet, useNavigate } from "react-router";
 import axios from "axios";

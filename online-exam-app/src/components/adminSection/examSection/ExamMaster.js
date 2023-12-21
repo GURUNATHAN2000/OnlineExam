@@ -1,6 +1,6 @@
 import axios from "axios";
 import "./ExamMaster.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { ExamContext } from "./Exam";
 import useStateRef from "react-usestateref";
@@ -73,7 +73,7 @@ const ExamMaster = () => {
               icon: "success",
               title: "Exam Added Successfully!",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 1000,
             })
           : data.EVENT_ERROR_MESSAGE === "ERROR" &&
             Swal.fire({
@@ -81,7 +81,7 @@ const ExamMaster = () => {
               icon: "error",
               title: "Invalid Form Submission!",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 1000,
             });
         const examMap = data.examMap;
         console.log("examMap", examMap);
@@ -122,8 +122,7 @@ const ExamMaster = () => {
             className="form-control"
             row="4"
             id="description"
-            name="description"
-          ></textarea>
+            name="description"></textarea>
         </div>
 
         <div className="col-md-6">
@@ -204,8 +203,7 @@ const ExamMaster = () => {
           <select
             className="form-control"
             name="questionsRandomized"
-            defaultValue="Y"
-          >
+            defaultValue="Y">
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>
@@ -230,8 +228,7 @@ const ExamMaster = () => {
           <select
             className="form-control"
             name="enableNegativeMark"
-            defaultValue="N"
-          >
+            defaultValue="N">
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>
