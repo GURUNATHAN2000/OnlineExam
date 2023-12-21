@@ -93,15 +93,10 @@ const Exam = () => {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {exams &&
-                  exams.map((exam) => (
-=======
                   {console.log("exams", exams)}
                   {exams &&
                     exams.length > 0 &&
                     exams.map((exam) => (
->>>>>>> dc6292fd453a2dd624799c625e4c301c8fa6e33e
                       <tr key={exam.examId}>
                         <td className="fw-bolder">{exam.examId}</td>
                         <td>{exam.examName}</td>
@@ -111,21 +106,19 @@ const Exam = () => {
                         <td>
                           <button
                             className="btn btn-outline-success m-1"
-                            onClick={() => handleEdit(exam.examId)}>
+                            onClick={() => handleEdit(exam.examId)}
+                          >
                             Edit
                           </button>
                           <button
                             className="btn btn-outline-danger m-1"
-                            onClick={() => handleDelete(exam.examId)}>
+                            onClick={() => handleDelete(exam.examId)}
+                          >
                             Delete
                           </button>
                         </td>
                       </tr>
-<<<<<<< HEAD
-                  ))}
-=======
                     ))}
->>>>>>> dc6292fd453a2dd624799c625e4c301c8fa6e33e
                 </tbody>
               </table>
             ) : (
