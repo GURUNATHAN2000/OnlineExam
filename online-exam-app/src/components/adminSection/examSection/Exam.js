@@ -28,7 +28,7 @@ const Exam = () => {
       .catch((error) => {
         console.log("error: ", error);
       });
-  }, [exams]);
+  }, []);
 
   const handleDelete = (examId) => {
     Swal.fire({
@@ -93,8 +93,8 @@ const Exam = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {exams.map((exam) => (
-                    <>
+                  {exams &&
+                  exams.map((exam) => (
                       <tr key={exam.examId}>
                         <td className="fw-bolder">{exam.examId}</td>
                         <td>{exam.examName}</td>
@@ -114,25 +114,6 @@ const Exam = () => {
                           </button>
                         </td>
                       </tr>
-                      <div className="d-none">
-                        <table className="table table-bordered border-dark table-striped table-hover">
-                          <thead className="table-dark">
-                            <tr>
-                              <td>Exam ID</td>
-                              <td>Topic Id</td>
-                              <td>Percentage</td>
-                              <td>Topic Pass Percentage</td>
-                              <td>Questions per Exam</td>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>{exam.examId}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </>
                   ))}
                 </tbody>
               </table>

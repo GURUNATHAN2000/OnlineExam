@@ -9,6 +9,8 @@ import { ValidateExamMasterForm } from "./ExamMasterValidator";
 const ExamMaster = () => {
   const [noError, setNoError, currentRef] = useStateRef(true);
 
+  const { exams, setExams } = useContext(ExamContext);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const makeErrorNone = () => {
@@ -16,7 +18,7 @@ const ExamMaster = () => {
 
     document.getElementById("noOfQuestionsEmpty").classList.remove("d-block");
     document.getElementById("noOfQuestionsEmpty").classList.add("d-none");
-    document.getElementById("noOfQuestions").innerHTML = "";
+    document.getElementById("noOfQuestionsEmpty").innerHTML = "";
 
     document.getElementById("durationMinutesEmpty").classList.remove("d-block");
     document.getElementById("durationMinutesEmpty").classList.add("d-none");
@@ -29,7 +31,6 @@ const ExamMaster = () => {
     setNoError(true);
   };
 
-  const { exams, setExams } = useContext(ExamContext);
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -59,44 +60,21 @@ const ExamMaster = () => {
       })
       .then((data) => {
         console.log("data: ", data);
-        data.EVENT_SUCCESS_MESSAGE === "SUCCESS"
-          ? Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Exam Added Successfully!",
-              showConfirmButton: false,
-              timer: 1500,
-            })
-          : data.EVENT_ERROR_MESSAGE === "ERROR" &&
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: "Invalid Form Submission!",
-              showConfirmButton: false,
-              timer: 1500,
-            });
+
         const { examMap } = data;
         console.log("examMap", examMap);
-        setExams([...exams, examMap]);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Exam Added Successfully !",
-          showConfirmButton: false,
-          timer: 1500,
-        });
       })
       .catch((error) => {
         console.log("error: ", error);
         setIsLoading(true);
       });
-    document.getElementById("examMaster").reset();
+    //document.getElementById("examMaster").reset();
   };
   return (
     <div className="container shadow-lg rounded-2 mt-4 mb-3 p-3 text-light custom-form">
       <form className="row g-4 p-3" onSubmit={handleSubmit} id="examMaster">
         {/* invalid credentials */}
-        <span id="invalidCredentials" className="empty custom-alert"></span>
+        <span id="invalidCredentials" className="custom-alert"></span>
 
         <div className="col-md-6">
           <label htmlFor="examName" className="form-label fw-bold">
@@ -108,7 +86,9 @@ const ExamMaster = () => {
             id="examName"
             placeholder="enter exam name"
             name="examName"
+            onChange={makeErrorNone}
           />
+          <span id="examNameEmpty" className="custom-alert"></span>
         </div>
 
         <div className="col-md-6">
@@ -154,7 +134,7 @@ const ExamMaster = () => {
             Number of questions
           </label>
           <input
-            type="number"
+            type="text"
             className="form-control"
             id="noOfQuestions"
             placeholder="number of questions"
@@ -162,14 +142,14 @@ const ExamMaster = () => {
             onChange={makeErrorNone}
           />
           {/* noOfQuestions empty alert */}
-          <span id="noOfQuestionsEmpty" className="empty custom-alert"></span>
+          <span id="noOfQuestionsEmpty" className="custom-alert"></span>
         </div>
         <div className="col-md-6">
           <label htmlFor="durationMinutes" className="form-label fw-bold">
             Duration minutes
           </label>
           <input
-            type="number"
+            type="text"
             className="form-control"
             id="durationMinutes"
             placeholder="enter duration minutes"
@@ -177,15 +157,14 @@ const ExamMaster = () => {
             onChange={makeErrorNone}
           />
           {/* durationMinutes empty alert */}
-          <span id="durationMinutesEmpty" className="empty custom-alert"></span>
+          <span id="durationMinutesEmpty" className="custom-alert"></span>
         </div>
         <div className="col-6">
           <label htmlFor="passPercentage" className="form-label fw-bold">
             Pass percentage
           </label>
           <input
-            type="number"
-            min="0"
+            type="text"
             className="form-control"
             id="passPercentage"
             placeholder="pass percentage"
@@ -193,7 +172,7 @@ const ExamMaster = () => {
             onChange={makeErrorNone}
           />
           {/* passPercentage empty alert */}
-          <span id="passPercentageEmpty" className="empty custom-alert"></span>
+          <span id="passPercentageEmpty" className="custom-alert"></span>
         </div>
         <div className="col-6">
           <label htmlFor="questionsRandomized" className="form-label fw-bold">
