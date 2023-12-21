@@ -3,6 +3,7 @@ export const ValidateExamMasterForm = (key, value, setNoError) => {
     case "noOfQuestions":
       {
         if (value == "" || value == null) {
+          console.log("value", value);
           document.getElementById("noOfQuestions").classList.remove("d-none");
           document.getElementById("noOfQuestions").classList.add("d-block");
           document.getElementById("noOfQuestions").innerHTML =

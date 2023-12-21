@@ -10,7 +10,6 @@ const Home = ({ setPage }) => {
       <img
         src="bg-boy.gif"
         alt="back-ground-image loading..."
-        height="450px"
         className="card-img"
       />
     </div>

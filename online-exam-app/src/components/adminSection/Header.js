@@ -30,7 +30,10 @@ const Header = ({ title, next, back }) => {
             <button
               className={showAddForm ? "btn btn-danger" : "btn btn-success"}
               type="button"
-              onClick={handleClick}>
+              onClick={handleClick}
+              data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title={showAddForm ? `Close ${title} Form` : `Open ${title} Form`}>
               {showAddForm ? "CLOSE" : `ADD ${title}`}
             </button>
           </div>
