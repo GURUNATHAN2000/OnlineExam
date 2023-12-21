@@ -15,8 +15,7 @@ const Exam = () => {
       .get(
         "https://" +
           window.location.hostname +
-          ":8443/onlineexam/control/display-all-exam",
-        { withCredentials: true }
+          ":8443/onlineexam/control/display-all-exam"
       )
       .then((response) => {
         return response.data;
@@ -45,29 +44,22 @@ const Exam = () => {
         //------------
         axios
           .get(
-            `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`,
-            {
-              withCredentials: true,
-            }
+            `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`
           )
           .then((response) => {
             return response.data;
           })
           .then((data) => {
-            console.log("data.listExam : ", data.listExam);
-            data.listExam ? setExams(data.listExam) : setExams([]);
+            console.log("data: ", data);
           })
           .catch((error) => {
             console.log("error: ", error);
           });
         //------------
         Swal.fire({
-          position: "center",
-          icon: "success",
           title: "Deleted!",
           text: "Your file has been deleted.",
-          showConfirmButton: false,
-          timer: 1000,
+          icon: "success",
         });
       }
     });
@@ -81,6 +73,8 @@ const Exam = () => {
     <ExamContext.Provider value={{ exams, setExams }}>
       <EditModal />
       <div className="container">
+        {/* <MainContent /> */}
+
         <Header title="EXAM" next="addExams" back="/admin/exams" />
 
         <Outlet />
@@ -91,44 +85,51 @@ const Exam = () => {
           </div>
           <div className="card-body">
             {exams && exams.length > 0 ? (
-              <table className="table table-bordered border-dark table-striped table-hover ">
-                <thead className="table-dark custom-table">
-                  <tr>
-                    <td>Exam Id</td>
-                    <td>Exam Name</td>
-                    <td>No of Questions</td>
-                    <td>Duration Minutes</td>
-                    <td>Pass Percentage</td>
-                    <td>Action</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {console.log("exams", exams)}
-                  {exams &&
-                    exams.length > 0 &&
-                    exams.map((exam) => (
-                      <tr key={exam.examId}>
-                        <td className="fw-bolder">{exam.examId}</td>
-                        <td>{exam.examName}</td>
-                        <td>{exam.noOfQuestions}</td>
-                        <td>{exam.durationMinutes}</td>
-                        <td>{exam.passPercentage}</td>
-                        <td>
-                          <button
-                            className="btn btn-outline-success m-1"
-                            onClick={() => handleEdit(exam.examId)}>
-                            Edit
-                          </button>
-                          <button
-                            className="btn btn-outline-danger m-1"
-                            onClick={() => handleDelete(exam.examId)}>
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+              <div className="table-responsive custom-table">
+                <table className="table table-bordered border-dark table-striped table-hover">
+                  <thead className="table-dark ">
+                    <tr>
+                      <td>Exam Id</td>
+                      <td>Exam Name</td>
+                      <td>No of Questions</td>
+                      <td>Duration Minutes</td>
+                      <td>Pass Percentage</td>
+                      <td>Action</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {console.log("exams", exams)}
+                    {exams &&
+                      exams.length > 0 &&
+                      exams.map((exam) => (
+                        <tr key={exam.examId}>
+                          <td className="fw-bolder">{exam.examId}</td>
+                          <td>{exam.examName}</td>
+                          <td>{exam.noOfQuestions}</td>
+                          <td>{exam.durationMinutes}</td>
+                          <td>{exam.passPercentage}</td>
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-outline-success m-1"
+                              data-bs-toggle="modal"
+                              data-bs-target="#modalForm"
+                            >
+                              Edit
+                            </button>
+
+                            <button
+                              className="btn btn-outline-danger m-1"
+                              onClick={() => handleDelete(exam.examId)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
             ) : (
               <p className="lead text-danger fw-bold">NO EXAMS TO DISPLAY</p>
             )}
