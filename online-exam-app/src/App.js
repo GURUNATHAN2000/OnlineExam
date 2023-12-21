@@ -27,6 +27,7 @@ function App() {
   return (
     <>
       <Header page={page} name={name} />
+      {/* <ExamTopicMapping/> */}
       <Routes>
         <Route path="/" element={<Home setPage={setPage} />} />
         <Route

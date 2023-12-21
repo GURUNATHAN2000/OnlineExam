@@ -1,6 +1,6 @@
-import React from "react";
-
+import './ExamTopicMapping.css';
 const ExamTopicMapping = () => {
+
   return (
     <div>
       <div className="container mt-4 p-3 text-light custom-form">

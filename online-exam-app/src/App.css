@@ -40,3 +40,7 @@
 textarea {
   height: 10px;
 }
+
+.custom-table{
+  overflow-x: auto;
+}

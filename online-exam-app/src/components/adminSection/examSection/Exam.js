@@ -4,6 +4,7 @@ import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import EditModal from "./EditModal";
 
 export const ExamContext = createContext(null);
 
@@ -65,10 +66,13 @@ const Exam = () => {
     });
   };
 
-  const handleEdit = (examId) => {};
+  // const handleEdit = (examId) => {
+  //   console.log("FOR handleEdit => EXAM ID:::::" + examId);
+  // };
 
   return (
     <ExamContext.Provider value={{ exams, setExams }}>
+      <EditModal />
       <div className="container">
         {/* <MainContent /> */}
 
@@ -82,46 +86,51 @@ const Exam = () => {
           </div>
           <div className="card-body">
             {exams && exams.length > 0 ? (
-              <table className="table table-bordered border-dark table-striped table-hover">
-                <thead className="table-dark ">
-                  <tr>
-                    <td>Exam Id</td>
-                    <td>Exam Name</td>
-                    <td>No of Questions</td>
-                    <td>Duration Minutes</td>
-                    <td>Pass Percentage</td>
-                    <td>Action</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {console.log("exams", exams)}
-                  {exams &&
-                    exams.length > 0 &&
-                    exams.map((exam) => (
-                      <tr key={exam.examId}>
-                        <td className="fw-bolder">{exam.examId}</td>
-                        <td>{exam.examName}</td>
-                        <td>{exam.noOfQuestions}</td>
-                        <td>{exam.durationMinutes}</td>
-                        <td>{exam.passPercentage}</td>
-                        <td>
-                          <button
-                            className="btn btn-outline-success m-1"
-                            onClick={() => handleEdit(exam.examId)}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="btn btn-outline-danger m-1"
-                            onClick={() => handleDelete(exam.examId)}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+              <div className="table-responsive custom-table">
+                <table className="table table-bordered border-dark table-striped table-hover">
+                  <thead className="table-dark ">
+                    <tr>
+                      <td>Exam Id</td>
+                      <td>Exam Name</td>
+                      <td>No of Questions</td>
+                      <td>Duration Minutes</td>
+                      <td>Pass Percentage</td>
+                      <td>Action</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {console.log("exams", exams)}
+                    {exams &&
+                      exams.length > 0 &&
+                      exams.map((exam) => (
+                        <tr key={exam.examId}>
+                          <td className="fw-bolder">{exam.examId}</td>
+                          <td>{exam.examName}</td>
+                          <td>{exam.noOfQuestions}</td>
+                          <td>{exam.durationMinutes}</td>
+                          <td>{exam.passPercentage}</td>
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-outline-success m-1"
+                              data-bs-toggle="modal"
+                              data-bs-target="#modalForm"
+                            >
+                              Edit
+                            </button>
+
+                            <button
+                              className="btn btn-outline-danger m-1"
+                              onClick={() => handleDelete(exam.examId)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
             ) : (
               <p className="lead text-danger fw-bold">NO EXAMS TO DISPLAY</p>
             )}
