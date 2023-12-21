@@ -39,7 +39,7 @@ const UserExamMapping = () => {
 
                 <div className="mb-3">
                  <label htmlFor="passwordChangesAuto" className="form-label fw-bold label">Password Changes Auto</label>
-                 <select className="form-control" name="passwordChangesAuto">
+                 <select className="form-control" name="passwordChangesAuto" defaultValue="Y">
                     
                     <option>Y</option>
                     <option>N</option>
@@ -57,7 +57,7 @@ const UserExamMapping = () => {
 
                 <div className="mb-3">
                  <label htmlFor="canSeeDetailedResults" className="form-label fw-bold label">Can Split Exams</label>
-                 <select className="form-control" name="canSeeDetailedResults">
+                 <select className="form-control" name="canSeeDetailedResults" defaultValue="Y">
                     
                     <option>Y</option>
                     <option>N</option>
@@ -66,7 +66,7 @@ const UserExamMapping = () => {
 
                 <div className="mb-3">
                 <label htmlFor="maxSplitAttempts" className="form-label fw-bold label">Max Split Attempts</label>
-                  <input type="number" id="timeoutDays" className="form-controller" placeholder="enter timeout days" name="timeoutDays"/>
+                  <input type="number" id="timeoutDays" className="form-controller" placeholder="enter timeout days" name="timeoutDays" defaultValue="0"/>
                 </div>
 
                 <div className="mb-5 d-grid">

@@ -59,7 +59,7 @@
             if(value==""||value==null){
                 document.getElementById("questionTypeIsEmpty").classList.remove("d-none");
                 document.getElementById("questionTypeIsEmpty").classList.add("d-block");
-                document.getElementById("questionTypeIsEmpty").innerHTML="*PLEASE ENTER OPTION-B";
+                document.getElementById("questionTypeIsEmpty").innerHTML="*PLEASE ENTER QUESTION TYPE";
                 setNoError(false);
             }
           }
@@ -75,13 +75,17 @@
           case"answer":
           {
             if(value==""||value==null){
-                document.getElementById("topicIdIsEmpty").classList.remove("d-none");
-                document.getElementById("topicIdIsEmpty").classList.add("d-block");
-                document.getElementById("topicIdIsEmpty").innerHTML="*PLEASE ENTER ANSWER";
+                document.getElementById("answerIsEmpty").classList.remove("d-none");
+                document.getElementById("answerIsEmpty").classList.add("d-block");
+                document.getElementById("answerIsEmpty").innerHTML="*PLEASE ENTER ANSWER";
                 setNoError(false); 
             }
           }
+          break;
+          default:
+            //setNoError(true);
+            console.log("QUESTION FORM VALIDATED SUCCESSFULLY");
 
     }
- }
+ };
     
