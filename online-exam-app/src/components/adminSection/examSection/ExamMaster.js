@@ -8,7 +8,6 @@ import { ValidateExamMasterForm } from "./ExamMasterValidator";
 
 const ExamMaster = () => {
   const [noError, setNoError, currentRef] = useStateRef(true);
-
   const { exams, setExams } = useContext(ExamContext);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -41,6 +40,7 @@ const ExamMaster = () => {
     const myObject = Object.fromEntries(formData.entries());
 
     Object.entries(myObject).map(([key, value], keyIndex) => {
+      console.log("VALIDATION IN");
       ValidateExamMasterForm(key, value, setNoError);
     });
 
@@ -60,9 +60,25 @@ const ExamMaster = () => {
       })
       .then((data) => {
         console.log("data: ", data);
-
-        const { examMap } = data;
+        data.EVENT_SUCCESS_MESSAGE === "SUCCESS"
+          ? Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Exam Added Successfully!",
+              showConfirmButton: false,
+              timer: 1500,
+            })
+          : data.EVENT_ERROR_MESSAGE === "ERROR" &&
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Invalid Form Submission!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+        const examMap = data.examMap;
         console.log("examMap", examMap);
+        setExams([...exams, examMap]);
       })
       .catch((error) => {
         console.log("error: ", error);
@@ -99,8 +115,7 @@ const ExamMaster = () => {
             className="form-control"
             row="4"
             id="description"
-            name="description"
-          ></textarea>
+            name="description"></textarea>
         </div>
 
         <div className="col-md-6">
@@ -181,8 +196,7 @@ const ExamMaster = () => {
           <select
             className="form-control"
             name="questionsRandomized"
-            defaultValue="Y"
-          >
+            defaultValue="Y">
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>
@@ -207,8 +221,7 @@ const ExamMaster = () => {
           <select
             className="form-control"
             name="enableNegativeMark"
-            defaultValue="N"
-          >
+            defaultValue="N">
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>

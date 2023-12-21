@@ -26,6 +26,9 @@ const Header = ({ page, name }) => {
             className="custom-logo p-2"
             height="50px"
             width="140px"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="back to home"
           />
         </Link>
 
@@ -39,7 +42,8 @@ const Header = ({ page, name }) => {
               className="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
-              data-bs-target="#navmenu">
+              data-bs-target="#navmenu"
+              title="click to expand">
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navmenu">
@@ -47,45 +51,67 @@ const Header = ({ page, name }) => {
                 to="admin"
                 className="list-group-item list-group-item-action  active m-2">
                 <RiAdminFill size="20" className="mx-3 " />
-                <p>ADMIN</p>
+                <p
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="ADMIN">
+                  ADMIN
+                </p>
               </Link>
 
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
                   <Link
                     to="admin/exams"
-                    className="list-group-item list-group-item-action px-2">
+                    className="list-group-item list-group-item-action p-2"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Go to Exams">
                     EXAMS
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link
                     to="admin/topics"
-                    className="list-group-item list-group-item-action px-2">
+                    className="list-group-item list-group-item-action p-2"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Go to Topics">
                     TOPICS
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link
                     to="admin/questions"
-                    className="list-group-item list-group-item-action px-2">
+                    className="list-group-item list-group-item-action p-2"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Go to Questions">
                     QUESTIONS
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link
                     to="admin/users"
-                    className="list-group-item list-group-item-action px-2">
+                    className="list-group-item list-group-item-action p-2 "
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Go to Users">
                     USERS
                   </Link>
                 </li>
-                <RiLogoutBoxRLine className="mt-2 mx-2"/>
+
                 <li className="nav-item">
                   <button
-                    className="btn btn-outline-light btn-sm"
+                    className="btn btn-outline-light btn-sm mx-3 p-2"
                     onClick={handleClick}
                     value="logout">
-                    LOGOUT
+                    <RiLogoutBoxRLine
+                      className="mb-1"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="LOGOUT"
+                    />
                   </button>
                 </li>
               </ul>
@@ -102,7 +128,10 @@ const Header = ({ page, name }) => {
                 type="button"
                 class="btn btn-outline-light btn-sm"
                 onClick={handleClick}
-                value="login">
+                value="login"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Click here to LOGIN">
                 LOGIN
               </button>
             </div>
@@ -111,7 +140,10 @@ const Header = ({ page, name }) => {
                 type="button"
                 class="btn btn-outline-light btn-sm"
                 onClick={handleClick}
-                value="register">
+                value="register"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Click here to REGISTER">
                 REGISTER
               </button>
             </div>
@@ -123,7 +155,10 @@ const Header = ({ page, name }) => {
                 type="button"
                 class="btn btn-outline-light"
                 onClick={handleClick}
-                value="login">
+                value="login"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Click here to LOGIN">
                 LOGIN
               </button>
             </div>

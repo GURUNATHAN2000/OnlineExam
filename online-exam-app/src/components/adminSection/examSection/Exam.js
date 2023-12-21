@@ -56,11 +56,11 @@ const Exam = () => {
             console.log("error: ", error);
           });
         //------------
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
+        // Swal.fire({
+        //   title: "Deleted!",
+        //   text: "Your file has been deleted.",
+        //   icon: "success",
+        // });
       }
     });
   };
@@ -93,8 +93,15 @@ const Exam = () => {
                   </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                   {exams &&
                   exams.map((exam) => (
+=======
+                  {console.log("exams", exams)}
+                  {exams &&
+                    exams.length > 0 &&
+                    exams.map((exam) => (
+>>>>>>> dc6292fd453a2dd624799c625e4c301c8fa6e33e
                       <tr key={exam.examId}>
                         <td className="fw-bolder">{exam.examId}</td>
                         <td>{exam.examName}</td>
@@ -114,7 +121,11 @@ const Exam = () => {
                           </button>
                         </td>
                       </tr>
+<<<<<<< HEAD
                   ))}
+=======
+                    ))}
+>>>>>>> dc6292fd453a2dd624799c625e4c301c8fa6e33e
                 </tbody>
               </table>
             ) : (
