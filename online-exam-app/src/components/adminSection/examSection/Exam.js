@@ -69,7 +69,7 @@ const Exam = () => {
 
   return (
     <ExamContext.Provider value={{ exams, setExams }}>
-      <div className="container">
+      <div className="container-fluid">
         {/* <MainContent /> */}
         <Header title="EXAM" next="addExams" back="/admin/exams" />
 

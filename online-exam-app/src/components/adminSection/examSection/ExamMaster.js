@@ -66,7 +66,7 @@ const ExamMaster = () => {
               icon: "success",
               title: "Exam Added Successfully!",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 1000,
             })
           : data.EVENT_ERROR_MESSAGE === "ERROR" &&
             Swal.fire({
@@ -74,7 +74,7 @@ const ExamMaster = () => {
               icon: "error",
               title: "Invalid Form Submission!",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 1000,
             });
         const examMap = data.examMap;
         console.log("examMap", examMap);
