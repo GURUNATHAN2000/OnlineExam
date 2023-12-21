@@ -9,6 +9,8 @@
                 setNoError(false);
             }
           }
+          break;
+
           case"optionA":
           {
             if(value==""||value==null){
@@ -18,6 +20,8 @@
                 setNoError(false);
             }
           }
+          break;
+
           case"optionB":
           {
             if(value==""||value==null){
@@ -27,6 +31,7 @@
                 setNoError(false);
             }
           }
+          break;
           case"optionC":
           {
             if(value==""||value==null){
@@ -36,6 +41,8 @@
                 setNoError(false);
             }
           }
+          break;
+
           case"optionD":
           {
             if(value==""||value==null){
@@ -45,6 +52,8 @@
                 setNoError(false);
             }
           }
+          break;
+
           case"optionE":
           {
             if(value==""||value==null){
@@ -54,6 +63,8 @@
                 setNoError(false);
             }
           }
+          break;
+
           case"questionType":
           {
             if(value==""||value==null){
@@ -63,6 +74,8 @@
                 setNoError(false);
             }
           }
+          break;
+
           case"topicId":
           {
             if(value==""||value==null){
@@ -72,6 +85,8 @@
                 setNoError(false);
             }
           }
+          break;
+          
           case"answer":
           {
             if(value==""||value==null){
