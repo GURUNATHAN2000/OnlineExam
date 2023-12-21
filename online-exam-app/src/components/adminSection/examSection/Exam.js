@@ -1,8 +1,7 @@
 import React, { useEffect, useState, createContext } from "react";
 import Header from "../Header";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet } from "react-router";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import EditModal from "./EditModal";
 

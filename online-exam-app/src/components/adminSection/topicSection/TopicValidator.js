@@ -3,16 +3,16 @@ export  const ValidateTopicMasterForm=(key,value,setNoError)=>{
         case "topicName":
             {
                 if(value==""||value==null){
-                    document.getElementById("topicName").classList.remove("d-none");
-                    document.getElementById("topicName").classList.add("d-block");
-                    document.getElementById("topicName").innerHTML=
+                    document.getElementById("topicNameEmpty").classList.remove("d-none");
+                    document.getElementById("topicNameEmpty").classList.add("d-block");
+                    document.getElementById("topicNameEmpty").innerHTML=
                     "*PLEASE ENTER TOPIC NAME";
                     setNoError(false);
                 }
             }
             break;
             default:
-            setNoError(true);
+            // setNoError(true);
             console.log("TOPIC MASTER FORM VALIDTED SUCCESSFULLY");
     }
     

@@ -1,19 +1,18 @@
 :root {
-    --bgcolor: #d6e6f2;
+  --bgcolor: #d6e6f2;
 }
-.custom-form{
-    background-color: var(--bgcolor);
+.custom-form {
+  background-color: var(--bgcolor);
 }
 
-label{
-    color: #303841;
+label {
+  color: #303841;
 }
 
 .custom-alert {
-    color: rgb(194, 75, 75);
-    font-size: small;
-  }
-
-/* .container{
-    height: -600px;
-} */
+  color: rgb(194, 75, 75);
+  font-size: small;
+}
+.custom-table{
+    background-color: #303841;
+}

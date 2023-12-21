@@ -220,6 +220,12 @@ const Register = ({ setPage }) => {
                 className="form-control "
                 placeholder="enter password"
                 onChange={makeErrorNone}
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="should have mininum of eight digit, 
+                one upper case, 
+                one special character, 
+                one number!"
                 //required
               />
               {/* passwordEmpty alert  */}
@@ -241,8 +247,30 @@ const Register = ({ setPage }) => {
                 className="form-control "
                 placeholder="re-enter password"
                 onChange={makeErrorNone}
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="should have mininum of eight digit, 
+                one upper case, 
+                one special character, 
+                one number!"
                 //required
               />
+              {/* <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Tooltip on top">
+                Tooltip on top
+              </button> */}
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                data-bs-title="Tooltip on top">
+                Tooltip on top
+              </button>
               {/* confirmPasswordEmpty alert */}
 
               <span id="confirmPasswordEmpty" className="custom-alert"></span>

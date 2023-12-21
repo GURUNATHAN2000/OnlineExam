@@ -7,9 +7,9 @@ const TopicMaster = () => {
   const[isLoading,setIsLoading]=useState(false);
   const makeErrorNone=()=>{
     console.log("topic master makeErrorNone called");
-    document.getElementById("TOPIC NAME EMPTY").classList.remove("d-block");
-    document.getElementById("TOPIC NAME EMPTY").classList.remove("d-none");
-    document.getElementById("topicName").innerHTML="";
+    document.getElementById("topicNameEmpty").classList.remove("d-block");
+    document.getElementById("topicNameEmpty").classList.add("d-none");
+    document.getElementById("topicNameEmpty").innerHTML="";
 
     setNoError(true);
   };
@@ -50,7 +50,7 @@ const TopicMaster = () => {
   };
   return (
     <div className="container shadow-lg rounded-2 mt-4 p-3 text-light custom-form">
-      <form className="row g-4 p-3" onSubmit={handleSubmit}>
+      <form className="row g-4 p-3" onSubmit={handleSubmit} id="topicForm">
         {/* <div className="col-md-6">
           <label htmlFor="topicId" className="form-label fw-bold">
             Topic Id
@@ -64,7 +64,7 @@ const TopicMaster = () => {
           />
         </div> */}
         {/* invalidCredentials */}
-        <span id="invalidCredentials" className="empty custom-alert"></span>
+        {/* <span id="topicNameEmpty" className="empty custom-alert"></span> */}
 
         <div className="col-md-6">
           <label htmlFor="topicName" className="form-label fw-bold label">
@@ -78,7 +78,10 @@ const TopicMaster = () => {
             name="topicName"
             onChange={makeErrorNone}
           />
+             <span id="topicNameEmpty" className="empty custom-alert"></span>
         </div>
+        <span id="topicNameEmpty" className="empty custom-alert"></span>
+
         <div className="col-12 text-center">
           <button type="submit" className="btn-login  custom-button">
             Submit
