@@ -60,7 +60,9 @@ const ExamMaster = () => {
   const axiosCall = (myObject) => {
     setIsLoading(true);
     axios
-      .post("https://localhost:8443/onlineexam/control/insert-exam", myObject)
+      .post("https://localhost:8443/onlineexam/control/insert-exam", myObject, {
+        withCredentials: true,
+      })
       .then((response) => {
         setIsLoading(false);
         return response.data;
@@ -83,9 +85,10 @@ const ExamMaster = () => {
               showConfirmButton: false,
               timer: 1000,
             });
-        const examMap = data.examMap;
-        console.log("examMap", examMap);
-        examMap && setExams([...exams, examMap]);
+        console.log("examMap", data.examMap);
+        data.examMap
+          ? setExams([...exams, data.examMap])
+          : console.log("error in fetch (data.examMap)");
       })
       .catch((error) => {
         console.log("error: ", error);
@@ -241,6 +244,7 @@ const ExamMaster = () => {
           </label>
           <input
             type="number"
+            min="0"
             className="form-control"
             id="negativeMarkValue"
             placeholder="enter negative mark value"

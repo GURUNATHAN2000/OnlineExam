@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Header";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet } from "react-router";
 import axios from "axios";
-
-// import MainContent from "../MainContent";
-// import AccordionMaker from "../AccordionMaker";
 
 const Topic = () => {
   const [topics, setTopics] = useState([]);
@@ -30,7 +27,6 @@ const Topic = () => {
 
   return (
     <div className="container-fluid ">
-      {/* <MainContent /> */}
       <Header title="TOPIC" next="addTopics" back="/admin/topics" />
       <Outlet />
       <div className="card text-center">

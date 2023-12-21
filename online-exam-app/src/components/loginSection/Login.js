@@ -66,7 +66,8 @@ const Login = (props) => {
         "https://" +
           window.location.hostname +
           ":8443/onlineexam/control/userlogin",
-        myObject
+        myObject,
+        { withCredentials: true }
       )
       .then((res) => {
         setIsLoading(false);

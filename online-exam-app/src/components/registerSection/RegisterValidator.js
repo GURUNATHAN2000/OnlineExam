@@ -70,7 +70,7 @@ export const validateRegisterForm = (key, value, setNoError) => {
           document.getElementById("passwordEmpty").classList.remove("d-none");
           document.getElementById("passwordEmpty").classList.add("d-block");
           document.getElementById("passwordEmpty").innerHTML =
-            "ENTER VALID PASSWORD";
+            "should have mininum of eight digit,  one upper case, one special character, one number!";
           setNoError(false);
         }
       }

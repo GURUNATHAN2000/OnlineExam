@@ -255,22 +255,7 @@ const Register = ({ setPage }) => {
                 one number!"
                 //required
               />
-              {/* <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                title="Tooltip on top">
-                Tooltip on top
-              </button> */}
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                data-bs-title="Tooltip on top">
-                Tooltip on top
-              </button>
+            
               {/* confirmPasswordEmpty alert */}
 
               <span id="confirmPasswordEmpty" className="custom-alert"></span>

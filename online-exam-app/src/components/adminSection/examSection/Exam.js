@@ -14,7 +14,8 @@ const Exam = () => {
       .get(
         "https://" +
           window.location.hostname +
-          ":8443/onlineexam/control/display-all-exam"
+          ":8443/onlineexam/control/display-all-exam",
+        { withCredentials: true }
       )
       .then((response) => {
         return response.data;
@@ -43,22 +44,29 @@ const Exam = () => {
         //------------
         axios
           .get(
-            `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`
+            `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`,
+            {
+              withCredentials: true,
+            }
           )
           .then((response) => {
             return response.data;
           })
           .then((data) => {
-            console.log("data: ", data);
+            console.log("data.listExam : ", data.listExam);
+            data.listExam ? setExams(data.listExam) : setExams([]);
           })
           .catch((error) => {
             console.log("error: ", error);
           });
         //------------
         Swal.fire({
+          position: "center",
+          icon: "success",
           title: "Deleted!",
           text: "Your file has been deleted.",
-          icon: "success",
+          showConfirmButton: false,
+          timer: 1000,
         });
       }
     });
@@ -69,8 +77,6 @@ const Exam = () => {
   return (
     <ExamContext.Provider value={{ exams, setExams }}>
       <div className="container-fluid">
-        {/* <MainContent /> */}
-
         <Header title="EXAM" next="addExams" back="/admin/exams" />
 
         <Outlet />
@@ -93,30 +99,27 @@ const Exam = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {console.log("exams", exams)}
-                  {exams &&
-                    exams.length > 0 &&
-                    exams.map((exam) => (
-                      <tr key={exam.examId}>
-                        <td className="fw-bolder">{exam.examId}</td>
-                        <td>{exam.examName}</td>
-                        <td>{exam.noOfQuestions}</td>
-                        <td>{exam.durationMinutes}</td>
-                        <td>{exam.passPercentage}</td>
-                        <td>
-                          <button
-                            className="btn btn-outline-success m-1"
-                            onClick={() => handleEdit(exam.examId)}>
-                            Edit
-                          </button>
-                          <button
-                            className="btn btn-outline-danger m-1"
-                            onClick={() => handleDelete(exam.examId)}>
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                  {exams.map((exam) => (
+                    <tr key={exam.examId}>
+                      <td className="fw-bolder">{exam.examId}</td>
+                      <td>{exam.examName}</td>
+                      <td>{exam.noOfQuestions}</td>
+                      <td>{exam.durationMinutes}</td>
+                      <td>{exam.passPercentage}</td>
+                      <td>
+                        <button
+                          className="btn btn-outline-success m-1"
+                          onClick={() => handleEdit(exam.examId)}>
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-outline-danger m-1"
+                          onClick={() => handleDelete(exam.examId)}>
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             ) : (
