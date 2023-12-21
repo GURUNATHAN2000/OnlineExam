@@ -89,10 +89,10 @@ const Question = () => {
                   <td>Answer</td>
                   <td>Num Answer</td>
                   <td>Question Type</td>
-                  <td>Difficulty Level</td>
-                  <td>Answer Value</td>
+                  {/* <td>Difficulty Level</td> */}
+                  {/* <td>Answer Value</td> */}
                   <td>Topic Id</td>
-                  <td>Negative Mark Value</td>
+                  {/* <td>Negative Mark Value</td> */}
                   <td>Action</td>
                 </tr>
               </thead>
@@ -110,10 +110,10 @@ const Question = () => {
                       <td> {question.answer}</td>
                       <td> {question.numAnswers}</td>
                       <td> {question.questionType}</td>
-                      <td> {question.difficultyLevel}</td>
-                      <td>{question.answerValue}</td>
+                      {/* <td> {question.difficultyLevel}</td> */}
+                      {/* <td>{question.answerValue}</td> */}
                       <td>{question.topicId}</td>
-                      <td>{question.negativeMarkValue}</td>
+                      {/* <td>{question.negativeMarkValue}</td> */}
                       <td>
                         <button
                           className="btn btn-danger m-1"
