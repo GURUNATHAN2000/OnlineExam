@@ -1,8 +1,7 @@
 import React, { useEffect, useState, createContext } from "react";
 import Header from "../Header";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet } from "react-router";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export const ExamContext = createContext(null);
@@ -82,8 +81,8 @@ const Exam = () => {
           </div>
           <div className="card-body">
             {exams && exams.length > 0 ? (
-              <table className="table table-bordered border-dark table-striped table-hover">
-                <thead className="table-dark ">
+              <table className="table table-bordered border-dark table-striped table-hover ">
+                <thead className="table-dark custom-table">
                   <tr>
                     <td>Exam Id</td>
                     <td>Exam Name</td>
@@ -107,14 +106,12 @@ const Exam = () => {
                         <td>
                           <button
                             className="btn btn-outline-success m-1"
-                            onClick={() => handleEdit(exam.examId)}
-                          >
+                            onClick={() => handleEdit(exam.examId)}>
                             Edit
                           </button>
                           <button
                             className="btn btn-outline-danger m-1"
-                            onClick={() => handleDelete(exam.examId)}
-                          >
+                            onClick={() => handleDelete(exam.examId)}>
                             Delete
                           </button>
                         </td>
