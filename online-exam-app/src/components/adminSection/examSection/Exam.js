@@ -3,6 +3,7 @@ import Header from "../Header";
 import { Outlet } from "react-router";
 import axios from "axios";
 import Swal from "sweetalert2";
+
 import EditModal from "./EditModal";
 import ViewDetailsModal from "./ViewDetailsModal";
 
@@ -45,7 +46,6 @@ const Exam = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        //------------
         axios
           .get(
             `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`,
@@ -55,16 +55,19 @@ const Exam = () => {
             return response.data;
           })
           .then((data) => {
-            console.log("data: ", data);
+            console.log("data.listExam ", data.listExam);
+            data.listExam ? setExams(data.listExam) : setExams([]);
           })
           .catch((error) => {
             console.log("error: ", error);
           });
-        //------------
         Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
+          position: "center",
           icon: "success",
+          title: "Deleted!",
+          text: "Exam has been deleted.",
+          showConfirmButton: false,
+          timer: 1000,
         });
       }
     });
@@ -84,14 +87,13 @@ const Exam = () => {
     <ExamContext.Provider value={{ exams, setExams }}>
       <EditModal />
       <ViewDetailsModal selectedExam={selectedExam} />
-      <div className="container">
-        {/* <MainContent /> */}
 
+      <div className="container">
         <Header title="EXAM" next="addExams" back="/admin/exams" />
 
         <Outlet />
 
-        <div className="card text-center shadow-lg">
+        <div className="card text-center shadow-lg mt-3">
           <div className="card-title">
             <h2 className="text-center">Exam Listing</h2>
           </div>
@@ -110,6 +112,7 @@ const Exam = () => {
                       <td>Action</td>
                     </tr>
                   </thead>
+
                   <tbody>
                     {console.log("exams", exams)}
                     {exams &&

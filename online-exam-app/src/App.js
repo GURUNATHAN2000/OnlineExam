@@ -27,19 +27,24 @@ function App() {
   return (
     <>
       <Header page={page} name={name} />
-      {/* <ExamTopicMapping/> */}
+
       <Routes>
         <Route path="/" element={<Home setPage={setPage} />} />
+
         <Route
           path="login"
           element={<Login setPage={setPage} setName={setName} />}
         />
+
         <Route path="/register" element={<Register setPage={setPage} />} />
+
         <Route path="/admin" element={<Admin setPage={setPage} />}>
           <Route path="exams" element={<Exam />}>
             <Route path="addExams" element={<ExamMaster />} />
           </Route>
+
           <Route path="editExams" elements={<ExamTopicMapping />}></Route>
+
           <Route path="topics" element={<Topic />}>
             <Route path="addTopics" element={<TopicMaster />} />
           </Route>
@@ -53,6 +58,7 @@ function App() {
           </Route>
         </Route>
         <Route path="/user" element={<UserHome setPage={setPage} />}></Route>
+
         <Route path="*" element={<NoMatch />}></Route>
       </Routes>
       <Footer page={page} />
