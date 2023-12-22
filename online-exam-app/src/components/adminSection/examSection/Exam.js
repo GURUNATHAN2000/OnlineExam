@@ -15,7 +15,8 @@ const Exam = () => {
       .get(
         "https://" +
           window.location.hostname +
-          ":8443/onlineexam/control/display-all-exam"
+          ":8443/onlineexam/control/display-all-exam",
+        { withCredentials: true }
       )
       .then((response) => {
         return response.data;
@@ -44,7 +45,8 @@ const Exam = () => {
         //------------
         axios
           .get(
-            `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`
+            `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`,
+            { withCredentials: true }
           )
           .then((response) => {
             return response.data;
