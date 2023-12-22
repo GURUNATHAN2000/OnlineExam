@@ -1,4 +1,8 @@
-import { ValidEmail, ValidName, ValidPassword } from "../../regexValidation/Regex";
+import {
+  ValidEmail,
+  ValidName,
+  ValidPassword,
+} from "../../regexValidation/Regex";
 
 export const validateRegisterForm = (key, value, setNoError) => {
   switch (key) {

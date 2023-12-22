@@ -15,7 +15,8 @@ const Exam = () => {
       .get(
         "https://" +
           window.location.hostname +
-          ":8443/onlineexam/control/display-all-exam"
+          ":8443/onlineexam/control/display-all-exam",
+        { withCredentials: true }
       )
       .then((response) => {
         return response.data;
@@ -44,7 +45,8 @@ const Exam = () => {
         //------------
         axios
           .get(
-            `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`
+            `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`,
+            { withCredentials: true }
           )
           .then((response) => {
             return response.data;
@@ -65,9 +67,9 @@ const Exam = () => {
     });
   };
 
-  // const handleEdit = (examId) => {
-  //   console.log("FOR handleEdit => EXAM ID:::::" + examId);
-  // };
+  const handleAddTopic = (examId) => {
+    console.log("FOR handleAddTopic => EXAM ID:::::" + examId);
+  };
 
   return (
     <ExamContext.Provider value={{ exams, setExams }}>
@@ -83,6 +85,7 @@ const Exam = () => {
           <div className="card-title">
             <h2 className="text-center">Exam Listing</h2>
           </div>
+
           <div className="card-body">
             {exams && exams.length > 0 ? (
               <div className="table-responsive custom-table">
@@ -114,14 +117,13 @@ const Exam = () => {
                               className="btn btn-outline-success m-1"
                               data-bs-toggle="modal"
                               data-bs-target="#modalForm"
-                            >
-                              Edit
+                              onClick={() => handleAddTopic(exam.examId)}>
+                              Add Topic
                             </button>
 
                             <button
                               className="btn btn-outline-danger m-1"
-                              onClick={() => handleDelete(exam.examId)}
-                            >
+                              onClick={() => handleDelete(exam.examId)}>
                               Delete
                             </button>
                           </td>

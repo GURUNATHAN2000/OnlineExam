@@ -10,7 +10,10 @@ const Topic = () => {
       .get(
         "https://" +
           window.location.hostname +
-          ":8443/onlineexam/control/findusertopic"
+          ":8443/onlineexam/control/findusertopic",
+        {
+          withCredentials: true,
+        }
       )
       .then((response) => {
         return response.data;

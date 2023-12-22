@@ -8,6 +8,7 @@ import "./Header.css";
 
 const Header = ({ page, name }) => {
   const navigate = useNavigate();
+
   const handleClick = (event) => {
     event.target.value === "login"
       ? navigate("/login")
@@ -15,6 +16,7 @@ const Header = ({ page, name }) => {
       ? navigate("/register")
       : event.target.value === "logout" && navigate("/");
   };
+
   return (
     <nav className="navbar navbar-expand-sm navbar-dark custom-navbar rounded-bottom-5 shadow-lg sticky-top">
       <div className="container-fluid">
@@ -35,6 +37,7 @@ const Header = ({ page, name }) => {
         {page === "login" ? (
           <p className="text-lg-center fs-3 fw-bold">Online Exam Login!</p>
         ) : //to set header for admin page
+
         page === "admin" ? (
           <>
             <button
@@ -45,6 +48,7 @@ const Header = ({ page, name }) => {
               title="click to expand">
               <span className="navbar-toggler-icon"></span>
             </button>
+
             <div className="collapse navbar-collapse" id="navmenu">
               <Link
                 to="admin"
@@ -53,7 +57,7 @@ const Header = ({ page, name }) => {
                 <p
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
-                  title="ADMIN" >
+                  title="ADMIN">
                   ADMIN
                 </p>
               </Link>
@@ -69,6 +73,7 @@ const Header = ({ page, name }) => {
                     EXAMS
                   </Link>
                 </li>
+
                 <li className="nav-item">
                   <Link
                     to="admin/topics"
@@ -79,6 +84,7 @@ const Header = ({ page, name }) => {
                     TOPICS
                   </Link>
                 </li>
+
                 <li className="nav-item">
                   <Link
                     to="admin/questions"
@@ -89,6 +95,7 @@ const Header = ({ page, name }) => {
                     QUESTIONS
                   </Link>
                 </li>
+
                 <li className="nav-item">
                   <Link
                     to="admin/users"
@@ -117,9 +124,11 @@ const Header = ({ page, name }) => {
             </div>
           </>
         ) : //to set header for user page
+
         page === "user" ? (
           <p className="text-lg-center fw-bold">WELCOME {name} !</p>
         ) : //to set header for home page
+
         page === "home" ? (
           <div className="row">
             <div className="col-5">
@@ -134,6 +143,7 @@ const Header = ({ page, name }) => {
                 LOGIN
               </button>
             </div>
+
             <div className="col-2 justify-content-center">
               <button
                 type="button"

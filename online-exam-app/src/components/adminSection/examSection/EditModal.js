@@ -4,41 +4,46 @@ const EditModal = () => {
   return (
     // <!-- Modal -->
     <div
-      class="modal fade"
+      class="modal fade "
       id="modalForm"
-      tabindex="-1"
+      tabIndex="-1"
       aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+      aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content custom-form">
           <div class="modal-header">
-            <h3 className="fw-bold" id="exampleModalLabel">
+            <h3
+              className=" modal-title text-center fw-bold"
+              id="exampleModalLabel">
               Add Topic
             </h3>
             <button
               type="button"
-              class="btn-close"
+              className="btn-close"
               data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+              aria-label="Close">
+              <span area-hidden="true"></span>
+            </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body ">
             <form>
-              <div class="mb-3">
+              <div className="mb-3">
                 <label className="form-label fw-bold">Topic Name</label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   id="topicName"
                   name="topicName"
                   placeholder="enter topic name"
                 />
               </div>
-              <div class="mb-3">
+              <div className="mb-3">
                 <label className="form-label fw-bold">Percentage</label>
                 <input
                   type="number"
+                  min="0"
+                  max="100"
+                  step="0.01"
                   class="form-control"
                   id="percentage"
                   name="percentage"
@@ -46,10 +51,15 @@ const EditModal = () => {
                 />
               </div>
 
-              <div class="mb-3">
-                <label className="form-label fw-bold">Topic Pass Percentage</label>
+              <div className="mb-3">
+                <label className="form-label fw-bold">
+                  Topic Pass Percentage
+                </label>
                 <input
                   type="number"
+                  min="0"
+                  max="100"
+                  step="0.01"
                   class="form-control"
                   id="topicPassPercentage"
                   name="topicPassPercentage"
@@ -57,21 +67,22 @@ const EditModal = () => {
                 />
               </div>
 
-              <div class="mb-3">
+              <div className="mb-3">
                 <label className="form-label fw-bold">Questions Per Exam</label>
                 <input
                   type="number"
+                  min="0"
                   class="form-control"
                   id="questionsPerExam"
                   name="questionsPerExam"
                   placeholder="enter questions per exam"
                 />
               </div>
-               <div className="text-center">
-               <button type="submit" className="custom-button">
+              <div className="text-center">
+                <button type="submit" className="custom-button">
                   Submit
                 </button>
-               </div>
+              </div>
             </form>
           </div>
         </div>

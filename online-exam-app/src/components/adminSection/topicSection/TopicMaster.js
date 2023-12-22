@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./topicMaster.css";
 import { ValidateTopicMasterForm } from "./TopicValidator";
 import useStateRef from "react-usestateref";
+import axios from "axios";
 const TopicMaster = () => {
   const [noError, setNoError, currentRef] = useStateRef(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,17 +32,10 @@ const TopicMaster = () => {
 
   const fetchCall = (formData) => {
     setIsLoading(true);
-    fetch(
-      "https://localhost:8443/onlineexam/control/usertopic",
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      },
-      formData
-    )
+    axios
+      .post("https://localhost:8443/onlineexam/control/usertopic", formData, {
+        withCredentials: true,
+      })
       .then((result) => {
         console.log("result ::", result);
         // alert("responses...")
@@ -56,7 +50,10 @@ const TopicMaster = () => {
     <div className="row container  m-4 p-3 text-light ">
       <div className="col-md-3"></div>
       <div className="col-md-7">
-        <form className="g-4 p-3 shadow-lg rounded-2  custom-form" onSubmit={handleSubmit} id="topicForm">
+        <form
+          className="g-4 p-3 shadow-lg rounded-2  custom-form"
+          onSubmit={handleSubmit}
+          id="topicForm">
           <div className="">
             <label htmlFor="topicName" className="form-label fw-bold label">
               Topic Name
