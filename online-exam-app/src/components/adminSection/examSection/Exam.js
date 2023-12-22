@@ -73,10 +73,6 @@ const Exam = () => {
     });
   };
 
-  // const handleEdit = (examId) => {
-  //   console.log("FOR handleEdit => EXAM ID:::::" + examId);
-  // };
-
   return (
     <ExamContext.Provider value={{ exams, setExams }}>
       <EditModal />
@@ -89,6 +85,7 @@ const Exam = () => {
           <div className="card-title">
             <h2 className="text-center">Exam Listing</h2>
           </div>
+
           <div className="card-body">
             {exams && exams.length > 0 ? (
               <table className="table table-bordered border-dark table-striped table-hover ">
@@ -102,6 +99,7 @@ const Exam = () => {
                     <td>Action</td>
                   </tr>
                 </thead>
+
                 <tbody>
                   {console.log("exams", exams)}
                   {exams &&

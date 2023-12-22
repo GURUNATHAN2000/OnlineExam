@@ -35,19 +35,16 @@ const Question = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://localhost:8443/onlineexam/control/deleteuserquestion?questionId=${questionId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-type": "application/json",
-            },
-            //   body:JSON.stringify(formData),
-          }
-        )
+        axios
+          .get(
+            `https://localhost:8443/onlineexam/control/deleteuserquestion?questionId=${questionId}`,
+            {
+              withCredentials: true,
+            }
+          )
           .then((result) => {
             console.log("result::", result);
             return result.json();
@@ -58,11 +55,10 @@ const Question = () => {
         Swal.fire({
           title: "Deleted!",
           text: "Your file has been deleted.",
-          icon: "success"
+          icon: "success",
         });
       }
     });
-    
   };
 
   return (
@@ -97,34 +93,33 @@ const Question = () => {
                 </tr>
               </thead>
               <tbody>
-                {
-                  questions.map((question) => (
-                    <tr key={question.questionId}>
-                      <td>{question.questionId}</td>
-                      <td>{question.questionDetail}</td>
-                      <td>{question.optionA}</td>
-                      <td>{question.optionB}</td>
-                      <td>{question.optionC}</td>
-                      <td>{question.optionD}</td>
-                      <td>{question.optionE}</td>
-                      <td> {question.answer}</td>
-                      <td> {question.numAnswers}</td>
-                      <td> {question.questionType}</td>
-                      {/* <td> {question.difficultyLevel}</td> */}
-                      {/* <td>{question.answerValue}</td> */}
-                      <td>{question.topicId}</td>
-                      {/* <td>{question.negativeMarkValue}</td> */}
-                      <td>
-                        <button
-                          className="btn btn-danger m-1"
-                          onClick={() => {
-                            handleDelete(question.questionId);
-                          }}>
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                {questions.map((question) => (
+                  <tr key={question.questionId}>
+                    <td>{question.questionId}</td>
+                    <td>{question.questionDetail}</td>
+                    <td>{question.optionA}</td>
+                    <td>{question.optionB}</td>
+                    <td>{question.optionC}</td>
+                    <td>{question.optionD}</td>
+                    <td>{question.optionE}</td>
+                    <td> {question.answer}</td>
+                    <td> {question.numAnswers}</td>
+                    <td> {question.questionType}</td>
+                    {/* <td> {question.difficultyLevel}</td> */}
+                    {/* <td>{question.answerValue}</td> */}
+                    <td>{question.topicId}</td>
+                    {/* <td>{question.negativeMarkValue}</td> */}
+                    <td>
+                      <button
+                        className="btn btn-danger m-1"
+                        onClick={() => {
+                          handleDelete(question.questionId);
+                        }}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           ) : (

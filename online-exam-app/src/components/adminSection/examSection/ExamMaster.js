@@ -86,8 +86,11 @@ const ExamMaster = () => {
               timer: 1000,
             });
         console.log("examMap", data.examMap);
+
         data.examMap
-          ? setExams([...exams, data.examMap])
+          ? exams != null
+            ? setExams([...exams, data.examMap])
+            : setExams(data.examMap)
           : console.log("error in fetch (data.examMap)");
       })
       .catch((error) => {

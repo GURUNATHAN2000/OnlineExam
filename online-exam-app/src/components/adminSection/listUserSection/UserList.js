@@ -8,7 +8,9 @@ const UserList = () => {
 
   useEffect(() => {
     axios
-      .get("https://localhost:8443/onlineexam/control/getUserList")
+      .get("https://localhost:8443/onlineexam/control/getUserList", {
+        withCredentials: true,
+      })
       .then((response) => {
         console.log("response  ", response);
         return response.data;
@@ -24,7 +26,7 @@ const UserList = () => {
   return (
     <div className="container-fluid ">
       <Header title="USER" next="addUsers" back="/admin/users" />
-      <Outlet/>
+      <Outlet />
       <div className="card text-center">
         <div className="card-body">
           <table className="table table-bordered border-dark table-striped table-hover">

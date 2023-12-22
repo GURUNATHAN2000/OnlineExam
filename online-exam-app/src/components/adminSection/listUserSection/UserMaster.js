@@ -84,7 +84,10 @@ const UserMaster = ({ setPage }) => {
         "https://" +
           window.location.hostname +
           ":8443/onlineexam/control/userRegister",
-        myObject
+        myObject,
+        {
+          withCredentials: true,
+        }
       )
       .then((res) => {
         setIsLoading(false);

@@ -87,7 +87,10 @@ const Register = ({ setPage }) => {
         "https://" +
           window.location.hostname +
           ":8443/onlineexam/control/userRegister",
-        myObject
+        myObject,
+        {
+          withCredentials: true,
+        }
       )
       .then((res) => {
         setIsLoading(false);
@@ -255,7 +258,7 @@ const Register = ({ setPage }) => {
                 one number!"
                 //required
               />
-            
+
               {/* confirmPasswordEmpty alert */}
 
               <span id="confirmPasswordEmpty" className="custom-alert"></span>
