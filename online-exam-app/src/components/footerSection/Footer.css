@@ -6,3 +6,8 @@
   color: white;
   user-select: none;
 }
+
+.footer {
+  height: 60px !important;
+  line-height: 60px !important;
+}  

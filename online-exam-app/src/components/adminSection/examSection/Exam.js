@@ -1,14 +1,17 @@
-import React, { useEffect, useState, createContext } from "react";
+import React, { useEffect, useState, createContext, useContext } from "react";
 import Header from "../Header";
 import { Outlet } from "react-router";
 import axios from "axios";
 import Swal from "sweetalert2";
 import EditModal from "./EditModal";
+import ViewDetailsModal from "./ViewDetailsModal";
 
 export const ExamContext = createContext(null);
 
 const Exam = () => {
   const [exams, setExams] = useState([]);
+
+  const [selectedExam, setSelectedExam] = useState("");
 
   useEffect(() => {
     axios
@@ -71,9 +74,16 @@ const Exam = () => {
     console.log("FOR handleAddTopic => EXAM ID:::::" + examId);
   };
 
+  const handleDetails = (exam) => {
+    console.log("Exam :: ", exam);
+    setSelectedExam(exam);
+    console.log("selectedExam :: ", selectedExam);
+  };
+
   return (
     <ExamContext.Provider value={{ exams, setExams }}>
       <EditModal />
+      <ViewDetailsModal selectedExam={selectedExam} />
       <div className="container">
         {/* <MainContent /> */}
 
@@ -114,17 +124,31 @@ const Exam = () => {
                           <td>
                             <button
                               type="button"
-                              className="btn btn-outline-success m-1"
+                              className="btn btn-outline-success m-1 btn-sm"
                               data-bs-toggle="modal"
                               data-bs-target="#modalForm"
-                              onClick={() => handleAddTopic(exam.examId)}>
+                              onClick={() => handleAddTopic(exam.examId)}
+                            >
                               Add Topic
                             </button>
 
                             <button
-                              className="btn btn-outline-danger m-1"
-                              onClick={() => handleDelete(exam.examId)}>
+                              className="btn btn-outline-danger m-1 btn-sm"
+                              onClick={() => handleDelete(exam.examId)}
+                            >
                               Delete
+                            </button>
+                            {console.log("Exam :: ", exam)}
+                            <button
+                              type="button"
+                              className="btn btn-outline-primary m-1 btn-sm"
+                              data-bs-toggle="modal"
+                              data-bs-target="#modalFormView"
+                              onClick={() => {
+                                handleDetails(exam);
+                              }}
+                            >
+                              Details
                             </button>
                           </td>
                         </tr>
