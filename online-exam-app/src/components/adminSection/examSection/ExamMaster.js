@@ -118,12 +118,11 @@ const ExamMaster = () => {
         </div>
 
         <div className="col-md-6">
-          <label htmlFor="examName" className="form-label fw-bold">
+          <label htmlFor="description" className="form-label fw-bold">
             Description
           </label>
           <textarea
             className="form-control"
-            row="4"
             id="description"
             name="description"></textarea>
         </div>
