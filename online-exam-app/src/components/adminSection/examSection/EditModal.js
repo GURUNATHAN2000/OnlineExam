@@ -4,16 +4,16 @@ const EditModal = () => {
   return (
     // <!-- Modal -->
     <div
-      class="modal fade"
+      class="modal fade "
       id="modalForm"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content custom-form">
           <div class="modal-header">
-            <h3 className="fw-bold" id="exampleModalLabel">
+            <h3 className=" modal-title text-center fw-bold" id="exampleModalLabel">
               Add Topic
             </h3>
             <button
@@ -21,9 +21,9 @@ const EditModal = () => {
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
-            ></button>
+            ><span area-hidden='true'></span></button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body ">
             <form>
               <div class="mb-3">
                 <label className="form-label fw-bold">Topic Name</label>
@@ -39,6 +39,7 @@ const EditModal = () => {
                 <label className="form-label fw-bold">Percentage</label>
                 <input
                   type="number"
+                  min="0" max="100" step="0.01"
                   class="form-control"
                   id="percentage"
                   name="percentage"
@@ -50,6 +51,7 @@ const EditModal = () => {
                 <label className="form-label fw-bold">Topic Pass Percentage</label>
                 <input
                   type="number"
+                  min="0" max="100" step="0.01"
                   class="form-control"
                   id="topicPassPercentage"
                   name="topicPassPercentage"
@@ -61,6 +63,7 @@ const EditModal = () => {
                 <label className="form-label fw-bold">Questions Per Exam</label>
                 <input
                   type="number"
+                  min="0"
                   class="form-control"
                   id="questionsPerExam"
                   name="questionsPerExam"

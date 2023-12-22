@@ -65,9 +65,9 @@ const Exam = () => {
     });
   };
 
-  // const handleEdit = (examId) => {
-  //   console.log("FOR handleEdit => EXAM ID:::::" + examId);
-  // };
+  const handleAddTopic = (examId) => {
+    console.log("FOR handleAddTopic => EXAM ID:::::" + examId);
+  };
 
   return (
     <ExamContext.Provider value={{ exams, setExams }}>
@@ -114,8 +114,9 @@ const Exam = () => {
                               className="btn btn-outline-success m-1"
                               data-bs-toggle="modal"
                               data-bs-target="#modalForm"
+                              onClick={() =>handleAddTopic(exam.examId)}
                             >
-                              Edit
+                              Add Topic
                             </button>
 
                             <button
