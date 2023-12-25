@@ -66,7 +66,7 @@ const UserList = () => {
                         <td className="fw-bolder">{user}</td>
                         <td>
                           <button className="btn btn-outline-success m-1">
-                            Edit
+                            Assign Exam
                           </button>
                           <button className="btn btn-outline-danger m-1">
                             Delete

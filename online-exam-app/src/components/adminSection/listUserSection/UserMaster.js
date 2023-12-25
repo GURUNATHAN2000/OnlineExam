@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { useState } from "react";
 import axios from "axios";
@@ -6,12 +6,15 @@ import { Link, useNavigate } from "react-router-dom";
 import useStateRef from "react-usestateref";
 
 import { validateRegisterForm } from "./RegisterValidator";
-import Swal from "sweetalert2";
+import { FailureAlert } from "../../alert/FailureAlert";
+import { SuccessAlert } from "../../alert/SuccessAlert";
+import { UserListContext } from "./UserList";
 
 const UserMaster = ({ setPage }) => {
+  const { userNameList, setUserNameList } = useContext(UserListContext);
+
   const [noError, setNoError, currentRef] = useStateRef(true);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   const makeErrorNone = () => {
     document.getElementById("firstNameEmpty").classList.remove("d-block");
@@ -78,7 +81,7 @@ const UserMaster = ({ setPage }) => {
   };
 
   const axiosCall = (myObject) => {
-    setIsLoading(true);
+    //setIsLoading(true);
     console.log(myObject);
     axios
       .post(
@@ -91,44 +94,40 @@ const UserMaster = ({ setPage }) => {
         }
       )
       .then((res) => {
-        setIsLoading(false);
+        //setIsLoading(false);
         console.log("result ::", res);
         return res.data;
       })
       .then((data) => {
-        data.SERVICE_SUCCESS_MESSAGE === "SUCCESS" &&
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "User Added Successfully!",
-            showConfirmButton: false,
-            timer: 1000,
-          });
-        console.log("data", data);
+        data.SERVICE_ERROR_MESSAGE
+          ? handleError(data.SERVICE_ERROR_MESSAGE)
+          : data.SERVICE_SUCCESS_MESSAGE
+          ? handleSuccess(data.SERVICE_SUCCESS_MESSAGE)
+          : console.log("data :: ", data);
+
+        data.ListOfUsers
+          ? setUserNameList(data.ListOfUsers)
+          : console.log("error in usernamelist fetch (data.ListOfUsers  )");
       })
       .catch((error) => {
-        setIsLoading(false);
+        //setIsLoading(false);
         console.log("error ::", error);
       });
   };
 
   //navigate to login if sucess
-  // const handleNavigate = (msg) => {
-  //   msg === "SUCCESS" ? navigate("/login") : navigate("/");
-  // };
+  const handleSuccess = (msg) => {
+    msg === "SUCCESS"
+      ? SuccessAlert("User Added Successfully !")
+      : console.log("Error in Add User");
+  };
 
   const handleError = (msg) => {
     if (msg === "USER-ID ALREADY EXIST") {
+      FailureAlert(msg);
       document.getElementById("userIdEmpty").classList.remove("d-none");
       document.getElementById("userIdEmpty").classList.add("d-block");
       document.getElementById("userIdEmpty").innerHTML = msg;
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "USER-ID ALREADY EXIST !",
-        showConfirmButton: false,
-        timer: 1000,
-      });
     }
   };
 
@@ -138,7 +137,7 @@ const UserMaster = ({ setPage }) => {
       <div className="col-md-4"></div>
 
       {/* form */}
-      {isLoading ? (
+      {/* {isLoading ? (
         <div className="col-md-6 m-5">
           <img
             className="m-5"
@@ -146,125 +145,122 @@ const UserMaster = ({ setPage }) => {
             src="rotateload.gif"
             alt="loading..."
           />
-        </div>
-      ) : (
-        <div className="container col-md-4 my-5 mt-4 col-10 p-4  shadow-lg rounded custom-form">
-          <form
-            id="registerForm"
-            className="custom-form"
-            onSubmit={handleSubmit}>
-            {/* to set roleType */}
-            <div className="mb-3">
-              <input type="hidden" name="roleTypeId" value="PERSON_ROLE" />
-            </div>
+        </div> 
+      ) : (*/}
+      <div className="container col-md-4 my-5 mt-4 col-10 p-4  shadow-lg rounded custom-form">
+        <form id="registerForm" className="custom-form" onSubmit={handleSubmit}>
+          {/* to set roleType */}
+          <div className="mb-3">
+            <input type="hidden" name="roleTypeId" value="PERSON_ROLE" />
+          </div>
 
-            {/* first Name */}
-            <div className="mb-3">
-              <label htmlFor="firstName" className="form-label fw-bold label">
-                First Name
-              </label>
-              <input
-                autoFocus
-                type="text"
-                id="firstName"
-                name="firstName"
-                className="form-control "
-                placeholder="enter first name"
-                onChange={makeErrorNone}
-                //required
-              />
-              {/* firstNameEmpty alert */}
+          {/* first Name */}
+          <div className="mb-3">
+            <label htmlFor="firstName" className="form-label fw-bold label">
+              First Name
+            </label>
+            <input
+              autoFocus
+              type="text"
+              id="firstName"
+              name="firstName"
+              className="form-control "
+              placeholder="enter first name"
+              onChange={makeErrorNone}
+              //required
+            />
+            {/* firstNameEmpty alert */}
 
-              <span id="firstNameEmpty" className="custom-alert"></span>
-            </div>
+            <span id="firstNameEmpty" className="custom-alert"></span>
+          </div>
 
-            <div className=" mb-3 ">
-              <label htmlFor="lastName" className="form-label fw-bold label">
-                Last Name
-              </label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                className="form-control"
-                placeholder="enter last name"
-                onChange={makeErrorNone}
-              />
-              {/* last NameEmpty alert*/}
+          <div className=" mb-3 ">
+            <label htmlFor="lastName" className="form-label fw-bold label">
+              Last Name
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              className="form-control"
+              placeholder="enter last name"
+              onChange={makeErrorNone}
+            />
+            {/* last NameEmpty alert*/}
 
-              <span id="lastNameEmpty" className="custom-alert"></span>
-            </div>
+            <span id="lastNameEmpty" className="custom-alert"></span>
+          </div>
 
-            <div className="mb-3">
-              <label htmlFor="userLoginId" className="form-label fw-bold label">
-                User ID / E-Mail ID
-              </label>
-              <input
-                type="text"
-                id="userLoginId"
-                name="userLoginId"
-                className="form-control"
-                placeholder="enter user Id"
-                onChange={makeErrorNone}
-                //required
-              />
-              {/* userIdEmpty alert  */}
+          <div className="mb-3">
+            <label htmlFor="userLoginId" className="form-label fw-bold label">
+              User ID / E-Mail ID
+            </label>
+            <input
+              type="text"
+              id="userLoginId"
+              name="userLoginId"
+              className="form-control"
+              placeholder="enter user Id"
+              onChange={makeErrorNone}
+              //required
+            />
+            {/* userIdEmpty alert  */}
 
-              <span id="userIdEmpty" className="custom-alert"></span>
-            </div>
+            <span id="userIdEmpty" className="custom-alert"></span>
+          </div>
 
-            {/* password */}
-            <div className="mb-3">
-              <label
-                htmlFor="currentPassword"
-                className="form-label fw-bold label">
-                Password
-              </label>
-              <input
-                type="password"
-                id="currentPassword"
-                name="currentPassword"
-                className="form-control "
-                placeholder="enter password"
-                onChange={makeErrorNone}
-                //required
-              />
-              {/* passwordEmpty alert  */}
+          {/* password */}
+          <div className="mb-3">
+            <label
+              htmlFor="currentPassword"
+              className="form-label fw-bold label">
+              Password
+            </label>
+            <input
+              type="password"
+              id="currentPassword"
+              name="currentPassword"
+              className="form-control "
+              placeholder="enter password"
+              onChange={makeErrorNone}
+              //required
+            />
+            {/* passwordEmpty alert  */}
 
-              <span id="passwordEmpty" className="custom-alert"></span>
-            </div>
+            <span id="passwordEmpty" className="custom-alert"></span>
+          </div>
 
-            {/* confirm password */}
-            <div className="mb-3">
-              <label
-                htmlFor="currentPasswordVerify"
-                className="form-label fw-bold label">
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                id="currentPasswordVerify"
-                name="currentPasswordVerify"
-                className="form-control "
-                placeholder="re-enter password"
-                onChange={makeErrorNone}
-                //required
-              />
-              {/* confirmPasswordEmpty alert */}
+          {/* confirm password */}
+          <div className="mb-3">
+            <label
+              htmlFor="currentPasswordVerify"
+              className="form-label fw-bold label">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="currentPasswordVerify"
+              name="currentPasswordVerify"
+              className="form-control "
+              placeholder="re-enter password"
+              onChange={makeErrorNone}
+              //required
+            />
+            {/* confirmPasswordEmpty alert */}
 
-              <span id="confirmPasswordEmpty" className="custom-alert"></span>
-            </div>
+            <span id="confirmPasswordEmpty" className="custom-alert"></span>
+          </div>
 
-            <div className="d-grid g-5 mb-3">
-              <input
-                type="submit"
-                value="Add User"
-                className="btn-login custom-button"
-              />
-            </div>
-          </form>
-        </div>
-      )}
+          <div className="d-grid g-5 mb-3">
+            <input
+              type="submit"
+              value="Add User"
+              className="btn-login custom-button"
+            />
+          </div>
+        </form>
+      </div>
+      {/* )} */}
       <div className="col-md-4"></div>
     </div>
   );
