@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useStateRef from "react-usestateref";
 
 import { validateRegisterForm } from "./RegisterValidator";
+import Swal from "sweetalert2";
 
 const UserMaster = ({ setPage }) => {
   const [noError, setNoError, currentRef] = useStateRef(true);
@@ -95,12 +96,15 @@ const UserMaster = ({ setPage }) => {
         return res.data;
       })
       .then((data) => {
-        if (data.SERVICE_ERROR_MESSAGE != null) {
-          handleError(data.SERVICE_ERROR_MESSAGE);
-        } else {
-          handleNavigate(data.SERVICE_SUCCESS_MESSAGE);
-        }
-        console.log("DATA :: ", data);
+        data.SERVICE_SUCCESS_MESSAGE === "SUCCESS" &&
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "User Added Successfully!",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        console.log("data", data);
       })
       .catch((error) => {
         setIsLoading(false);
@@ -109,15 +113,22 @@ const UserMaster = ({ setPage }) => {
   };
 
   //navigate to login if sucess
-  const handleNavigate = (msg) => {
-    msg === "SUCCESS" ? navigate("/login") : navigate("/");
-  };
+  // const handleNavigate = (msg) => {
+  //   msg === "SUCCESS" ? navigate("/login") : navigate("/");
+  // };
 
   const handleError = (msg) => {
     if (msg === "USER-ID ALREADY EXIST") {
       document.getElementById("userIdEmpty").classList.remove("d-none");
       document.getElementById("userIdEmpty").classList.add("d-block");
       document.getElementById("userIdEmpty").innerHTML = msg;
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "USER-ID ALREADY EXIST !",
+        showConfirmButton: false,
+        timer: 1000,
+      });
     }
   };
 

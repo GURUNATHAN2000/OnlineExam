@@ -147,7 +147,7 @@ const Login = (props) => {
               </label>
 
               <input
-                autoFocus
+                // autoFocus
                 type="text"
                 className="form-control"
                 placeholder="enter e-mail"

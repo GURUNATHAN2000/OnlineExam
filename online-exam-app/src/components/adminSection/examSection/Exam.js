@@ -1,15 +1,17 @@
 import React, { useEffect, useState, createContext, useContext } from "react";
-import Header from "../Header";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import Header from "../Header";
 import EditModal from "./EditModal";
 import ViewDetailsModal from "./ViewDetailsModal";
 
 export const ExamContext = createContext(null);
 
 const Exam = () => {
+  const navigate = useNavigate();
+
   const [exams, setExams] = useState([]);
 
   const [selectedExam, setSelectedExam] = useState("");
@@ -31,9 +33,20 @@ const Exam = () => {
         setExams(data.listExam);
       })
       .catch((error) => {
-        console.log("error: ", error);
+        error.message === "Request failed with status code 401"
+          ? handleError()
+          : console.log("Error From UserMaster Fetch : ", error);
       });
   }, []);
+
+  const handleError = () => {
+    Swal.fire({
+      icon: "error",
+      title: "Your Session Has Expired..!",
+      text: "you've to login to use this service",
+    });
+    navigate("/login");
+  };
 
   const handleDelete = (examId) => {
     Swal.fire({
@@ -130,15 +143,13 @@ const Exam = () => {
                               className="btn btn-outline-success m-1 btn-sm"
                               data-bs-toggle="modal"
                               data-bs-target="#modalForm"
-                              onClick={() => handleAddTopic(exam.examId)}
-                            >
+                              onClick={() => handleAddTopic(exam.examId)}>
                               Add Topic
                             </button>
 
                             <button
                               className="btn btn-outline-danger m-1 btn-sm"
-                              onClick={() => handleDelete(exam.examId)}
-                            >
+                              onClick={() => handleDelete(exam.examId)}>
                               Delete
                             </button>
                             {console.log("Exam :: ", exam)}
@@ -149,8 +160,7 @@ const Exam = () => {
                               data-bs-target="#modalFormView"
                               onClick={() => {
                                 handleDetails(exam);
-                              }}
-                            >
+                              }}>
                               Details
                             </button>
                           </td>
