@@ -28,6 +28,19 @@ const ViewDetailsModal = ({ selectedExam }) => {
           </div>
           <div class="modal-body ">
             <form className="row g-4 p-3" id="examMaster">
+            <div className="col-md-3">
+                <label htmlFor="examName" className="form-label fw-bold">
+                  Exam name
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="examName"
+                  name="examName"
+                  value={selectedExam.examName}
+                  disabled
+                />
+              </div>
               <div className="col-md-3">
                 <label htmlFor="examName" className="form-label fw-bold">
                   Exam name
