@@ -88,7 +88,7 @@ const Login = (props) => {
   //navigating based on the back-end data
   const handleRoleType = (data) => {
     data.roleTypeId === "ADMIN"
-      ? navigate("/admin")
+      ? navigate("/admin/exams")
       : data.roleTypeId === "PERSON_ROLE"
       ? navigate("/user")
       : checkValidCredentials();

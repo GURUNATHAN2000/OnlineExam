@@ -3,11 +3,12 @@ import React, { createContext, useEffect, useState } from "react";
 import Header from "../Header";
 import { Outlet, useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import UserExamMappingModal from "./UserExamMappingModal";
+import AssignExam from "./AssignExam";
 
 export const UserListContext = createContext(null);
 
 const UserList = () => {
+  const [selectedUser, setSelectedUser] = useState([]);
   const [userNameList, setUserNameList] = useState([]);
   const navigate = useNavigate();
 
@@ -42,15 +43,13 @@ const UserList = () => {
     navigate("/login");
   };
 
-  
-  const handleAssignExam=(user)=>{
-    console.log("assign exam called",user);
-
-  }
+  const handleAssignExam = (user) => {
+    setSelectedUser(user);
+  };
 
   return (
     <UserListContext.Provider value={{ userNameList, setUserNameList }}>
-      <UserExamMappingModal/>
+      <AssignExam selectedUser={selectedUser} />
       <div className="container-fluid ">
         <Header title="USER" next="addUsers" back="/admin/users" />
 
@@ -63,7 +62,6 @@ const UserList = () => {
                 <tr>
                   <td>Party ID</td>
                   <td>Name</td>
-                  <td>User Login ID</td>
                   <td>ACTION</td>
                 </tr>
               </thead>
@@ -78,15 +76,16 @@ const UserList = () => {
                           <td className="fw-bolder">
                             {user.firstName + " " + user.lastName}
                           </td>
-                          <td className="fw-bolder">
-                            {user.userLoginId }
-                          </td>
                           <td>
-                            <button className="btn btn-outline-success m-1"
-                            >
+                            <button
+                              type="button"
+                              className="btn btn-outline-success m-1 btn-sm"
+                              data-bs-toggle="modal"
+                              data-bs-target="#modalFormAssign"
+                              onClick={() => handleAssignExam(user)}>
                               Assign Exam
                             </button>
-                            <button className="btn btn-outline-danger m-1">
+                            <button className="btn btn-outline-danger m-1 btn-sm">
                               Delete
                             </button>
                           </td>
