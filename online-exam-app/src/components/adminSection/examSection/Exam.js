@@ -89,16 +89,16 @@ const Exam = () => {
 
   //handleAddTopic
   const handleAddTopic = (exam) => {
-    console.log("FOR handleAddTopic => EXAM ID:::::" + exam);
+    //console.log("FOR handleAddTopic => EXAM ID:::::" + exam);
     setSelectedExam(exam);
-    console.log("SELECTED EXAM:::::", selectedExam);
+    //console.log("SELECTED EXAM:::::", selectedExam);
   };
 
   // handleDetails
   const handleDetails = (exam) => {
-    console.log(`EXAM:: ${exam}`);
+    // console.log(`EXAM:: ${exam}`);
     setSelectedExam(exam);
-    console.log("selectedExam :: ", selectedExam);
+    // console.log("selectedExam :: ", selectedExam);
   };
 
   return (
@@ -133,45 +133,42 @@ const Exam = () => {
 
                   <tbody>
                     {console.log("exams", exams)}
-                    {exams &&
-                      exams.length > 0 &&
-                      exams.map((exam) => (
-                        <tr key={exam.examId}>
-                          <td className="fw-bolder">{exam.examId}</td>
-                          <td>{exam.examName}</td>
-                          <td>{exam.noOfQuestions}</td>
-                          <td>{exam.durationMinutes}</td>
-                          <td>{exam.passPercentage}</td>
-                          <td>
-                            <button
-                              type="button"
-                              className="btn btn-outline-success m-1 btn-sm"
-                              data-bs-toggle="modal"
-                              data-bs-target="#modalForm"
-                              onClick={() => handleAddTopic(exam)}
-                            >
-                              Add Topic
-                            </button>
+                    {exams.map((exam) => (
+                      <tr key={exam.examId}>
+                        <td className="fw-bolder">{exam.examId}</td>
+                        <td>{exam.examName}</td>
+                        <td>{exam.noOfQuestions}</td>
+                        <td>{exam.durationMinutes}</td>
+                        <td>{exam.passPercentage}</td>
+                        <td>
+                          <button
+                            type="button"
+                            className="btn btn-outline-success m-1 btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalForm"
+                            onClick={() => handleAddTopic(exam)}>
+                            Add Topic
+                          </button>
 
-                            <button
-                              className="btn btn-outline-danger m-1 btn-sm"
-                              onClick={() => handleDelete(exam.examId)}>
-                              Delete
-                            </button>
-                            {console.log("Exam :: ", exam)}
-                            <button
-                              type="button"
-                              className="btn btn-outline-primary m-1 btn-sm"
-                              data-bs-toggle="modal"
-                              data-bs-target="#modalFormView"
-                              onClick={() => {
-                                handleDetails(exam);
-                              }}>
-                              Details
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+                          <button
+                            className="btn btn-outline-danger m-1 btn-sm"
+                            onClick={() => handleDelete(exam.examId)}>
+                            Delete
+                          </button>
+                          {console.log("Exam :: ", exam)}
+                          <button
+                            type="button"
+                            className="btn btn-outline-primary m-1 btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalFormView"
+                            onClick={() => {
+                              handleDetails(exam);
+                            }}>
+                            Details
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

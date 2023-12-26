@@ -45,9 +45,13 @@ const TopicMaster = () => {
   const fetchCall = (formData) => {
     setIsLoading(true);
     axios
-      .post("https://localhost:8443/onlineexam/control/usertopic", formData, {
-        withCredentials: true,
-      })
+      .post(
+        "https://localhost:8443/onlineexam/control/insert-topic",
+        formData,
+        {
+          withCredentials: true,
+        }
+      )
       .then((result) => {
         console.log("result ::", result);
         return result.data;
@@ -75,6 +79,8 @@ const TopicMaster = () => {
         data.listTopics
           ? setTopics(data.listTopics)
           : console.log("error in fetch (data.topicMap  )");
+
+        document.getElementById("topicForm").reset();
       })
       .catch((err) => {
         console.log("error ::", err);
