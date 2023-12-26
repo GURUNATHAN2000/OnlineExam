@@ -20,11 +20,12 @@ const UserList = () => {
         return response.data;
       })
       .then((data) => {
-        console.log("data ", data);
-        setUserNameList(data.ListOfUsers);
+        data.ListOfUsers
+          ? setUserNameList(data.ListOfUsers)
+          : console.log("data ", data);
       })
       .catch((error) => {
-        //console.log(error.message);
+        console.log(error.message);
         error.message === "Request failed with status code 401"
           ? handleError()
           : console.log("Error From UserMaster Fetch : ", error);
@@ -59,21 +60,28 @@ const UserList = () => {
               </thead>
 
               <tbody>
+                {console.log("userNameList", userNameList)}
                 {userNameList && userNameList.length > 0
-                  ? userNameList.map((user, index) => (
-                      <tr key={index}>
-                        <td className="fw-bolder">{index + 1}</td>
-                        <td className="fw-bolder">{user}</td>
-                        <td>
-                          <button className="btn btn-outline-success m-1">
-                            Assign Exam
-                          </button>
-                          <button className="btn btn-outline-danger m-1">
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))
+                  ? userNameList.map((user) =>
+                      user != null ? (
+                        <tr key={user.partyId}>
+                          <td className="fw-bolder">{user.partyId}</td>
+                          <td className="fw-bolder">
+                            {user.firstName + " " + user.lastName}
+                          </td>
+                          <td>
+                            <button className="btn btn-outline-success m-1">
+                              Assign Exam
+                            </button>
+                            <button className="btn btn-outline-danger m-1">
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ) : (
+                        console.log("user is null")
+                      )
+                    )
                   : console.log("list user undefined")}
               </tbody>
             </table>
