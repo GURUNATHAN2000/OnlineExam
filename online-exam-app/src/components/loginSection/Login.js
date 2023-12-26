@@ -80,7 +80,7 @@ const Login = (props) => {
         console.log("roleTypeId :: ", data.roleTypeId);
       })
       .catch((err) => {
-        setIsLoading(true);
+        setIsLoading(false);
         console.log("ERROR FROM LOGIN FETCH :: ", err);
       });
   };
@@ -118,8 +118,7 @@ const Login = (props) => {
     <div className="row g-0 align-items-center justify-content-center">
       {/* empty div */}
       <div className="col-md-4"></div>
-
-      {isLoading ? (
+      {/* {isLoading ? (
         <div className="col-md-6 col-7 m-5">
           <img
             className="m-5"
@@ -128,92 +127,97 @@ const Login = (props) => {
             alt="loading..."
           />
         </div>
-      ) : (
-        <div className="col-md-4 col-10 p-4 mt-4 mb-3 shadow-lg rounded custom-form">
-          <form id="loginForm " className="custom-form" onSubmit={handleSubmit}>
-            <h1 className="mb-3 text-center login-heading fw-bold">
-              USER LOGIN
-            </h1>
-
-            {/* invalid Credentials */}
-            <span id="invalidCredentials" className="empty custom-alert"></span>
-
-            {/* username */}
-            <div className="mb-3">
-              <label
-                htmlFor="emailid"
-                className="form-label fw-bold custom-login-label">
-                E-MAIL ID
-              </label>
-
-              <input
-                // autoFocus
-                type="text"
-                className="form-control"
-                placeholder="enter e-mail"
-                id="emailid"
-                name="USERNAME"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                data-bs-custom-class="custom-tooltip"
-                data-bs-title="This top tooltip is themed via CSS variables."
-                onChange={makeErrorNone}
-              />
-
-              {/* username empty alert */}
-              <span id="userEmpty" className="empty custom-alert"></span>
-            </div>
-
-            {/* password */}
-            <div className="mb-3">
-              <label
-                htmlFor="password"
-                className="form-label  fw-bold custom-login-label">
-                PASSWORD
-              </label>
-
-              <input
-                type={password}
-                className="form-control"
-                id="password"
-                placeholder="enter password"
-                name="PASSWORD"
-                onChange={makeErrorNone}
-              />
-              {/* password empty alert */}
-              <span id="passwordEmpty" className="empty custom-alert"></span>
-            </div>
-
-            {/* checkbox for show password */}
-            <div className="mb-3">
-              <input
-                type="checkbox"
-                className="mx-1 form-control-check"
-                id="showPassword"
-                onChange={handleToggle}
-              />
-              <label
-                htmlFor="showPassword"
-                className="form-label  fw-bold custom-login-label">
-                Show Password
-              </label>
-            </div>
-
-            {/* submit button */}
-            <div className="d-grid mb-3">
-              <input
-                type="submit"
-                className="btn-login custom-button"
-                value="LOGIN"
-              />
-            </div>
-          </form>
-          <p className="text-center">
-            don't you have an account? <Link to="/register">register</Link>
-          </p>
+      ) : ( */}
+      /
+      {isLoading && (
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
         </div>
       )}
+      <div className="col-md-4 col-10 p-4 mt-4 mb-3 shadow-lg rounded custom-form">
+        <form id="loginForm " className="custom-form" onSubmit={handleSubmit}>
+          <h1 className="mb-3 text-center login-heading fw-bold">USER LOGIN</h1>
 
+          {/* invalid Credentials */}
+          <span id="invalidCredentials" className="empty custom-alert"></span>
+
+          {/* username */}
+          <div className="mb-3">
+            <label
+              htmlFor="emailid"
+              className="form-label fw-bold custom-login-label">
+              E-MAIL ID
+            </label>
+
+            <input
+              // autoFocus
+              type="text"
+              className="form-control"
+              placeholder="enter e-mail"
+              id="emailid"
+              name="USERNAME"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              data-bs-custom-class="custom-tooltip"
+              data-bs-title="This top tooltip is themed via CSS variables."
+              onChange={makeErrorNone}
+            />
+
+            {/* username empty alert */}
+            <span id="userEmpty" className="empty custom-alert"></span>
+          </div>
+
+          {/* password */}
+          <div className="mb-3">
+            <label
+              htmlFor="password"
+              className="form-label  fw-bold custom-login-label">
+              PASSWORD
+            </label>
+
+            <input
+              type={password}
+              className="form-control"
+              id="password"
+              placeholder="enter password"
+              name="PASSWORD"
+              onChange={makeErrorNone}
+            />
+            {/* password empty alert */}
+            <span id="passwordEmpty" className="empty custom-alert"></span>
+          </div>
+
+          {/* checkbox for show password */}
+          <div className="mb-3">
+            <input
+              type="checkbox"
+              className="mx-1 form-control-check"
+              id="showPassword"
+              onChange={handleToggle}
+            />
+            <label
+              htmlFor="showPassword"
+              className="form-label  fw-bold custom-login-label">
+              Show Password
+            </label>
+          </div>
+
+          {/* submit button */}
+          <div className="d-grid mb-3">
+            <input
+              type="submit"
+              className="btn-login custom-button"
+              value="LOGIN"
+            />
+          </div>
+        </form>
+        <p className="text-center">
+          don't you have an account? <Link to="/register">register</Link>
+        </p>
+      </div>
+      {/* )} */}
       {/* empty div */}
       <div className="col-md-4"></div>
     </div>
