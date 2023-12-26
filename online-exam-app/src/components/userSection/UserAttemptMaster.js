@@ -9,9 +9,9 @@ const UserAttemptMaster = () => {
             <table className="table table-bordered border-dark table-striped table-hover">
                <thead className="table-dark">
                  <tr>
-                  <td>Performance Id</td>
+                  {/* <td>Performance Id</td> */}
                   <td>Attempt Number</td>
-                  <td>Party Id</td>
+                  {/* <td>Party Id</td> */}
                   <td>Exam Id</td>
                   <td>Score</td>
                   <td>Completed Date</td>

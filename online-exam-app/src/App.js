@@ -19,6 +19,8 @@ import ExamTopicMapping from "./components/adminSection/examSection/ExamTopicMap
 import Home from "./components/homeSection/Home";
 import UserHome from "./components/userSection/UserHome";
 import UserMaster from "./components/adminSection/listUserSection/UserMaster";
+import UserDashboard from "./components/userSection/UserDashboard";
+import UserReport from "./components/userSection/UserReport";
 
 function App() {
   const [page, setPage] = useState("");
@@ -57,7 +59,11 @@ function App() {
             <Route path="addUsers" element={<UserMaster setPage={setPage} />} />
           </Route>
         </Route>
-        <Route path="/user" element={<UserHome setPage={setPage} />}></Route>
+        <Route path="/user" element={<UserHome setPage={setPage} />}>
+          <Route path="userDashboard" element={<UserDashboard/>}/>
+          <Route path="userReport" element={<UserReport/>}/>
+          </Route>
+        
 
         <Route path="*" element={<NoMatch />}></Route>
       </Routes>

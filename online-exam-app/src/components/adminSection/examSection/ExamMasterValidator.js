@@ -51,6 +51,7 @@ export const ValidateExamMasterForm = (key, value, setNoError) => {
       break;
 
     default:
+
       console.log("EXAM MASTER FORM VALIDATED SUCCESSFULLY!!");
   }
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { RiAdminFill, RiLogoutBoxRLine } from "react-icons/ri";
+import { RiAdminFill, RiLogoutBoxRLine, RiUserFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 
 import logo from "../../img/vastpro-logo-right.png";
@@ -126,7 +126,73 @@ const Header = ({ page, name }) => {
         ) : //to set header for user page
 
         page === "user" ? (
-          <p className="text-lg-center fw-bold">WELCOME {name} !</p>
+          <>
+          {/* <p className="text-lg-center fw-bold">WELCOME {name} !</p> */}
+
+          <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navmenu"
+              title="click to expand">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+
+            <div className="collapse navbar-collapse" id="navmenu">
+            <Link
+                to="user"
+                className="list-group-item list-group-item-action  active">
+                <RiUserFill size="20" className="mx-3" />
+                <p
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="USER">
+                  {name}
+                </p>
+              </Link>
+
+              <ul className="navbar-nav ms-auto">
+              <li className="nav-item">
+                  <Link
+                    to="user/userDashboard"
+                    className="list-group-item list-group-item-action p-2 "
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Go to Dashboard">
+                    DASHBOARD
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link
+                    to="user/userReport"
+                    className="list-group-item list-group-item-action p-2 "
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Go to Report">
+                    REPORT
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-outline-light btn-sm mx-3 p-2"
+                    onClick={handleClick}
+                    value="logout">
+                    <RiLogoutBoxRLine
+                      className="mb-1"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="LOGOUT"
+                    />
+                  </button>
+                </li>
+
+              </ul>
+
+            </div>
+
+
+          </>
         ) : //to set header for home page
 
         page === "home" ? (
