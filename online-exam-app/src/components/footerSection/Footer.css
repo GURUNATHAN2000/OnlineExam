@@ -6,3 +6,15 @@
   color: white;
   user-select: none;
 }
+
+/* .footer {
+  height: 60px !important;
+  line-height: 60px !important;
+}  */
+
+footer {
+  width: 100%;
+  padding: 0.25em;
+  display: grid;
+  place-content: center;
+}

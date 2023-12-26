@@ -1,54 +1,51 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./questionMaster.css";
 import axios from "axios";
 import useStateRef from "react-usestateref";
 import { ValidateQuestionForm } from "./QuestionValidator";
+import Swal from "sweetalert2";
+import { QuestionContext } from "./Question";
 
 const QuestionMaster = () => {
   const [noError, setNoError, currentRef] = useStateRef(true);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { questions, setQuestions } = useContext(QuestionContext);
+
   const makeErrorNone = () => {
     console.log("questionForm makeErrorNone() is called");
 
     document.getElementById("questionDetailEmpty").classList.remove("d-block");
     document.getElementById("questionDetailEmpty").classList.add("d-none");
     document.getElementById("questionDetailEmpty").innerHTML = "";
-    setNoError(true);
 
     document.getElementById("optionAisEmpty").classList.remove("d-block");
     document.getElementById("optionAisEmpty").classList.add("d-none");
     document.getElementById("optionAisEmpty").innerHTML = "";
-    setNoError(true);
 
     document.getElementById("optionBisEmpty").classList.remove("d-block");
     document.getElementById("optionBisEmpty").classList.add("d-none");
     document.getElementById("optionBisEmpty").innerHTML = "";
-    setNoError(true);
 
     document.getElementById("optionCisEmpty").classList.remove("d-block");
     document.getElementById("optionCisEmpty").classList.add("d-none");
     document.getElementById("optionCisEmpty").innerHTML = "";
-    setNoError(true);
 
     document.getElementById("optionDisEmpty").classList.remove("d-block");
     document.getElementById("optionDisEmpty").classList.add("d-none");
     document.getElementById("optionDisEmpty").innerHTML = "";
-    setNoError(true);
 
     document.getElementById("optionEisEmpty").classList.remove("d-block");
     document.getElementById("optionEisEmpty").classList.add("d-none");
     document.getElementById("optionEisEmpty").innerHTML = "";
-    setNoError(true);
 
     document.getElementById("questionTypeIsEmpty").classList.remove("d-block");
     document.getElementById("questionTypeIsEmpty").classList.add("d-none");
     document.getElementById("questionTypeIsEmpty").innerHTML = "";
-    setNoError(true);
 
     document.getElementById("topicIdIsEmpty").classList.remove("d-block");
     document.getElementById("topicIdIsEmpty").classList.add("d-none");
     document.getElementById("topicIdIsEmpty").innerHTML = "";
-    setNoError(true);
 
     document.getElementById("answerIsEmpty").classList.remove("d-block");
     document.getElementById("answerIsEmpty").classList.add("d-none");
@@ -58,13 +55,19 @@ const QuestionMaster = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("makeError inside handlesubmit");
+
     makeErrorNone();
+
     console.log("NO ERROR::", noError);
+
     const form = new FormData(event.target);
     const formData = Object.fromEntries(form.entries());
+
     Object.entries(formData).map(([key, value], keyIndex) => {
+      console.log("validation loop");
       ValidateQuestionForm(key, value, setNoError);
     });
+
     currentRef.current
       ? axiosCall(formData)
       : console.log("Error Occured.... QUESTION MASTER form");
@@ -85,6 +88,29 @@ const QuestionMaster = () => {
       .then((result) => {
         console.log("result::", result);
         return result.data;
+      })
+      .then((data) => {
+        console.log("data", data);
+        console.log("data: ", data);
+        data.EVENT_SUCCESS_MESSAGE === "success"
+          ? Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Question Added Successfully!",
+              showConfirmButton: false,
+              timer: 1000,
+            })
+          : data.EVENT_ERROR_MESSAGE === "error" &&
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Invalid Form Submission!",
+              showConfirmButton: false,
+              timer: 1000,
+            });
+        data.listQuestions
+          ? setQuestions(data.listQuestions)
+          : console.log("error in fetch (data.examMap)");
       })
       .catch((err) => {
         console.log("error::", err);

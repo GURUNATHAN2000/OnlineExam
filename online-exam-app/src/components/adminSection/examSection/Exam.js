@@ -1,14 +1,20 @@
-import React, { useEffect, useState, createContext } from "react";
-import Header from "../Header";
-import { Outlet } from "react-router";
+import React, { useEffect, useState, createContext, useContext } from "react";
+import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
 import Swal from "sweetalert2";
+
+import Header from "../Header";
 import EditModal from "./EditModal";
+import ViewDetailsModal from "./ViewDetailsModal";
 
 export const ExamContext = createContext(null);
 
 const Exam = () => {
+  const navigate = useNavigate();
+
   const [exams, setExams] = useState([]);
+
+  const [selectedExam, setSelectedExam] = useState("");
 
   useEffect(() => {
     axios
@@ -27,9 +33,20 @@ const Exam = () => {
         setExams(data.listExam);
       })
       .catch((error) => {
-        console.log("error: ", error);
+        error.message === "Request failed with status code 401"
+          ? handleError()
+          : console.log("Error From UserMaster Fetch : ", error);
       });
   }, []);
+
+  const handleError = () => {
+    Swal.fire({
+      icon: "error",
+      title: "Your Session Has Expired..!",
+      text: "you've to login to use this service",
+    });
+    navigate("/login");
+  };
 
   const handleDelete = (examId) => {
     Swal.fire({
@@ -42,7 +59,6 @@ const Exam = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        //------------
         axios
           .get(
             `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`,
@@ -52,16 +68,19 @@ const Exam = () => {
             return response.data;
           })
           .then((data) => {
-            console.log("data: ", data);
+            console.log("data.listExam ", data.listExam);
+            data.listExam ? setExams(data.listExam) : setExams([]);
           })
           .catch((error) => {
             console.log("error: ", error);
           });
-        //------------
         Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
+          position: "center",
           icon: "success",
+          title: "Deleted!",
+          text: "Exam has been deleted.",
+          showConfirmButton: false,
+          timer: 1000,
         });
       }
     });
@@ -71,17 +90,23 @@ const Exam = () => {
     console.log("FOR handleAddTopic => EXAM ID:::::" + examId);
   };
 
+  const handleDetails = (exam) => {
+    console.log("Exam :: ", exam);
+    setSelectedExam(exam);
+    console.log("selectedExam :: ", selectedExam);
+  };
+
   return (
     <ExamContext.Provider value={{ exams, setExams }}>
       <EditModal />
-      <div className="container">
-        {/* <MainContent /> */}
+      <ViewDetailsModal selectedExam={selectedExam} />
 
+      <div className="container">
         <Header title="EXAM" next="addExams" back="/admin/exams" />
 
         <Outlet />
 
-        <div className="card text-center shadow-lg">
+        <div className="card text-center shadow-lg mt-3">
           <div className="card-title">
             <h2 className="text-center">Exam Listing</h2>
           </div>
@@ -100,6 +125,7 @@ const Exam = () => {
                       <td>Action</td>
                     </tr>
                   </thead>
+
                   <tbody>
                     {console.log("exams", exams)}
                     {exams &&
@@ -114,7 +140,7 @@ const Exam = () => {
                           <td>
                             <button
                               type="button"
-                              className="btn btn-outline-success m-1"
+                              className="btn btn-outline-success m-1 btn-sm"
                               data-bs-toggle="modal"
                               data-bs-target="#modalForm"
                               onClick={() => handleAddTopic(exam.examId)}>
@@ -122,9 +148,20 @@ const Exam = () => {
                             </button>
 
                             <button
-                              className="btn btn-outline-danger m-1"
+                              className="btn btn-outline-danger m-1 btn-sm"
                               onClick={() => handleDelete(exam.examId)}>
                               Delete
+                            </button>
+                            {console.log("Exam :: ", exam)}
+                            <button
+                              type="button"
+                              className="btn btn-outline-primary m-1 btn-sm"
+                              data-bs-toggle="modal"
+                              data-bs-target="#modalFormView"
+                              onClick={() => {
+                                handleDetails(exam);
+                              }}>
+                              Details
                             </button>
                           </td>
                         </tr>

@@ -1,10 +1,11 @@
 import axios from "axios";
-import "./ExamMaster.css";
 import { useContext, useState } from "react";
 import Swal from "sweetalert2";
-import { ExamContext } from "./Exam";
 import useStateRef from "react-usestateref";
+
 import { ValidateExamMasterForm } from "./ExamMasterValidator";
+import "./ExamMaster.css";
+import { ExamContext } from "./Exam";
 
 const ExamMaster = () => {
   const [noError, setNoError, currentRef] = useStateRef(true);
@@ -51,6 +52,7 @@ const ExamMaster = () => {
       ValidateExamMasterForm(key, value, setNoError);
     });
     console.log("current value ::: ", currentRef.current);
+
     //if ExamMaster form has no error then make a call to axios...
     currentRef.current
       ? axiosCall(myObject)
@@ -69,7 +71,7 @@ const ExamMaster = () => {
       })
       .then((data) => {
         console.log("data: ", data);
-        data.EVENT_SUCCESS_MESSAGE === "SUCCESS"
+        data.EVENT_SUCCESS_MESSAGE === "success"
           ? Swal.fire({
               position: "center",
               icon: "success",
@@ -77,7 +79,7 @@ const ExamMaster = () => {
               showConfirmButton: false,
               timer: 1000,
             })
-          : data.EVENT_ERROR_MESSAGE === "ERROR" &&
+          : data.EVENT_ERROR_MESSAGE === "error" &&
             Swal.fire({
               position: "center",
               icon: "error",
@@ -85,12 +87,10 @@ const ExamMaster = () => {
               showConfirmButton: false,
               timer: 1000,
             });
-        console.log("examMap", data.examMap);
+        console.log("examMap", data.listExam);
 
-        data.examMap
-          ? exams != null
-            ? setExams([...exams, data.examMap])
-            : setExams(data.examMap)
+        data.listExam
+          ? setExams(data.listExam)
           : console.log("error in fetch (data.examMap)");
       })
       .catch((error) => {
@@ -127,8 +127,7 @@ const ExamMaster = () => {
           <textarea
             className="form-control"
             id="description"
-            name="description"
-          ></textarea>
+            name="description"></textarea>
         </div>
 
         <div className="col-md-6">
@@ -212,13 +211,13 @@ const ExamMaster = () => {
           <select
             className="form-control"
             name="questionsRandomized"
-            defaultValue="Y"
-          >
+            defaultValue="Y">
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>
           </select>
         </div>
+
 
         <div className="col-4">
           <label htmlFor="answersMust" className="form-label fw-bold">
@@ -238,8 +237,7 @@ const ExamMaster = () => {
           <select
             className="form-control"
             name="enableNegativeMark"
-            defaultValue="N"
-          >
+            defaultValue="N">
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>
