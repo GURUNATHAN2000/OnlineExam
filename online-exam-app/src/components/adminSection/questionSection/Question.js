@@ -13,7 +13,10 @@ const Question = () => {
       .get(
         "https://" +
           window.location.hostname +
-          ":8443/onlineexam/control/finduserquestion"
+          ":8443/onlineexam/control/display-all-question",
+        {
+          withCredentials: true,
+        }
       )
       .then((response) => {
         return response.data;
@@ -99,7 +102,7 @@ const Question = () => {
                       <td>Option D</td>
                       <td>Option E</td>
                       <td>Answer</td>
-                      <td>Num Answer</td>
+
                       <td>Question Type</td>
                       {/* <td>Difficulty Level</td> */}
                       {/* <td>Answer Value</td> */}
@@ -119,7 +122,7 @@ const Question = () => {
                         <td>{question.optionD}</td>
                         <td>{question.optionE}</td>
                         <td> {question.answer}</td>
-                        <td> {question.numAnswers}</td>
+
                         <td> {question.questionType}</td>
                         {/* <td> {question.difficultyLevel}</td> */}
                         {/* <td>{question.answerValue}</td> */}
@@ -130,8 +133,7 @@ const Question = () => {
                             className="btn btn-danger m-1"
                             onClick={() => {
                               handleDelete(question.questionId);
-                            }}
-                          >
+                            }}>
                             Delete
                           </button>
                         </td>

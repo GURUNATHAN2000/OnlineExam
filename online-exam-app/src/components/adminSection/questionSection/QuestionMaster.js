@@ -111,6 +111,7 @@ const QuestionMaster = () => {
         data.listQuestions
           ? setQuestions(data.listQuestions)
           : console.log("error in fetch (data.examMap)");
+        document.getElementById("questionForm").reset();
       })
       .catch((err) => {
         console.log("error::", err);

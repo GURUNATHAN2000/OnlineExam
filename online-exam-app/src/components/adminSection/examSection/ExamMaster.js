@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import useStateRef from "react-usestateref";
 
 import { ValidateExamMasterForm } from "./ExamMasterValidator";
-import "./ExamMaster.css";
+import "./css/ExamMaster.css";
 import { ExamContext } from "./Exam";
 
 const ExamMaster = () => {
@@ -92,17 +92,17 @@ const ExamMaster = () => {
         data.listExam
           ? setExams(data.listExam)
           : console.log("error in fetch (data.examMap)");
+        document.getElementById("examMasterForm").reset();
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log("error: ", error);
-        setIsLoading(true);
       });
-    document.getElementById("exam").reset();
   };
 
   return (
     <div className="container shadow-lg rounded-2 mt-4 mb-3 p-3 text-light custom-form">
-      <form className="row g-4 p-3" onSubmit={handleSubmit} id="exam">
+      <form className="row g-4 p-3" onSubmit={handleSubmit} id="examMasterForm">
         {/* invalid credentials */}
         <span id="invalidCredentials" className="custom-alert"></span>
 

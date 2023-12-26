@@ -115,7 +115,6 @@ const UserMaster = ({ setPage }) => {
       });
   };
 
-  //navigate to login if sucess
   const handleSuccess = (msg) => {
     msg === "SUCCESS"
       ? SuccessAlert("User Added Successfully !")

@@ -1,12 +1,15 @@
 import React, { createContext, useEffect, useState } from "react";
 import Header from "../Header";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
 import Swal from "sweetalert2";
 
 export const TopicContext = createContext(null);
 
 const Topic = () => {
+  const navigate = useNavigate();
+
+
   const [topics, setTopics] = useState([]);
 
   useEffect(() => {
@@ -14,7 +17,7 @@ const Topic = () => {
       .get(
         "https://" +
           window.location.hostname +
-          ":8443/onlineexam/control/findusertopic",
+          ":8443/onlineexam/control/display-all-topic",
         {
           withCredentials: true,
         }
@@ -23,14 +26,25 @@ const Topic = () => {
         return response.data;
       })
       .then((data) => {
-        console.log(data.listTopics);
-        console.log("data:", data);
+        //console.log(data.listTopics);
+        //console.log("data:", data);
         setTopics(data.listTopics);
       })
       .catch((error) => {
-        console.log("error:", error);
+        error.message === "Request failed with status code 401"
+          ? handleError()
+          : console.log("Error From Topic Fetch : ", error);
       });
   }, []);
+
+  const handleError = () => {
+    Swal.fire({
+      icon: "error",
+      title: "Your Session Has Expired..!",
+      text: "you've to login to use this service",
+    });
+    navigate("/login");
+  };
 
   const handleDelete = (topicId) => {
     Swal.fire({
@@ -52,8 +66,8 @@ const Topic = () => {
             return response.data;
           })
           .then((data) => {
-            console.log("data", data);
-            console.log("data.listTopics ", data.listTopics);
+            //console.log("data", data);
+            //console.log("data.listTopics ", data.listTopics);
             data.listTopics ? setTopics(data.listTopics) : setTopics([]);
           })
           .catch((error) => {
