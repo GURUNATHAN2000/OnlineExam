@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import Header from "../Header";
 import EditModal from "./EditModal";
 import ViewDetailsModal from "./ViewDetailsModal";
+import useStateRef from "react-usestateref";
 
 export const ExamContext = createContext(null);
 
@@ -86,19 +87,23 @@ const Exam = () => {
     });
   };
 
-  const handleAddTopic = (examId) => {
-    console.log("FOR handleAddTopic => EXAM ID:::::" + examId);
+  //handleAddTopic
+  const handleAddTopic = (exam) => {
+    console.log("FOR handleAddTopic => EXAM ID:::::" + exam);
+    setSelectedExam(exam);
+    console.log("SELECTED EXAM:::::", selectedExam);
   };
 
+  // handleDetails
   const handleDetails = (exam) => {
-    console.log("Exam :: ", exam);
+    console.log(`EXAM:: ${exam}`);
     setSelectedExam(exam);
     console.log("selectedExam :: ", selectedExam);
   };
 
   return (
     <ExamContext.Provider value={{ exams, setExams }}>
-      <EditModal />
+      <EditModal selectedExam={selectedExam} />
       <ViewDetailsModal selectedExam={selectedExam} />
 
       <div className="container">
@@ -143,7 +148,8 @@ const Exam = () => {
                               className="btn btn-outline-success m-1 btn-sm"
                               data-bs-toggle="modal"
                               data-bs-target="#modalForm"
-                              onClick={() => handleAddTopic(exam.examId)}>
+                              onClick={() => handleAddTopic(exam)}
+                            >
                               Add Topic
                             </button>
 

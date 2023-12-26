@@ -21,11 +21,12 @@ const UserList = () => {
         return response.data;
       })
       .then((data) => {
-        console.log("data ", data);
-        setUserNameList(data.ListOfUsers);
+        data.ListOfUsers
+          ? setUserNameList(data.ListOfUsers)
+          : console.log("data ", data);
       })
       .catch((error) => {
-        //console.log(error.message);
+        console.log(error.message);
         error.message === "Request failed with status code 401"
           ? handleError()
           : console.log("Error From UserMaster Fetch : ", error);
@@ -60,35 +61,40 @@ const UserList = () => {
             <table className="table table-bordered border-dark table-striped table-hover">
               <thead className="table-dark ">
                 <tr>
-                  <td>No.</td>
-                  <td>LIST OF USERS</td>
+                  <td>Party ID</td>
+                  <td>Name</td>
+                  <td>User Login ID</td>
                   <td>ACTION</td>
                 </tr>
               </thead>
 
               <tbody>
+                {console.log("userNameList", userNameList)}
                 {userNameList && userNameList.length > 0
-                  ? userNameList.map((user, index) => (
-                      <tr key={index}>
-                        <td className="fw-bolder">{index + 1}</td>
-                        <td className="fw-bolder">{user}</td>
-                        <td>
-                          <button type="button"
-                          className="btn btn-outline-success m-1 btn-sm"
-                          data-bs-toggle="modal"
-                          data-bs-target="#modalFormAssign"
-                          onClick={()=>handleAssignExam(user)}
-                          >
-                            Assign Exam
-                          </button>
-
-
-                          <button className="btn btn-outline-danger m-1">
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))
+                  ? userNameList.map((user) =>
+                      user != null ? (
+                        <tr key={user.partyId}>
+                          <td className="fw-bolder">{user.partyId}</td>
+                          <td className="fw-bolder">
+                            {user.firstName + " " + user.lastName}
+                          </td>
+                          <td className="fw-bolder">
+                            {user.userLoginId }
+                          </td>
+                          <td>
+                            <button className="btn btn-outline-success m-1"
+                            >
+                              Assign Exam
+                            </button>
+                            <button className="btn btn-outline-danger m-1">
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ) : (
+                        console.log("user is null")
+                      )
+                    )
                   : console.log("list user undefined")}
               </tbody>
             </table>

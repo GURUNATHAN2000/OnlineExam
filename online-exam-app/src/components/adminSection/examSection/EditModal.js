@@ -1,6 +1,7 @@
 import React from "react";
 
-const EditModal = () => {
+const EditModal = ({ selectedExam }) => {
+  console.log("EDIT MODAL::::", selectedExam.examId);
   return (
     // <!-- Modal -->
     <div
@@ -8,35 +9,58 @@ const EditModal = () => {
       id="modalForm"
       tabIndex="-1"
       aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content custom-form">
           <div class="modal-header">
             <h3
               className=" modal-title text-center fw-bold"
-              id="exampleModalLabel">
+              id="exampleModalLabel"
+            >
               Add Topic
             </h3>
             <button
               type="button"
               className="btn-close"
               data-bs-dismiss="modal"
-              aria-label="Close">
+              aria-label="Close"
+            >
               <span area-hidden="true"></span>
             </button>
           </div>
+
           <div class="modal-body ">
             <form>
-              <div className="mb-3">
-                <label className="form-label fw-bold">Topic Name</label>
+              <div className="col-md-4">
+                <label htmlFor="examId" className="form-label fw-bold">
+                  Exam Id
+                </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="topicName"
-                  name="topicName"
-                  placeholder="enter topic name"
+                  id="examId"
+                  name="examId"
+                  value={selectedExam.examId}
+                  disabled
                 />
               </div>
+
+              <div className="mb-3">
+                <label
+                  htmlFor="topicId"
+                  className="form-label fw-bold"
+                >
+                  Topic Id / Topic Name
+                </label>
+                <select
+                  className="form-control"
+                  name="topicId"
+                >
+                  <option>TopicId/TopicName</option>
+                </select>
+              </div>
+
               <div className="mb-3">
                 <label className="form-label fw-bold">Percentage</label>
                 <input

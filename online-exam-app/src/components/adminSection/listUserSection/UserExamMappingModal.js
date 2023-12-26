@@ -1,6 +1,45 @@
 import React from 'react'
+import useStateRef from 'react-usestateref'
+import { validateUserExamMap } from './UserExamMappingValidator'
 
-const UserExamMappingModal = ({ selectedUser }) => {
+
+const UserExamMappingModal = () => {
+  const [noError, setNoError, currentRef] = useStateRef(true);
+
+  const makeErrorNone=()=>{
+    console.log("Inside make error none");
+            
+            document.getElementById("examIdEmpty").classList.remove("d-block");
+            document.getElementById("examIdEmpty").classList.add("d-none");
+            document.getElementById("examIdEmpty").innerHTML=""
+
+            document.getElementById("allowedAttemptsEmpty").classList.remove("d-block");
+            document.getElementById("allowedAttemptsEmpty").classList.add("d-none");
+            document.getElementById("allowedAttemptsEmpty").innerHTML=""
+            
+            document.getElementById("noOfAttemptsEmpty").classList.remove("d-block");
+            document.getElementById("noOfAttemptsEmpty").classList.add("d-none");
+            document.getElementById("noOfAttemptsEmpty").innerHTML=""
+            
+            document.getElementById("timeoutDaysEmpty").classList.remove("d-block");
+            document.getElementById("timeoutDaysEmpty").classList.add("d-none");
+            document.getElementById("timeoutDaysEmpty").innerHTML=""
+
+
+            setNoError(true);
+  };
+
+  const handleSubmit=(event)=>{
+    event.preventDefault();
+    makeErrorNone();
+    console.log("NO ERROR::",noError);
+
+    const formData=new FormData(event.target);
+    const myObject=Object.fromEntries(formData.entries());
+    console.log(myObject);
+    
+
+  };
   return (
     // <!-- Modal -->
     <div
@@ -27,7 +66,7 @@ const UserExamMappingModal = ({ selectedUser }) => {
             </button>
           </div>
           <div class="modal-body ">
-          <form className="row g-4 p-3" >
+          <form className="row g-4 p-3" onSubmit={handleSubmit}>
                 <h3 className="text-center fw-bold label">User Exam Mapping</h3>
                 <div className="col-md-6">
                     <label htmlFor="partyId" className="form-label fw-bold label">Party Id</label>
@@ -36,17 +75,20 @@ const UserExamMappingModal = ({ selectedUser }) => {
 
                 <div className="col-md-6">
                     <label htmlFor="examId" className="form-label fw-bold label">Exam Id</label>
-                    <input type="text" id="examId" className="form-control" placeholder="enter examId" name="examId"/>
+                    <input type="text" id="examId" className="form-control" placeholder="enter examId" name="examId"  onChange={makeErrorNone}/>
+                    <span id="examIdEmpty" className="custom-alert"></span>
                 </div>
 
                 <div className="col-md-6">
                     <label htmlFor="allowedAttempts" className="form-label fw-bold label">Allowed Attempts</label>
-                    <input type="number" id="allowedAttempts" className="form-control" placeholder="enter allowed attempts"/>
+                    <input type="number" id="allowedAttempts" className="form-control" placeholder="enter allowed attempts"  onChange={makeErrorNone}/>
+                    <span id="allowedAttemptsEmpty" className="custom-alert"></span>
                 </div>
 
                 <div className="col-md-6">
                   <label htmlFor="noOfAttempts" className="form-label fw-bold label">No Of Attempts</label>
-                  <input type="number" id="noOfAttempts" className="form-control" placeholder="enter no of attempts" name="noOfAttempts"/>
+                  <input type="number" id="noOfAttempts" className="form-control" placeholder="enter no of attempts" name="noOfAttempts"  onChange={makeErrorNone}/>
+                  <span id="noOfAttemptsEmpty" className="custom-alert"></span>
                 </div>
 
                 <div className="col-md-6">
@@ -56,7 +98,8 @@ const UserExamMappingModal = ({ selectedUser }) => {
 
                 <div className="col-md-6">
                   <label htmlFor="timeoutDays" className="form-label fw-bold label">Timeout Days</label>
-                  <input type="number" id="timeoutDays" className="form-control"  name="timeoutDays" defaultValue="30"/>
+                  <input type="number" id="timeoutDays" className="form-control"  name="timeoutDays" defaultValue="30"  onChange={makeErrorNone}/>
+                  <span id="timeoutDaysEmpty" className="custom-alert"></span>
                 </div>
 
                 <div className="col-md-6">
