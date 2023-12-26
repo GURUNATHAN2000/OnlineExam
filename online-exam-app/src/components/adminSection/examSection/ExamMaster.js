@@ -92,12 +92,12 @@ const ExamMaster = () => {
         data.listExam
           ? setExams(data.listExam)
           : console.log("error in fetch (data.examMap)");
+        document.getElementById("examMaster").reset();
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log("error: ", error);
-        setIsLoading(true);
       });
-    document.getElementById("examMaster").reset();
   };
   return (
     <div className="container shadow-lg rounded-2 mt-4 mb-3 p-3 text-light custom-form">
@@ -218,7 +218,6 @@ const ExamMaster = () => {
             <option>N</option>
           </select>
         </div>
-
 
         <div className="col-4">
           <label htmlFor="answersMust" className="form-label fw-bold">

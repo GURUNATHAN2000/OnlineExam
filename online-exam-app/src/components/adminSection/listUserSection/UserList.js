@@ -53,8 +53,9 @@ const UserList = () => {
             <table className="table table-bordered border-dark table-striped table-hover">
               <thead className="table-dark ">
                 <tr>
-                  <td>No.</td>
-                  <td>LIST OF USERS</td>
+                  <td>Party ID</td>
+                  <td>Name</td>
+                  <td>User Login ID</td>
                   <td>ACTION</td>
                 </tr>
               </thead>
@@ -68,6 +69,9 @@ const UserList = () => {
                           <td className="fw-bolder">{user.partyId}</td>
                           <td className="fw-bolder">
                             {user.firstName + " " + user.lastName}
+                          </td>
+                          <td className="fw-bolder">
+                            {user.userLoginId }
                           </td>
                           <td>
                             <button className="btn btn-outline-success m-1">
