@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../img/vastpro-logo-right.png";
 import "./Header.css";
 
-const Header = ({ page, name }) => {
+const Header = ({ page, name, partyId }) => {
   const navigate = useNavigate();
 
   const handleClick = (event) => {
@@ -51,7 +51,7 @@ const Header = ({ page, name }) => {
 
             <div className="collapse navbar-collapse" id="navmenu">
               <Link
-                to="admin"
+                to="admin/exams"
                 className="list-group-item list-group-item-action  active">
                 <RiAdminFill size="20" className="mx-3" />
                 <p
@@ -59,6 +59,8 @@ const Header = ({ page, name }) => {
                   data-bs-placement="top"
                   title="ADMIN">
                   ADMIN
+                  <br />
+                  ID : {partyId}
                 </p>
               </Link>
 
@@ -127,9 +129,9 @@ const Header = ({ page, name }) => {
 
         page === "user" ? (
           <>
-          {/* <p className="text-lg-center fw-bold">WELCOME {name} !</p> */}
+            {/* <p className="text-lg-center fw-bold">WELCOME {name} !</p> */}
 
-          <button
+            <button
               className="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
@@ -139,20 +141,21 @@ const Header = ({ page, name }) => {
             </button>
 
             <div className="collapse navbar-collapse" id="navmenu">
-            <Link
-                to="user"
+              <Link
+                to="user/userDashboard"
                 className="list-group-item list-group-item-action  active">
                 <RiUserFill size="20" className="mx-3" />
                 <p
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
                   title="USER">
-                  {name}
+                  {name} <br />
+                  ID : {partyId}
                 </p>
               </Link>
 
               <ul className="navbar-nav ms-auto">
-              <li className="nav-item">
+                <li className="nav-item">
                   <Link
                     to="user/userDashboard"
                     className="list-group-item list-group-item-action p-2 "
@@ -186,12 +189,8 @@ const Header = ({ page, name }) => {
                     />
                   </button>
                 </li>
-
               </ul>
-
             </div>
-
-
           </>
         ) : //to set header for home page
 

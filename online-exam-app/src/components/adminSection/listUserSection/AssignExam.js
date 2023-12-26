@@ -65,6 +65,7 @@ const AssignExam = ({ selectedUser }) => {
         return response.data;
       })
       .then((data) => {
+        console.log("data: ", data);
         data.EVENT_SUCCESS_MESSAGE === "SUCCESS"
           ? handleSuccess()
           : data.EVENT_ERROR_MESSAGE === "ERROR"

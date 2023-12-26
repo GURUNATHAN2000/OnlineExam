@@ -34,6 +34,7 @@ const Question = () => {
   }, []);
 
   const handleDelete = (questionId) => {
+    console.log(questionId);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -57,6 +58,7 @@ const Question = () => {
           })
           .then((data) => {
             console.log("data :: ", data);
+            console.log(data.listQuestions);
             data.listQuestions
               ? setQuestions(data.listQuestions)
               : setQuestions([]);

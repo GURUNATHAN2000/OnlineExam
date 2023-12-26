@@ -70,17 +70,18 @@ const Login = (props) => {
         { withCredentials: true }
       )
       .then((res) => {
-        setIsLoading(false);
+        //setIsLoading(false);
         return res.data;
       })
       .then((data) => {
         console.log("Data :: ", data);
         handleRoleType(data);
         props.setName(data.userNameLogin);
+        props.setPartyId(data.partyId);
         console.log("roleTypeId :: ", data.roleTypeId);
       })
       .catch((err) => {
-        setIsLoading(false);
+        // setIsLoading(false);
         console.log("ERROR FROM LOGIN FETCH :: ", err);
       });
   };
@@ -90,7 +91,7 @@ const Login = (props) => {
     data.roleTypeId === "ADMIN"
       ? navigate("/admin/exams")
       : data.roleTypeId === "PERSON_ROLE"
-      ? navigate("/user")
+      ? navigate("/user/userDashboard")
       : checkValidCredentials();
   };
 
@@ -118,6 +119,7 @@ const Login = (props) => {
     <div className="row g-0 align-items-center justify-content-center">
       {/* empty div */}
       <div className="col-md-4"></div>
+
       {/* {isLoading ? (
         <div className="col-md-6 col-7 m-5">
           <img
@@ -128,14 +130,6 @@ const Login = (props) => {
           />
         </div>
       ) : ( */}
-      /
-      {isLoading && (
-        <div class="d-flex justify-content-center">
-          <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-        </div>
-      )}
       <div className="col-md-4 col-10 p-4 mt-4 mb-3 shadow-lg rounded custom-form">
         <form id="loginForm " className="custom-form" onSubmit={handleSubmit}>
           <h1 className="mb-3 text-center login-heading fw-bold">USER LOGIN</h1>
@@ -218,6 +212,7 @@ const Login = (props) => {
         </p>
       </div>
       {/* )} */}
+
       {/* empty div */}
       <div className="col-md-4"></div>
     </div>

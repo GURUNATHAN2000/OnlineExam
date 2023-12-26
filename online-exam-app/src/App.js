@@ -25,17 +25,24 @@ import UserReport from "./components/userSection/UserReport";
 function App() {
   const [page, setPage] = useState("");
   const [name, setName] = useState("");
+  const [partyId, setPartyId] = useState("");
 
   return (
     <>
-      <Header page={page} name={name} />
+      <Header page={page} name={name} partyId={partyId} />
 
       <Routes>
         <Route path="/" element={<Home setPage={setPage} />} />
 
         <Route
           path="login"
-          element={<Login setPage={setPage} setName={setName} />}
+          element={
+            <Login
+              setPage={setPage}
+              setName={setName}
+              setPartyId={setPartyId}
+            />
+          }
         />
 
         <Route path="/register" element={<Register setPage={setPage} />} />
@@ -60,10 +67,12 @@ function App() {
           </Route>
         </Route>
         <Route path="/user" element={<UserHome setPage={setPage} />}>
-          <Route path="userDashboard" element={<UserDashboard/>}/>
-          <Route path="userReport" element={<UserReport/>}/>
-          </Route>
-        
+          <Route
+            path="userDashboard"
+            element={<UserDashboard partyId={partyId} />}
+          />
+          <Route path="userReport" element={<UserReport />} />
+        </Route>
 
         <Route path="*" element={<NoMatch />}></Route>
       </Routes>
