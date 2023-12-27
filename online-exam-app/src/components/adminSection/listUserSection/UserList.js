@@ -18,7 +18,7 @@ const UserList = () => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log("response  ", response);
+        // console.log("response  ", response);
         return response.data;
       })
       .then((data) => {
@@ -56,48 +56,46 @@ const UserList = () => {
         <Outlet />
 
         <div className="card text-center">
-          <div className="card-body">
-            <table className="table table-bordered border-dark table-striped table-hover">
-              <thead className="table-dark ">
-                <tr>
-                  <td>Party ID</td>
-                  <td>Name</td>
-                  <td>ACTION</td>
-                </tr>
-              </thead>
+          {userNameList && userNameList.length > 0 ? (
+            userNameList.map((user) => (
+              <div className="card-body" key={user.partyId}>
+                <table className="table table-bordered border-dark table-striped table-hover">
+                  <thead className="table-dark ">
+                    <tr>
+                      <td>Party ID</td>
+                      <td>Name</td>
+                      <td>ACTION</td>
+                    </tr>
+                  </thead>
 
-              <tbody>
-                {console.log("userNameList", userNameList)}
-                {userNameList && userNameList.length > 0
-                  ? userNameList.map((user) =>
-                      user != null ? (
-                        <tr key={user.partyId}>
-                          <td className="fw-bolder">{user.partyId}</td>
-                          <td className="fw-bolder">
-                            {user.firstName + " " + user.lastName}
-                          </td>
-                          <td>
-                            <button
-                              type="button"
-                              className="btn btn-outline-success m-1 btn-sm"
-                              data-bs-toggle="modal"
-                              data-bs-target="#modalFormAssign"
-                              onClick={() => handleAssignExam(user)}>
-                              Assign Exam
-                            </button>
-                            <button className="btn btn-outline-danger m-1 btn-sm">
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      ) : (
-                        console.log("user is null")
-                      )
-                    )
-                  : console.log("list user undefined")}
-              </tbody>
-            </table>
-          </div>
+                  <tbody>
+                    {/* {console.log("userNameList", userNameList)} */}
+                    <tr>
+                      <td className="fw-bolder">{user.partyId}</td>
+                      <td className="fw-bolder">
+                        {user.firstName + " " + user.lastName}
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-outline-success m-1 btn-sm"
+                          data-bs-toggle="modal"
+                          data-bs-target="#modalFormAssign"
+                          onClick={() => handleAssignExam(user)}>
+                          Assign Exam
+                        </button>
+                        <button className="btn btn-outline-danger m-1 btn-sm">
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            ))
+          ) : (
+            <p className="lead text-danger fw-bold">NO USERS TO DISPLAY</p>
+          )}
         </div>
       </div>
     </UserListContext.Provider>

@@ -22,11 +22,9 @@ const Question = () => {
         return response.data;
       })
       .then((data) => {
-        console.log(data.listQuestions);
-        console.log("data:", data);
         data.listQuestions
           ? setQuestions(data.listQuestions)
-          : setQuestions([]);
+          : console.log("data:", data);
       })
       .catch((error) => {
         console.log("error:", error);

@@ -86,22 +86,24 @@ const AssignExam = ({ selectedUser }) => {
   return (
     // <!-- Modal -->
     <div
-      class="modal fade "
+    className="modal fade "
       id="modalFormAssign"
       tabIndex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true">
-      <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content custom-form">
-          <div class="modal-header">
+      <div className="modal-dialog modal-xl modal-dialog-centered">
+        <div className="modal-content custom-form">
+          <div className="modal-header">
             <h3 className="text-center fw-bold label">User Exam Mapping</h3>
+
             <button
               type="button"
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"></button>
           </div>
-          <div class="modal-body ">
+
+          <div className="modal-body ">
             <form
               className="row g-4 p-3"
               onSubmit={handleSubmit}
@@ -137,7 +139,9 @@ const AssignExam = ({ selectedUser }) => {
                   <option>select exam</option>
                   {exams && exams.length > 0 ? (
                     exams.map((exam) => (
-                      <option value={exam.examId}>{exam.examName}</option>
+                      <option value={exam.examId} key={exam.examId}>
+                        {exam.examName}
+                      </option>
                     ))
                   ) : (
                     <option>No topics to select</option>

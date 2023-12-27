@@ -21,7 +21,7 @@ const Login = (props) => {
   const navigate = useNavigate();
 
   const makeErrorNone = () => {
-    console.log("makeErrorNone Worked!");
+    //console.log("makeErrorNone Worked!");
 
     document.getElementById("userEmpty").classList.remove("d-block");
     document.getElementById("userEmpty").classList.add("d-none");
@@ -74,7 +74,8 @@ const Login = (props) => {
         return res.data;
       })
       .then((data) => {
-        console.log("Data :: ", data);
+        console.log("data:: ", data);
+        //data._ERROR_MESSAGE_ ? handleError(data) : handleRoleType(data);
         handleRoleType(data);
         props.setName(data.userNameLogin);
         props.setPartyId(data.partyId);
@@ -95,9 +96,16 @@ const Login = (props) => {
       : checkValidCredentials();
   };
 
+  const handleError = (data) => {
+    // data._ERROR_MESSAGE_ ===
+    // "following error occurred during login: Password incorrect."
+    //   ? checkValidCredentials()
+    //   : console.log("Data : ", data);
+  };
+
   //password Incorrect
   const checkValidCredentials = () => {
-    console.log("checkValidCredentials  in");
+    //console.log("checkValidCredentials  in");
     document.getElementById("invalidCredentials").classList.remove("d-none");
     document.getElementById("invalidCredentials").classList.add("d-block");
     document.getElementById("invalidCredentials").innerHTML =
@@ -107,7 +115,7 @@ const Login = (props) => {
   //toggle for showpassword
   const handleToggle = (event) => {
     if (event.target.checked) {
-      console.log(event.target.checked);
+      // console.log(event.target.checked);
       setPassword("text");
     } else {
       setPassword("password");

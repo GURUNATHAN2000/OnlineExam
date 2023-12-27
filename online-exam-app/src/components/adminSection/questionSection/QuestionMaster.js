@@ -153,7 +153,7 @@ const QuestionMaster = () => {
           </label>
           <textarea
             className="form-control"
-            placeholder="optionA"
+            placeholder="optionB"
             rows="3"
             name="optionB"></textarea>
           <span id="optionBisEmpty" className="empty custom-alert"></span>

@@ -6,7 +6,7 @@ const Home = ({ setPage }) => {
   });
 
   return (
-    <div class="card">
+    <div className="card">
       <img
         src="bg-boy.gif"
         alt="back-ground-image loading..."

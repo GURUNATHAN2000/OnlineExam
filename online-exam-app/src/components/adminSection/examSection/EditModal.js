@@ -85,14 +85,14 @@ const EditModal = ({ selectedExam }) => {
   return (
     // <!-- Modal -->
     <div
-      class="modal fade "
+      className="modal fade "
       id="modalForm"
       tabIndex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content custom-form">
-          <div class="modal-header">
+      <div className="modal-dialog">
+        <div className="modal-content custom-form">
+          <div className="modal-header">
             <h3
               className=" modal-title text-center fw-bold"
               id="exampleModalLabel">
@@ -107,7 +107,7 @@ const EditModal = ({ selectedExam }) => {
             </button>
           </div>
 
-          <div class="modal-body ">
+          <div className="modal-body ">
             <form
               className="row"
               onSubmit={handleSubmit}
@@ -156,7 +156,12 @@ const EditModal = ({ selectedExam }) => {
                   <option>select topic</option>
                   {topics && topics.length > 0 ? (
                     topics.map((topic) => (
-                      <option value={topic.topicId}>{topic.topicName}</option>
+                      <option
+                        key={topic.topicId}
+                        value={topic.topicId}
+                        className="form-control">
+                        {topic.topicName}
+                      </option>
                     ))
                   ) : (
                     <option>No topics to select</option>
@@ -171,7 +176,7 @@ const EditModal = ({ selectedExam }) => {
                   min="0"
                   max="100"
                   step="0.01"
-                  class="form-control"
+                  className="form-control"
                   id="percentage"
                   name="percentage"
                   placeholder="enter percentage"
@@ -187,7 +192,7 @@ const EditModal = ({ selectedExam }) => {
                   min="0"
                   max="100"
                   step="0.01"
-                  class="form-control"
+                  className="form-control"
                   id="topicPassPercentage"
                   name="topicPassPercentage"
                   placeholder="enter topic pass percentage"
@@ -199,7 +204,7 @@ const EditModal = ({ selectedExam }) => {
                 <input
                   type="number"
                   min="0"
-                  class="form-control"
+                  className="form-control"
                   id="questionsPerExam"
                   name="questionsPerExam"
                   placeholder="enter questions per exam"

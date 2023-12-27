@@ -29,9 +29,8 @@ const Exam = () => {
         return response.data;
       })
       .then((data) => {
-        console.log("list from response:::::", data.listExam);
-        console.log("data: ", data);
-        setExams(data.listExam);
+        // console.log("list from response:::::", data.listExam);
+        data.listExam ? setExams(data.listExam) : console.log("data: ", data);
       })
       .catch((error) => {
         error.message === "Request failed with status code 401"
@@ -132,7 +131,7 @@ const Exam = () => {
                   </thead>
 
                   <tbody>
-                    {console.log("exams", exams)}
+                    {/* {console.log("exams", exams)} */}
                     {exams.map((exam) => (
                       <tr key={exam.examId}>
                         <td className="fw-bolder">{exam.examId}</td>
@@ -155,7 +154,7 @@ const Exam = () => {
                             onClick={() => handleDelete(exam.examId)}>
                             Delete
                           </button>
-                          {console.log("Exam :: ", exam)}
+                          {/* {console.log("Exam :: ", exam)} */}
                           <button
                             type="button"
                             className="btn btn-outline-primary m-1 btn-sm"

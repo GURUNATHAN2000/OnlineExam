@@ -199,7 +199,7 @@ const Header = ({ page, name, partyId }) => {
             <div className="col-5">
               <button
                 type="button"
-                class="btn btn-outline-light btn-sm"
+                className="btn btn-outline-light btn-sm"
                 onClick={handleClick}
                 value="login"
                 data-bs-toggle="tooltip"
@@ -212,7 +212,7 @@ const Header = ({ page, name, partyId }) => {
             <div className="col-2 justify-content-center">
               <button
                 type="button"
-                class="btn btn-outline-light btn-sm"
+                className="btn btn-outline-light btn-sm"
                 onClick={handleClick}
                 value="register"
                 data-bs-toggle="tooltip"
@@ -227,7 +227,7 @@ const Header = ({ page, name, partyId }) => {
             <div className="col-md-1 col-3 mx-2">
               <button
                 type="button"
-                class="btn btn-outline-light"
+                className="btn btn-outline-light"
                 onClick={handleClick}
                 value="login"
                 data-bs-toggle="tooltip"

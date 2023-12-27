@@ -4,31 +4,26 @@ const ViewDetailsModal = ({ selectedExam }) => {
   return (
     // <!-- Modal -->
     <div
-      class="modal fade "
+      className="modal fade "
       id="modalFormView"
       tabIndex="-1"
       aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content custom-form">
-        <div class="modal-header">
-            <h3
-              className=" modal-title fw-bold"
-              id="exampleModalLabel"
-            >
+      aria-hidden="true">
+      <div className="modal-dialog modal-xl modal-dialog-centered">
+        <div className="modal-content custom-form">
+          <div className="modal-header">
+            <h3 className=" modal-title fw-bold" id="exampleModalLabel">
               EXAM DETAILS
             </h3>
             <button
               type="button"
               className="btn-close"
               data-bs-dismiss="modal"
-              aria-label="Close">
-            </button>
+              aria-label="Close"></button>
           </div>
-          <div class="modal-body ">
+          <div className="modal-body ">
             <form className="row g-4 p-3" id="examMaster">
-            <div className="col-md-3">
+              <div className="col-md-3">
                 <label htmlFor="examName" className="form-label fw-bold">
                   Exam name
                 </label>
@@ -65,8 +60,7 @@ const ViewDetailsModal = ({ selectedExam }) => {
                   id="description"
                   name="description"
                   value={selectedExam.description}
-                  disabled
-                ></textarea>
+                  disabled></textarea>
               </div>
 
               <div className="col-md-3">
@@ -142,16 +136,14 @@ const ViewDetailsModal = ({ selectedExam }) => {
               <div className="col-3">
                 <label
                   htmlFor="questionsRandomized"
-                  className="form-label fw-bold"
-                >
+                  className="form-label fw-bold">
                   Questions randomized
                 </label>
                 <select
                   className="form-control"
                   name="questionsRandomized"
                   value={selectedExam.questionsRandomized}
-                  disabled
-                >
+                  disabled>
                   <option>Y</option>
                   <option>N</option>
                 </select>
@@ -161,10 +153,12 @@ const ViewDetailsModal = ({ selectedExam }) => {
                 <label htmlFor="answersMust" className="form-label fw-bold">
                   Answers must
                 </label>
-                <select className="form-control" name="answersMust" 
-                value={selectedExam.answersMust}
-                disabled>
-                  <option>Y</option>
+                <select
+                  className="form-control"
+                  name="answersMust"
+                  value={selectedExam.answersMust}
+                  disabled>
+                  <option className="form-control">Y</option>
                   <option>N</option>
                 </select>
               </div>
@@ -172,16 +166,14 @@ const ViewDetailsModal = ({ selectedExam }) => {
               <div className="col-4">
                 <label
                   htmlFor="enableNegativeMark"
-                  className="form-label fw-bold"
-                >
+                  className="form-label fw-bold">
                   Enable negative mark
                 </label>
                 <select
                   className="form-control"
                   name="enableNegativeMark"
                   value={selectedExam.enableNegativeMark}
-                  disabled
-                >
+                  disabled>
                   <option>Y</option>
                   <option>N</option>
                 </select>
