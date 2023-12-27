@@ -141,8 +141,9 @@ const Login = (props) => {
           <div className="mb-3">
             <label
               htmlFor="emailid"
-              className="form-label fw-bold custom-login-label">
-              E-MAIL ID
+              className="form-label fw-bold custom-login-label"
+            >
+              E-MAIL ID <span className="text-danger">*</span>
             </label>
 
             <input
@@ -167,8 +168,9 @@ const Login = (props) => {
           <div className="mb-3">
             <label
               htmlFor="password"
-              className="form-label  fw-bold custom-login-label">
-              PASSWORD
+              className="form-label  fw-bold custom-login-label"
+            >
+              PASSWORD <span className="text-danger">*</span>
             </label>
 
             <input
@@ -193,7 +195,8 @@ const Login = (props) => {
             />
             <label
               htmlFor="showPassword"
-              className="form-label  fw-bold custom-login-label">
+              className="form-label  fw-bold custom-login-label"
+            >
               Show Password
             </label>
           </div>

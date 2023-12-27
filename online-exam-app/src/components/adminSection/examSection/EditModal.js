@@ -89,20 +89,23 @@ const EditModal = ({ selectedExam }) => {
       id="modalForm"
       tabIndex="-1"
       aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content custom-form">
           <div class="modal-header">
             <h3
               className=" modal-title text-center fw-bold"
-              id="exampleModalLabel">
+              id="exampleModalLabel"
+            >
               Add Topic
             </h3>
             <button
               type="button"
               className="btn-close"
               data-bs-dismiss="modal"
-              aria-label="Close">
+              aria-label="Close"
+            >
               <span area-hidden="true"></span>
             </button>
           </div>
@@ -111,7 +114,8 @@ const EditModal = ({ selectedExam }) => {
             <form
               className="row"
               onSubmit={handleSubmit}
-              id="ExamTopicMappingMaster">
+              id="ExamTopicMappingMaster"
+            >
               <div className="col-md-6">
                 <label className="form-label fw-bold">Exam Id</label>
                 <input

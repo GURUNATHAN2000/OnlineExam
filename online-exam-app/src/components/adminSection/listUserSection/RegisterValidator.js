@@ -12,7 +12,7 @@ export const validateRegisterForm = (key, value, setNoError) => {
           document.getElementById("firstNameEmpty").classList.remove("d-none");
           document.getElementById("firstNameEmpty").classList.add("d-block");
           document.getElementById("firstNameEmpty").innerHTML =
-            "PLEASE ENTER FIRST NAME";
+            "Please enter first name";
           setNoError(false);
         } else {
           if (!ValidName.test(value)) {
@@ -21,7 +21,7 @@ export const validateRegisterForm = (key, value, setNoError) => {
               .classList.remove("d-none");
             document.getElementById("firstNameEmpty").classList.add("d-block");
             document.getElementById("firstNameEmpty").innerHTML =
-              "ENTER VALID NAME";
+              "Enter valid name";
             setNoError(false);
           }
         }
@@ -33,14 +33,14 @@ export const validateRegisterForm = (key, value, setNoError) => {
           document.getElementById("lastNameEmpty").classList.remove("d-none");
           document.getElementById("lastNameEmpty").classList.add("d-block");
           document.getElementById("lastNameEmpty").innerHTML =
-            "PLEASE ENTER LAST NAME";
+            "Please enter last name";
           setNoError(false);
         } else {
           if (!ValidName.test(value)) {
             document.getElementById("lastNameEmpty").classList.remove("d-none");
             document.getElementById("lastNameEmpty").classList.add("d-block");
             document.getElementById("lastNameEmpty").innerHTML =
-              "ENTER VALID NAME";
+              "Enter valid name";
             setNoError(false);
           }
         }
@@ -51,13 +51,13 @@ export const validateRegisterForm = (key, value, setNoError) => {
         document.getElementById("userIdEmpty").classList.remove("d-none");
         document.getElementById("userIdEmpty").classList.add("d-block");
         document.getElementById("userIdEmpty").innerHTML =
-          "PLEASE ENTER EMAIL-ID";
+          "Please enter email-id";
         setNoError(false);
       } else if (!ValidEmail.test(value)) {
         document.getElementById("userIdEmpty").classList.remove("d-none");
         document.getElementById("userIdEmpty").classList.add("d-block");
         document.getElementById("userIdEmpty").innerHTML =
-          "ENTER VALID EMAIL-ID";
+          "Enter valid email-id";
         setNoError(false);
       }
       break;
@@ -68,13 +68,13 @@ export const validateRegisterForm = (key, value, setNoError) => {
           document.getElementById("passwordEmpty").classList.remove("d-none");
           document.getElementById("passwordEmpty").classList.add("d-block");
           document.getElementById("passwordEmpty").innerHTML =
-            "PLEASE ENTER PASSWORD";
+            "Please enter password";
           setNoError(false);
         } else if (!ValidPassword.test(value)) {
           document.getElementById("passwordEmpty").classList.remove("d-none");
           document.getElementById("passwordEmpty").classList.add("d-block");
           document.getElementById("passwordEmpty").innerHTML =
-            "ENTER VALID PASSWORD";
+            "Enter valid password";
           setNoError(false);
         }
       }
@@ -89,7 +89,7 @@ export const validateRegisterForm = (key, value, setNoError) => {
             .getElementById("confirmPasswordEmpty")
             .classList.add("d-block");
           document.getElementById("confirmPasswordEmpty").innerHTML =
-            "PLEASE RE-ENTER PASSWORD";
+            "Please re-enter password";
           setNoError(false);
         } else if (!ValidPassword.test(value)) {
           document
@@ -99,7 +99,7 @@ export const validateRegisterForm = (key, value, setNoError) => {
             .getElementById("confirmPasswordEmpty")
             .classList.add("d-block");
           document.getElementById("confirmPasswordEmpty").innerHTML =
-            "ENTER VALID PASSWORD";
+            "Password and Confirm Password must be match";
           setNoError(false);
         }
       }

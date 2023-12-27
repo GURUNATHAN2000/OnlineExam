@@ -9,14 +9,14 @@ export const validateLoginForm = (key, value, setNoError) => {
           document.getElementById("userEmpty").classList.remove("d-none");
           document.getElementById("userEmpty").classList.add("d-block");
           document.getElementById("userEmpty").innerHTML =
-            "PLEASE ENTER YOUR EMAIL / USER-ID";
+            "Please enter your Email / User-id";
           setNoError(false);
         } else {
           if (!ValidEmail.test(value)) {
             document.getElementById("userEmpty").classList.remove("d-none");
             document.getElementById("userEmpty").classList.add("d-block");
             document.getElementById("userEmpty").innerHTML =
-              "ENTER VALID EMAIL / USER-ID!";
+              "Enter valid Email / User-id";
             setNoError(false);
           }
         }
@@ -29,14 +29,14 @@ export const validateLoginForm = (key, value, setNoError) => {
           document.getElementById("passwordEmpty").classList.remove("d-none");
           document.getElementById("passwordEmpty").classList.add("d-block");
           document.getElementById("passwordEmpty").innerHTML =
-            "PLEASE ENTER YOUR PASSWORD";
+            "Please enter your password";
           setNoError(false);
         } else {
           if (!ValidPassword.test(value)) {
             document.getElementById("passwordEmpty").classList.remove("d-none");
             document.getElementById("passwordEmpty").classList.add("d-block");
             document.getElementById("passwordEmpty").innerHTML =
-              "ENTER VALID PASSWORD! ";
+              "Enter valid password";
             setNoError(false);
           }
         }

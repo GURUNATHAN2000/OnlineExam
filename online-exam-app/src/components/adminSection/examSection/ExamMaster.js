@@ -108,7 +108,7 @@ const ExamMaster = () => {
 
         <div className="col-md-6">
           <label htmlFor="examName" className="form-label fw-bold">
-            Exam name
+            Exam name <span className="text-danger">*</span>
           </label>
           <input
             type="text"
@@ -160,7 +160,7 @@ const ExamMaster = () => {
 
         <div className="col-md-6">
           <label htmlFor="noOfQuestions" className="form-label fw-bold">
-            Number of questions
+            Number of questions <span className="text-danger">*</span>
           </label>
           <input
             type="number"
@@ -176,7 +176,7 @@ const ExamMaster = () => {
         </div>
         <div className="col-md-6">
           <label htmlFor="durationMinutes" className="form-label fw-bold">
-            Duration minutes
+            Duration minutes <span className="text-danger">*</span>
           </label>
           <input
             type="number"
@@ -192,7 +192,7 @@ const ExamMaster = () => {
         </div>
         <div className="col-6">
           <label htmlFor="passPercentage" className="form-label fw-bold">
-            Pass percentage
+            Pass percentage <span className="text-danger">*</span>
           </label>
           <input
             type="number"

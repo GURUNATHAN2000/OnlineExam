@@ -6,7 +6,7 @@ export const ValidateExamMasterForm = (key, value, setNoError) => {
         document.getElementById("examNameEmpty").classList.remove("d-none");
         document.getElementById("examNameEmpty").classList.add("d-block");
         document.getElementById("examNameEmpty").innerHTML =
-          "*please enter exam name";
+          "Please enter exam name";
         setNoError(false);
       }
       break;
@@ -18,7 +18,7 @@ export const ValidateExamMasterForm = (key, value, setNoError) => {
           .classList.remove("d-none");
         document.getElementById("noOfQuestionsEmpty").classList.add("d-block");
         document.getElementById("noOfQuestionsEmpty").innerHTML =
-          "*please enter no of questions";
+          "Please enter no of questions";
         setNoError(false);
       }
       break;
@@ -33,7 +33,7 @@ export const ValidateExamMasterForm = (key, value, setNoError) => {
           .getElementById("durationMinutesEmpty")
           .classList.add("d-block");
         document.getElementById("durationMinutesEmpty").innerHTML =
-          "*please enter duration minutes";
+          "Please enter duration minutes";
         setNoError(false);
       }
       break;
@@ -45,13 +45,12 @@ export const ValidateExamMasterForm = (key, value, setNoError) => {
           .classList.remove("d-none");
         document.getElementById("passPercentageEmpty").classList.add("d-block");
         document.getElementById("passPercentageEmpty").innerHTML =
-          "*please enter pass percentage";
+          "Please enter pass percentage";
         setNoError(false);
       }
       break;
 
     default:
-
       console.log("EXAM MASTER FORM VALIDATED SUCCESSFULLY!!");
   }
 };
