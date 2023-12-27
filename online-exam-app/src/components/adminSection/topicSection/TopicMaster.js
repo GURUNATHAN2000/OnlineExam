@@ -98,7 +98,7 @@ const TopicMaster = () => {
           id="topicForm">
           <div className="">
             <label htmlFor="topicName" className="form-label fw-bold label">
-              Topic Name
+              Topic Name <span className="text-danger">*</span>
             </label>
             <input
               type="text"

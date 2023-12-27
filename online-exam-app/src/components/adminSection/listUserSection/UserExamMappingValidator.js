@@ -4,7 +4,7 @@ switch(key){
         if (value === "" || value === null) {
             document.getElementById("examIdEmpty").classList.remove("d-none");
             document.getElementById("examIdEmpty").classList.add("d-block");
-            document.getElementById("examIdEmpty").innerHTML="PLEASE ENTER EXAM ID"
+            document.getElementById("examIdEmpty").innerHTML="Please enter exam id"
             setNoError(false);
         }
         break;
@@ -13,7 +13,7 @@ switch(key){
         if(value==="" || value===null) {
             document.getElementById("allowedAttemptsEmpty").classList.remove("d-none");
             document.getElementById("allowedAttemptsEmpty").classList.add("d-block");
-            document.getElementById("allowedAttemptsEmpty").innerHTML="PLEASE ENTER ALLOWED ATTEMPTS"
+            document.getElementById("allowedAttemptsEmpty").innerHTML="Please enter allowed attempts"
             setNoError(false);
         }
         break;
@@ -22,7 +22,7 @@ switch(key){
         if(value==="" || value===null) {
             document.getElementById("noOfAttemptsEmpty").classList.remove("d-none");
             document.getElementById("noOfAttemptsEmpty").classList.add("d-block");
-            document.getElementById("noOfAttemptsEmpty").innerHTML="PLEASE ENTER NO OF ATTEMPTS"
+            document.getElementById("noOfAttemptsEmpty").innerHTML="Please enter no of attempts"
             setNoError(false);
         }
         break;
@@ -31,7 +31,7 @@ switch(key){
         if(value==="" || value===null) {
             document.getElementById("timeoutDaysEmpty").classList.remove("d-none");
             document.getElementById("timeoutDaysEmpty").classList.add("d-block");
-            document.getElementById("timeoutDaysEmpty").innerHTML="PLEASE ENTER TIME OUT DAYS"
+            document.getElementById("timeoutDaysEmpty").innerHTML="Please enter timeout days"
             setNoError(false);
         }
         break;

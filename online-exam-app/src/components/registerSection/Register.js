@@ -161,7 +161,7 @@ const Register = ({ setPage }) => {
           {/* first Name */}
           <div className="mb-3">
             <label htmlFor="firstName" className="form-label fw-bold label">
-              First Name
+              First Name <span className="text-danger">*</span>
             </label>
             <input
               autoFocus
@@ -180,7 +180,7 @@ const Register = ({ setPage }) => {
 
           <div className=" mb-3 ">
             <label htmlFor="lastName" className="form-label fw-bold label">
-              Last Name
+              Last Name <span className="text-danger">*</span>
             </label>
             <input
               type="text"
@@ -197,7 +197,7 @@ const Register = ({ setPage }) => {
 
           <div className="mb-3">
             <label htmlFor="userLoginId" className="form-label fw-bold label">
-              User ID / E-Mail ID
+              User ID / E-Mail ID <span className="text-danger">*</span>
             </label>
             <input
               type="text"
@@ -218,7 +218,7 @@ const Register = ({ setPage }) => {
             <label
               htmlFor="currentPassword"
               className="form-label fw-bold label">
-              Password
+              Password <span className="text-danger">*</span>
             </label>
             <input
               type="password"
@@ -245,7 +245,7 @@ const Register = ({ setPage }) => {
             <label
               htmlFor="currentPasswordVerify"
               className="form-label fw-bold label">
-              Confirm Password
+              Confirm Password <span className="text-danger">*</span>
             </label>
             <input
               type="password"
