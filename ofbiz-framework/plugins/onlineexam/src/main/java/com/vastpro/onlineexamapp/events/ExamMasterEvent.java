@@ -63,7 +63,7 @@ public class ExamMasterEvent {
 					questionsRandomized, ExamConstants.ANSWER_MUST, answersMust, ExamConstants.ENABLE_NEGATIVE_MARK,
 					enableNegativeMark, ExamConstants.NEGATIVE_MARK_VALUE, negativeMarkValue));
 
-			// Hibernate validation with the help of hibernate helper class
+			// Hibernate validation with the help of Hibernate Validator Helper class
 			ExamMasterValidator examMasterForm = HibernateHelper.populateBeanFromMap(combinedMap,
 					ExamMasterValidator.class);
 
