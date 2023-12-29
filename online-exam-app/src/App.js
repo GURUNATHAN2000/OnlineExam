@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 
 import Header from "./components/headerSection/Header";
 import Footer from "./components/footerSection/Footer";
@@ -21,14 +22,18 @@ import UserHome from "./components/userSection/UserHome";
 import UserMaster from "./components/adminSection/listUserSection/UserMaster";
 import UserDashboard from "./components/userSection/UserDashboard";
 import UserReport from "./components/userSection/UserReport";
+import Loader from "./components/loader/Loader";
+import { store } from "./components/store";
 
 function App() {
+  // const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState("");
   const [name, setName] = useState("");
   const [partyId, setPartyId] = useState("");
 
   return (
-    <>
+    <Provider store={store}>
+      {/* {isLoading ? <Loader /> : ""} */}
       <Header page={page} name={name} partyId={partyId} />
 
       <Routes>
@@ -77,7 +82,7 @@ function App() {
         <Route path="*" element={<NoMatch />}></Route>
       </Routes>
       <Footer page={page} />
-    </>
+    </Provider>
   );
 }
 

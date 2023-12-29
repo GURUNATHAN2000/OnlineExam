@@ -3,16 +3,19 @@ import Header from "../Header";
 import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Loader from "../../loader/Loader";
 
 export const TopicContext = createContext(null);
 
 const Topic = () => {
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(false);
 
   const [topics, setTopics] = useState([]);
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(
         "https://" +
@@ -23,6 +26,7 @@ const Topic = () => {
         }
       )
       .then((response) => {
+        setIsLoading(false);
         return response.data;
       })
       .then((data) => {
@@ -31,6 +35,7 @@ const Topic = () => {
         setTopics(data.listTopics);
       })
       .catch((error) => {
+        setIsLoading(false);
         error.message === "Request failed with status code 401"
           ? handleError()
           : console.log("Error From Topic Fetch : ", error);
@@ -91,7 +96,7 @@ const Topic = () => {
         <Header title="TOPIC" next="addTopics" back="/admin/topics" />
 
         <Outlet />
-
+        {isLoading ? <Loader /> : ""}
         <div className="card text-center  shadow-lg  mt-3">
           <div className="card-title">
             <h2 className="text-center">Topic Listing</h2>
@@ -119,7 +124,7 @@ const Topic = () => {
                           className="btn btn-outline-success m-1 btn-sm"
                           // data-bs-toggle="modal"
                           // data-bs-target="#modalForm"
-                          //onClick={() => handleAddTopic(exam.examId)}
+                          //onClick={() => handleEdit(exam.examId)}
                         >
                           Edit
                         </button>
@@ -135,7 +140,7 @@ const Topic = () => {
                 </tbody>
               </table>
             ) : (
-              <p className="lead text-danger fw-bold">NO TOPICS TO DISPLAY</p>
+              <p className="lead text-danger fw-bold">No Topics To Display</p>
             )}
           </div>
         </div>

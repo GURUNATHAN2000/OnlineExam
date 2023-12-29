@@ -5,8 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 import logo from "../../img/vastpro-logo-right.png";
 import "./Header.css";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = ({ page, name, partyId }) => {
+  const userName = useSelector((state) => state.name);
+  sessionStorage.setItem("userName", userName);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleClick = (event) => {
@@ -15,6 +20,32 @@ const Header = ({ page, name, partyId }) => {
       : event.target.value === "register"
       ? navigate("/register")
       : event.target.value === "logout" && navigate("/");
+  };
+
+  const handleLogout = () => {
+    axios
+      .post(
+        "https://" +
+          window.location.hostname +
+          ":8443/onlineexam/control/logout",
+        { withCredentials: true }
+      )
+      .then((res) => {
+        //setIsLoading(false);
+        return res.data;
+      })
+      .then((data) => {
+        console.log("data:: ", data);
+        // //data._ERROR_MESSAGE_ ? handleError(data) : handleRoleType(data);
+        // handleRoleType(data);
+        // props.setName(data.userNameLogin);
+        // props.setPartyId(data.partyId);
+        // console.log("roleTypeId :: ", data.roleTypeId);
+      })
+      .catch((err) => {
+        // setIsLoading(false);
+        console.log("ERROR FROM Logout FETCH :: ", err);
+      });
   };
 
   return (
@@ -149,7 +180,7 @@ const Header = ({ page, name, partyId }) => {
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
                   title="USER">
-                  {name} <br />
+                  {sessionStorage.getItem("userName")} <br />
                   ID : {partyId}
                 </p>
               </Link>

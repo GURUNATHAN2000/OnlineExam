@@ -1,14 +1,53 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./questionMaster.css";
 import axios from "axios";
 import useStateRef from "react-usestateref";
 import { ValidateQuestionForm } from "./QuestionValidator";
 import Swal from "sweetalert2";
 import { QuestionContext } from "./Question";
+import { useNavigate } from "react-router";
 
 const QuestionMaster = () => {
   const [noError, setNoError, currentRef] = useStateRef(true);
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  const [topics, setTopics] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://" +
+          window.location.hostname +
+          ":8443/onlineexam/control/display-all-topic",
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        data.listTopics
+          ? setTopics(data.listTopics)
+          : console.log("data :: ", data);
+      })
+      .catch((error) => {
+        error.message === "Request failed with status code 401"
+          ? handleError()
+          : console.log("Error From UserMaster Fetch : ", error);
+      });
+  }, []);
+
+  const handleError = () => {
+    Swal.fire({
+      icon: "error",
+      title: "Your Session Has Expired..!",
+      text: "you've to login to use this service",
+    });
+    navigate("/login");
+  };
 
   const { questions, setQuestions } = useContext(QuestionContext);
 
@@ -268,16 +307,19 @@ const QuestionMaster = () => {
         </div>
 
         <div className="col-md-6">
-          <label htmlFor="topicId" className="form-label fw-bold label">
-            Topic Id
+          <label htmlFor="topicId" className="form-label fw-bold">
+            Topic Id / Topic Name
           </label>
-          <input
-            type="text"
-            id="topicId"
-            className="form-control "
-            placeholder="enter answer value"
-            name="topicId"
-          />
+          <select className="form-control" name="topicId">
+            <option>select topic</option>
+            {topics && topics.length > 0 ? (
+              topics.map((topic) => (
+                <option value={topic.topicId}>{topic.topicName}</option>
+              ))
+            ) : (
+              <option>No topics to select</option>
+            )}
+          </select>
           <span id="topicIdIsEmpty" className="empty custom-alert"></span>
         </div>
 
@@ -299,7 +341,7 @@ const QuestionMaster = () => {
         </div>
 
         <div className="col-12 text-center">
-          <button type="submit" className="btn-login custom-button">
+          <button type="submit" className="btn-login  custom-button">
             Submit
           </button>
         </div>

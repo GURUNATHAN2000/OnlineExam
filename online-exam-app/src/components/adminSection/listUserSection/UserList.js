@@ -56,21 +56,21 @@ const UserList = () => {
         <Outlet />
 
         <div className="card text-center">
-          {userNameList && userNameList.length > 0 ? (
-            userNameList.map((user) => (
-              <div className="card-body" key={user.partyId}>
-                <table className="table table-bordered border-dark table-striped table-hover">
-                  <thead className="table-dark ">
-                    <tr>
-                      <td>Party ID</td>
-                      <td>Name</td>
-                      <td>ACTION</td>
-                    </tr>
-                  </thead>
+          <div className="card-body">
+            {userNameList && userNameList.length > 0 ? (
+              <table className="table table-bordered border-dark table-striped table-hover">
+                <thead className="table-dark ">
+                  <tr>
+                    <td>Party ID</td>
+                    <td>Name</td>
+                    <td>ACTION</td>
+                  </tr>
+                </thead>
 
-                  <tbody>
-                    {/* {console.log("userNameList", userNameList)} */}
-                    <tr>
+                <tbody>
+                  {/* {console.log("userNameList", userNameList)} */}
+                  {userNameList.map((user) => (
+                    <tr key={user.partyId}>
                       <td className="fw-bolder">{user.partyId}</td>
                       <td className="fw-bolder">
                         {user.firstName + " " + user.lastName}
@@ -89,13 +89,13 @@ const UserList = () => {
                         </button>
                       </td>
                     </tr>
-                  </tbody>
-                </table>
-              </div>
-            ))
-          ) : (
-            <p className="lead text-danger fw-bold">NO USERS TO DISPLAY</p>
-          )}
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="lead text-danger fw-bold">No Users To Display</p>
+            )}
+          </div>
         </div>
       </div>
     </UserListContext.Provider>

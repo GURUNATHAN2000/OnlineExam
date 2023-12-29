@@ -43,11 +43,10 @@ const UserDashboard = ({ partyId }) => {
         <div class="col-sm-6 mb-5">
           <div class="card border-0 shadow-lg custom-form">
             <div class="card-body">
-              <h5 class="card-title">{exam.examName}</h5>
-              <p class="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
+              <h5 class="card-title">
+                <b>{exam.examName}</b>
+              </h5>
+              <p class="card-text">EXAMINATION</p>
               <Link to="#" class="btn btn-outline-success">
                 Take Exam
               </Link>

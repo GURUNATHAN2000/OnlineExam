@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext, useContext } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { Outlet, useNavigate } from "react-router";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -6,18 +6,21 @@ import Swal from "sweetalert2";
 import Header from "../Header";
 import EditModal from "./EditModal";
 import ViewDetailsModal from "./ViewDetailsModal";
-import useStateRef from "react-usestateref";
+import Loader from "../../loader/Loader";
 
 export const ExamContext = createContext(null);
 
 const Exam = () => {
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [exams, setExams] = useState([]);
 
   const [selectedExam, setSelectedExam] = useState("");
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(
         "https://" +
@@ -26,13 +29,14 @@ const Exam = () => {
         { withCredentials: true }
       )
       .then((response) => {
+        setIsLoading(false);
         return response.data;
       })
       .then((data) => {
-        // console.log("list from response:::::", data.listExam);
         data.listExam ? setExams(data.listExam) : console.log("data: ", data);
       })
       .catch((error) => {
+        setIsLoading(false);
         error.message === "Request failed with status code 401"
           ? handleError()
           : console.log("Error From UserMaster Fetch : ", error);
@@ -59,19 +63,22 @@ const Exam = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        setIsLoading(true);
         axios
           .get(
             `https://localhost:8443/onlineexam/control/delete-exam?examId=${examId}`,
             { withCredentials: true }
           )
           .then((response) => {
+            setIsLoading(false);
             return response.data;
           })
           .then((data) => {
-            console.log("data.listExam ", data.listExam);
+            // console.log("data.listExam ", data.listExam);
             data.listExam ? setExams(data.listExam) : setExams([]);
           })
           .catch((error) => {
+            setIsLoading(false);
             console.log("error: ", error);
           });
         Swal.fire({
@@ -88,16 +95,12 @@ const Exam = () => {
 
   //handleAddTopic
   const handleAddTopic = (exam) => {
-    //console.log("FOR handleAddTopic => EXAM ID:::::" + exam);
     setSelectedExam(exam);
-    //console.log("SELECTED EXAM:::::", selectedExam);
   };
 
   // handleDetails
   const handleDetails = (exam) => {
-    // console.log(`EXAM:: ${exam}`);
     setSelectedExam(exam);
-    // console.log("selectedExam :: ", selectedExam);
   };
 
   return (
@@ -109,6 +112,7 @@ const Exam = () => {
         <Header title="EXAM" next="addExams" back="/admin/exams" />
 
         <Outlet />
+        {isLoading ? <Loader /> : ""}
 
         <div className="card text-center shadow-lg mt-3">
           <div className="card-title">
@@ -154,6 +158,7 @@ const Exam = () => {
                             onClick={() => handleDelete(exam.examId)}>
                             Delete
                           </button>
+
                           {/* {console.log("Exam :: ", exam)} */}
                           <button
                             type="button"
@@ -172,7 +177,7 @@ const Exam = () => {
                 </table>
               </div>
             ) : (
-              <p className="lead text-danger fw-bold">NO EXAMS TO DISPLAY</p>
+              <p className="lead text-danger fw-bold">No Exams To Display</p>
             )}
           </div>
         </div>

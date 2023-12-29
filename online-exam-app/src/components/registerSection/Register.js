@@ -7,15 +7,18 @@ import "./register.css";
 import { validateRegisterForm } from "./RegisterValidator";
 import { FailureAlert } from "../alert/FailureAlert";
 import { SuccessAlert } from "../alert/SuccessAlert";
+import Loader from "../loader/Loader";
 
 const Register = ({ setPage }) => {
   const [noError, setNoError, currentRef] = useStateRef(true);
+
   const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     setPage("register");
-  });
+  }, []);
 
   const makeErrorNone = () => {
     document.getElementById("firstNameEmpty").classList.remove("d-block");
@@ -63,7 +66,7 @@ const Register = ({ setPage }) => {
   };
 
   const passwordVerification = (currentPassword, currentPasswordVerify) => {
-    console.log(currentPassword, currentPasswordVerify);
+    // console.log(currentPassword, currentPasswordVerify);
     if (
       currentPassword != currentPasswordVerify ||
       currentPassword == "" ||
@@ -74,15 +77,13 @@ const Register = ({ setPage }) => {
         .classList.remove("d-none");
       document.getElementById("confirmPasswordEmpty").classList.add("d-block");
       document.getElementById("confirmPasswordEmpty").innerHTML =
-        "CONFIRM PASSWORD DOESN'T MATCH WITH PASSWORD";
+        "Confirm password doesn't match with password";
       setNoError(false);
-    } else {
-      setNoError(true);
     }
   };
 
   const axiosCall = (myObject) => {
-    // setIsLoading(true);
+    setIsLoading(true);
     console.log(myObject);
     axios
       .post(
@@ -95,7 +96,7 @@ const Register = ({ setPage }) => {
         }
       )
       .then((res) => {
-        //setIsLoading(false);
+        setIsLoading(false);
         console.log("result ::", res);
         return res.data;
       })
@@ -107,7 +108,7 @@ const Register = ({ setPage }) => {
           : console.log("data :: ", data);
       })
       .catch((error) => {
-        //setIsLoading(false);
+        setIsLoading(false);
         console.log("error ::", error);
       });
   };
@@ -137,16 +138,8 @@ const Register = ({ setPage }) => {
       <div className="col-md-4"></div>
 
       {/* form */}
-      {/* {isLoading ? (
-        <div className="col-md-6 m-5">
-          <img
-            className="m-5"
-            style={{ height: "100px" }}
-            src="rotateload.gif"
-            alt="loading..."
-          />
-        </div>
-      ) : ( */}
+      {isLoading ? <Loader /> : ""}
+
       <div className="container col-md-4 my-5 mt-4 col-10 p-4  shadow-lg rounded custom-form">
         <form id="registerForm" className="custom-form" onSubmit={handleSubmit}>
           <h1 className="text-center register-heading fw-bold label">

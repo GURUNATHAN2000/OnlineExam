@@ -5,6 +5,9 @@ import useStateRef from "react-usestateref";
 
 import "./Login.css";
 import { validateLoginForm } from "./LoginValidator";
+import Loader from "../loader/Loader";
+import { useDispatch } from "react-redux";
+import { setName } from "../redux/NameAction";
 
 const Login = (props) => {
   const [noError, setNoError, currentRef] = useStateRef(true);
@@ -12,6 +15,8 @@ const Login = (props) => {
   const [password, setPassword] = useState("password");
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   //to set the header for login
   useEffect(() => {
@@ -56,11 +61,12 @@ const Login = (props) => {
     //if form has no error then make a call to axios
     currentRef.current
       ? axiosCall(myObject)
-      : console.log("Error Occured.... LOGIN form");
+      : console.log("Error Occured in LOGIN form");
   };
 
   const axiosCall = (myObject) => {
     setIsLoading(true);
+
     axios
       .post(
         "https://" +
@@ -70,19 +76,25 @@ const Login = (props) => {
         { withCredentials: true }
       )
       .then((res) => {
-        //setIsLoading(false);
+        setIsLoading(false);
         return res.data;
       })
       .then((data) => {
-        console.log("data:: ", data);
-        //data._ERROR_MESSAGE_ ? handleError(data) : handleRoleType(data);
+        data.userNameLogin && data.partyId
+          ? set()
+          : console.log("data:: ", data);
+
         handleRoleType(data);
-        props.setName(data.userNameLogin);
-        props.setPartyId(data.partyId);
-        console.log("roleTypeId :: ", data.roleTypeId);
+
+        function set() {
+          dispatch(setName(data.userNameLogin));
+          //props.setName();
+          props.setPartyId();
+        }
+        // console.log("roleTypeId :: ", data.roleTypeId);
       })
       .catch((err) => {
-        // setIsLoading(false);
+        setIsLoading(true);
         console.log("ERROR FROM LOGIN FETCH :: ", err);
       });
   };
@@ -128,19 +140,10 @@ const Login = (props) => {
       {/* empty div */}
       <div className="col-md-4"></div>
 
-      {/* {isLoading ? (
-        <div className="col-md-6 col-7 m-5">
-          <img
-            className="m-5"
-            style={{ height: "100px" }}
-            src="rotateload.gif"
-            alt="loading..."
-          />
-        </div>
-      ) : ( */}
+      {isLoading ? <Loader /> : ""}
       <div className="col-md-4 col-10 p-4 mt-4 mb-3 shadow-lg rounded custom-form">
         <form id="loginForm " className="custom-form" onSubmit={handleSubmit}>
-          <h1 className="mb-3 text-center login-heading fw-bold">USER LOGIN</h1>
+          <h1 className="mb-3 text-center login-heading fw-bold">LOGIN</h1>
 
           {/* invalid Credentials */}
           <span id="invalidCredentials" className="empty custom-alert"></span>
@@ -149,8 +152,7 @@ const Login = (props) => {
           <div className="mb-3">
             <label
               htmlFor="emailid"
-              className="form-label fw-bold custom-login-label"
-            >
+              className="form-label fw-bold custom-login-label">
               E-MAIL ID <span className="text-danger">*</span>
             </label>
 
@@ -176,8 +178,7 @@ const Login = (props) => {
           <div className="mb-3">
             <label
               htmlFor="password"
-              className="form-label  fw-bold custom-login-label"
-            >
+              className="form-label  fw-bold custom-login-label">
               PASSWORD <span className="text-danger">*</span>
             </label>
 
@@ -203,8 +204,7 @@ const Login = (props) => {
             />
             <label
               htmlFor="showPassword"
-              className="form-label  fw-bold custom-login-label"
-            >
+              className="form-label  fw-bold custom-login-label">
               Show Password
             </label>
           </div>

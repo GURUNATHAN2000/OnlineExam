@@ -130,7 +130,7 @@ const Question = () => {
                         {/* <td>{question.negativeMarkValue}</td> */}
                         <td>
                           <button
-                            className="btn btn-danger m-1"
+                            className="btn btn-outline-danger m-1 btn-sm"
                             onClick={() => {
                               handleDelete(question.questionId);
                             }}>
@@ -144,7 +144,7 @@ const Question = () => {
               </div>
             ) : (
               <p className="lead text-danger fw-bold">
-                NO QUESTIONS TO DISPLAY
+                No Questions To Display
               </p>
             )}
           </div>
