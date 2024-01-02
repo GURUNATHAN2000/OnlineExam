@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<entity-engine-xml>
-	<Employee EmpID="101" EmpName="Guru" DeptID="2"/>
-	<Employee EmpID="2" EmpName="Kamal" DeptID="2"/>
-	<Employee EmpID="3" EmpName="Prashanth" DeptID="3"/>
-	<Employee EmpID="4" EmpName="Sreelash" DeptID="1"/>
-	<Employee EmpID="5" EmpName="Naren" DeptID="1"/>
-</entity-engine-xml>

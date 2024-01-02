@@ -24,9 +24,9 @@ import org.apache.ofbiz.service.ServiceUtil;
 
 import com.vastpro.onlineexamapp.forms.QuestionValidator;
 import com.vastpro.onlineexamapp.forms.checks.QuestionFormCheck;
-import com.vastpro.onlineexamapp.helper.HibernateHelper;
+import com.vastpro.onlineexamapp.helper.HibernateValidatorHelper;
 import com.vastpro.onlineexamapp.util.CommonConstants;
-
+import com.vastpro.onlineexamapp.util.EntityConstants;
 import com.vastpro.onlineexamapp.util.QuestionConstants;
 import com.vastpro.onlineexamapp.util.TopicConstants;
 
@@ -57,7 +57,7 @@ public class QuestionMasterEvent {
 		String negativeMarkValue = (String) combinedMap.get(QuestionConstants.NEGATIVE_MARK_VALUE);
 
 		try {
-			Map<String, Object> result = dispatcher.runSync("createQuestionMaster", UtilMisc.toMap("userLogin",
+			Map<String, Object> result = dispatcher.runSync("createQuestionMaster", UtilMisc.toMap(CommonConstants.USERLOGIN,
 					userLogin, QuestionConstants.QUESTION_DETAIL, questionDetail, QuestionConstants.OPTION_A, optionA,
 					QuestionConstants.OPTION_B, optionB, QuestionConstants.OPTION_C, optionC,
 					QuestionConstants.OPTION_D, optionD, QuestionConstants.OPTION_E, optionE, QuestionConstants.ANSWER,
@@ -66,13 +66,13 @@ public class QuestionMasterEvent {
 					TopicConstants.TOPIC_ID, topicId, QuestionConstants.NEGATIVE_MARK_VALUE, negativeMarkValue));
 
 			// hibernate validation
-			QuestionValidator questionForm = HibernateHelper.populateBeanFromMap(combinedMap, QuestionValidator.class);
+			QuestionValidator questionForm = HibernateValidatorHelper.populateBeanFromMap(combinedMap, QuestionValidator.class);
 			// Debug.log("===================QUESTIONFORM =======================",
 			// questionForm);
-			Set<ConstraintViolation<QuestionValidator>> errors = HibernateHelper.checkValidationErrors(questionForm,
+			Set<ConstraintViolation<QuestionValidator>> errors = HibernateValidatorHelper.checkValidationErrors(questionForm,
 					QuestionFormCheck.class);
 			// Debug.log("=============ERRORS=================", errors);
-			boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, errors, request, locale,
+			boolean hasFormErrors = HibernateValidatorHelper.validateFormSubmission(delegator, errors, request, locale,
 					"MandatoryFieldsAreEmpty", resource_error, false);
 
 			request.setAttribute("hasFormErrors", hasFormErrors);
@@ -167,7 +167,7 @@ public class QuestionMasterEvent {
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USERLOGIN);
 
 		try {
-			List<GenericValue> questionList = EntityQuery.use(delegator).from("QuestionMaster").queryList();
+			List<GenericValue> questionList = EntityQuery.use(delegator).from(EntityConstants.QUESTION_MASTER).cache().queryList();
 			if (UtilValidate.isNotEmpty(questionList)) {
 				request.setAttribute("listQuestions", questionList);
 			}

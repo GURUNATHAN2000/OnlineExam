@@ -22,8 +22,9 @@ import org.apache.ofbiz.webapp.control.LoginWorker;
 
 import com.vastpro.onlineexamapp.forms.LoginValidator;
 import com.vastpro.onlineexamapp.forms.checks.LoginFormCheck;
-import com.vastpro.onlineexamapp.helper.HibernateHelper;
+import com.vastpro.onlineexamapp.helper.HibernateValidatorHelper;
 import com.vastpro.onlineexamapp.util.CommonConstants;
+import com.vastpro.onlineexamapp.util.EntityConstants;
 
 public class LoginEvent {
 
@@ -46,21 +47,21 @@ public class LoginEvent {
 		String usernameDummy = (String) combinedMap.get("USERNAME");
 		String username = usernameDummy.toLowerCase();
 		String password = (String) combinedMap.get("PASSWORD");
-		Map<String, Object> userLoginMap = UtilMisc.toMap("username", username, "password", password);
+		Map<String, Object> userLoginMap = UtilMisc.toMap(CommonConstants.USERNAME, username, CommonConstants.PASSWORD, password);
 
 		// doing hibernate validation with the help of hibernate helper class
-		LoginValidator loginForm = HibernateHelper.populateBeanFromMap(userLoginMap, LoginValidator.class);
-		Set<ConstraintViolation<LoginValidator>> errors = HibernateHelper.checkValidationErrors(loginForm,
+		LoginValidator loginForm = HibernateValidatorHelper.populateBeanFromMap(userLoginMap, LoginValidator.class);
+		Set<ConstraintViolation<LoginValidator>> errors = HibernateValidatorHelper.checkValidationErrors(loginForm,
 				LoginFormCheck.class);
 
-		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, errors, request, locale,
+		boolean hasFormErrors = HibernateValidatorHelper.validateFormSubmission(delegator, errors, request, locale,
 				"MandatoryFieldErrMsgLoginForm", resource_error, false);
 		request.setAttribute("hasFormErrors", hasFormErrors);
 		
 
 		// check whether requesting person is ADMIN or USER
 		try {
-			GenericValue userLogin = EntityQuery.use(delegator).from("UserLogin").where("userLoginId", username).cache()
+			GenericValue userLogin = EntityQuery.use(delegator).from(EntityConstants.USER_LOGIN).where(CommonConstants.USER_LOGIN_ID, username).cache()
 					.queryFirst();
 			if (UtilValidate.isNotEmpty(userLogin)) {
 
@@ -70,11 +71,11 @@ public class LoginEvent {
 				
 				request.setAttribute(CommonConstants.PARTY_ID, userLogin.get(CommonConstants.PARTY_ID));
 				
-				GenericValue party = EntityQuery.use(delegator).from("Person")
+				GenericValue party = EntityQuery.use(delegator).from(EntityConstants.PERSON)
 						.where(CommonConstants.PARTY_ID, userLogin.get(CommonConstants.PARTY_ID)).cache().queryOne();
-				String userNameLogin = party.get("firstName") + " " + party.get("lastName");
+				String userNameLogin = party.get(CommonConstants.FIRST_NAME) + " " + party.get(CommonConstants.LAST_NAME);
 
-				request.setAttribute("userNameLogin", userNameLogin);
+				request.setAttribute(CommonConstants.USER_NAME_LOGIN, userNameLogin);
 
 				EntityCondition adminCondition = EntityCondition.makeCondition(CommonConstants.ROLE_TYPE_ID, "ADMIN");
 				EntityCondition userCondition = EntityCondition.makeCondition(CommonConstants.ROLE_TYPE_ID,
@@ -84,7 +85,7 @@ public class LoginEvent {
 				EntityCondition orCondition = EntityCondition.makeCondition(adminCondition, EntityOperator.OR,
 						userCondition);
 
-				GenericValue partyRole = EntityQuery.use(delegator).from("PartyRole")
+				GenericValue partyRole = EntityQuery.use(delegator).from(EntityConstants.PARTY_ROLE)
 						.where(partyIdCondition, orCondition).cache().queryOne();
 
 				if (UtilValidate.isNotEmpty(partyRole)) {

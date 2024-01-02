@@ -15,6 +15,7 @@ import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.LocalDispatcher;
 
 import com.vastpro.onlineexamapp.util.CommonConstants;
+import com.vastpro.onlineexamapp.util.EntityConstants;
 
 public class UserMasterEvent {
 
@@ -22,17 +23,17 @@ public class UserMasterEvent {
 
 	public static String getUsers(HttpServletRequest request, HttpServletResponse response) {
 		Debug.logInfo("=========getUsers EVENT STARTED SUCCESSFULLY======", module);
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USERLOGIN);
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 
 		List<GenericValue> listOfUsers = new ArrayList<GenericValue>();
 		try {
-			List<GenericValue> partyRoleList = EntityQuery.use(delegator).from("PartyRole")
+			List<GenericValue> partyRoleList = EntityQuery.use(delegator).from(EntityConstants.PARTY_ROLE)
 					.where(CommonConstants.ROLE_TYPE_ID, "PERSON_ROLE").cache().queryList();
 			if(UtilValidate.isNotEmpty(partyRoleList)) {
 				for(GenericValue partyRole:partyRoleList) {
-					GenericValue party = EntityQuery.use(delegator).from("Person").where(CommonConstants.PARTY_ID, partyRole.get(CommonConstants.PARTY_ID)).cache().queryOne();
+					GenericValue party = EntityQuery.use(delegator).from(EntityConstants.PERSON).where(CommonConstants.PARTY_ID, partyRole.get(CommonConstants.PARTY_ID)).cache().queryOne();
 					if(UtilValidate.isNotEmpty(party)) {
 						listOfUsers.add(party);
 					}
