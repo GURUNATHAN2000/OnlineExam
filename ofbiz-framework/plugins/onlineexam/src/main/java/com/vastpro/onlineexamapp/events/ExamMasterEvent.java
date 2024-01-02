@@ -24,9 +24,9 @@ import org.apache.ofbiz.service.ServiceUtil;
 
 import com.vastpro.onlineexamapp.forms.ExamMasterValidator;
 import com.vastpro.onlineexamapp.forms.checks.ExamMasterFormCheck;
-import com.vastpro.onlineexamapp.helper.HibernateHelper;
+import com.vastpro.onlineexamapp.helper.HibernateValidatorHelper;
 import com.vastpro.onlineexamapp.util.CommonConstants;
-
+import com.vastpro.onlineexamapp.util.EntityConstants;
 import com.vastpro.onlineexamapp.util.ExamConstants;
 
 public class ExamMasterEvent {
@@ -35,9 +35,9 @@ public class ExamMasterEvent {
 
 	public static String insertExam(HttpServletRequest request, HttpServletResponse response) {
 
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USERLOGIN);
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		Locale locale = UtilHttp.getLocale(request);
 
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
@@ -55,7 +55,7 @@ public class ExamMasterEvent {
 
 		try {
 
-			Map<String, Object> result = dispatcher.runSync("insertExam", UtilMisc.toMap("userLogin", userLogin,
+			Map<String, Object> result = dispatcher.runSync("insertExam", UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin,
 					ExamConstants.EXAM_NAME, examName, ExamConstants.DESCRIPTION, description,
 					ExamConstants.CREATION_DATE, creationDate, ExamConstants.EXPIRATION_DATE, expirationDate,
 					ExamConstants.NO_OF_QUESTIONS, noOfQuestions, ExamConstants.DURATION_MINUTES, durationMinutes,
@@ -64,13 +64,13 @@ public class ExamMasterEvent {
 					enableNegativeMark, ExamConstants.NEGATIVE_MARK_VALUE, negativeMarkValue));
 
 			// Hibernate validation with the help of Hibernate Validator Helper class
-			ExamMasterValidator examMasterForm = HibernateHelper.populateBeanFromMap(combinedMap,
+			ExamMasterValidator examMasterForm = HibernateValidatorHelper.populateBeanFromMap(combinedMap,
 					ExamMasterValidator.class);
 
-			Set<ConstraintViolation<ExamMasterValidator>> errors = HibernateHelper.checkValidationErrors(examMasterForm,
+			Set<ConstraintViolation<ExamMasterValidator>> errors = HibernateValidatorHelper.checkValidationErrors(examMasterForm,
 					ExamMasterFormCheck.class);
 
-			boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, errors, request, locale,
+			boolean hasFormErrors = HibernateValidatorHelper.validateFormSubmission(delegator, errors, request, locale,
 					"MandatoryFieldErrMsgRegisterForm", resource_error, false);
 			request.setAttribute("hasFormErrors", hasFormErrors);
 
@@ -92,8 +92,8 @@ public class ExamMasterEvent {
 
 	public static String updateExam(HttpServletRequest request, HttpServletResponse response) {
 
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USERLOGIN);
 
 		String examId = (String) request.getAttribute(ExamConstants.EXAM_ID);
 		String examName = (String) request.getAttribute(ExamConstants.EXAM_NAME);
@@ -110,7 +110,7 @@ public class ExamMasterEvent {
 
 		try {
 
-			dispatcher.runSync("updateExam", UtilMisc.toMap("userLogin", userLogin, ExamConstants.EXAM_ID, examId,
+			dispatcher.runSync("updateExam", UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, ExamConstants.EXAM_ID, examId,
 					ExamConstants.EXAM_NAME, examName, ExamConstants.DESCRIPTION, description,
 					ExamConstants.CREATION_DATE, creationDate, ExamConstants.EXPIRATION_DATE, expirationDate,
 					ExamConstants.NO_OF_QUESTIONS, noOfQuestions, ExamConstants.DURATION_MINUTES, durationMinutes,
@@ -132,8 +132,8 @@ public class ExamMasterEvent {
 
 	public static String deleteExam(HttpServletRequest request, HttpServletResponse response) {
 
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USERLOGIN);
 		// Delegator delegator = (Delegator) request.getAttribute("delegator");
 
 		String examId = request.getParameter(ExamConstants.EXAM_ID);
@@ -141,7 +141,7 @@ public class ExamMasterEvent {
 		try {
 
 			Map<String, Object> result = dispatcher.runSync("deleteExam",
-					UtilMisc.toMap("userLogin", userLogin, ExamConstants.EXAM_ID, examId));
+					UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, ExamConstants.EXAM_ID, examId));
 			if (ServiceUtil.isSuccess(result)) {
 				displayAllExam(request, response);
 			}
@@ -159,12 +159,12 @@ public class ExamMasterEvent {
 
 	public static String displayAllExam(HttpServletRequest request, HttpServletResponse response) {
 		Debug.logInfo("=========displayAllExam EVENT STARTED SUCCESSFULLY======", module);
-		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		// GenericValue userLogin = (GenericValue)
 		// request.getSession().getAttribute("userLogin");
 
 		try {
-			List<GenericValue> listOfExam = EntityQuery.use(delegator).from("ExamMaster").queryList();
+			List<GenericValue> listOfExam = EntityQuery.use(delegator).from(EntityConstants.EXAM_MASTER).cache().queryList();
 			if (UtilValidate.isNotEmpty(listOfExam)) {
 				request.setAttribute("listExam", listOfExam);
 			}

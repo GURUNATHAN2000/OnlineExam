@@ -23,6 +23,11 @@ public interface CommonConstants {
 	
 	String ROLE_TYPE_ID = "roleTypeId";
 	String PARTY_ID = "partyId";
+	
+	String USER_NAME_LOGIN="userNameLogin";
+	
+	String USERNAME="username";
+	String PASSWORD="password";
 
 	String FIRST_NAME = "firstName";
 	String LAST_NAME = "lastName";

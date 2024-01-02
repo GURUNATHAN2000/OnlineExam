@@ -54,7 +54,7 @@ const EditModal = ({ selectedExam }) => {
   const axiosCall = (myObject) => {
     axios
       .post(
-        "https://localhost:8443/onlineexam/control/edit-examTopicMapping",
+        "https://"+window.location.hostname+":8443/onlineexam/control/edit-examTopicMapping",
         myObject,
         {
           withCredentials: true,

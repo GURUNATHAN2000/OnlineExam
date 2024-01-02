@@ -25,8 +25,9 @@ import org.apache.ofbiz.service.ServiceUtil;
 
 import com.vastpro.onlineexamapp.forms.TopicValidator;
 import com.vastpro.onlineexamapp.forms.checks.TopicFormCheck;
-import com.vastpro.onlineexamapp.helper.HibernateHelper;
+import com.vastpro.onlineexamapp.helper.HibernateValidatorHelper;
 import com.vastpro.onlineexamapp.util.CommonConstants;
+import com.vastpro.onlineexamapp.util.EntityConstants;
 import com.vastpro.onlineexamapp.util.TopicConstants;
 
 public class TopicMasterEvent {
@@ -36,11 +37,11 @@ public class TopicMasterEvent {
 
 	public static String enterTopic(HttpServletRequest request, HttpServletResponse response) {
 
-		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		Locale locale = UtilHttp.getLocale(request);
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USERLOGIN);
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 
 		String topicName = (String) combinedMap.get(TopicConstants.TOPIC_NAME);
@@ -49,15 +50,15 @@ public class TopicMasterEvent {
 		try {
 			Debug.logInfo("=======Creating topic master event using service createTopicMaster=========", module);
 			result = dispatcher.runSync("createTopicMaster",
-					UtilMisc.toMap("userLogin", userLogin, TopicConstants.TOPIC_NAME, topicName));
+					UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, TopicConstants.TOPIC_NAME, topicName));
 
 			// doing hibernate validtion
-			TopicValidator topicForm = HibernateHelper.populateBeanFromMap(combinedMap, TopicValidator.class);
+			TopicValidator topicForm = HibernateValidatorHelper.populateBeanFromMap(combinedMap, TopicValidator.class);
 			Debug.log("===================TOPICFORM =======================", topicForm);
-			Set<ConstraintViolation<TopicValidator>> errors = HibernateHelper.checkValidationErrors(topicForm,
+			Set<ConstraintViolation<TopicValidator>> errors = HibernateValidatorHelper.checkValidationErrors(topicForm,
 					TopicFormCheck.class);
 			Debug.log("=================ERRORS=========", errors);
-			boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, errors, request, locale,
+			boolean hasFormErrors = HibernateValidatorHelper.validateFormSubmission(delegator, errors, request, locale,
 					"MandatoryFieldErrMsgTopicForm", resource_error, false);
 			request.setAttribute("hasFormErrors", hasFormErrors);
 
@@ -79,8 +80,8 @@ public class TopicMasterEvent {
 
 	public static String deleteTopic(HttpServletRequest request, HttpServletResponse response) {
 
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USERLOGIN);
 		// Delegator delegator = (Delegator) request.getAttribute("delegator");
 		
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
@@ -108,13 +109,13 @@ public class TopicMasterEvent {
 	// findAll
 	public static String findAllTopics(HttpServletRequest request, HttpServletResponse response) {
 
-		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		// LocalDispatcher dispatcher = (LocalDispatcher)
 		// request.getAttribute("dispatcher");
 		// GenericValue userLogin = (GenericValue) request.getAttribute("userlogin");
 
 		try {
-			List<GenericValue> topicList = EntityQuery.use(delegator).from("TopicMaster").queryList();
+			List<GenericValue> topicList = EntityQuery.use(delegator).from(EntityConstants.TOPIC_MASTER).cache().queryList();
 
 			if (UtilValidate.isNotEmpty(topicList)) {
 				request.setAttribute("listTopics", topicList);
