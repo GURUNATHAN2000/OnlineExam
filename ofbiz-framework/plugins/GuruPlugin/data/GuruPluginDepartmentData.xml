@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<entity-engine-xml>
-	<Department DeptID="1" DeptName="Developer"/>
-	<Department DeptID="2" DeptName="QA"/>
-	<Department DeptID="3" DeptName="Dev-ops"/>
-</entity-engine-xml>

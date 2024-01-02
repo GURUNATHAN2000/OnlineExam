@@ -13,6 +13,7 @@ import javax.validation.ConstraintViolation;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilHttp;
 import org.apache.ofbiz.base.util.UtilMisc;
+import org.apache.ofbiz.base.util.UtilProperties;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
@@ -79,6 +80,11 @@ public class ExamMasterEvent {
 			}
 
 		} catch (GenericServiceException e) {
+//			Map<String, String> messageMap = UtilMisc.toMap("errorMessage", e.getMessage());
+//            String errMsg = UtilProperties.getMessage(RESOURCE, "loginevents.following_error_occurred_during_login",
+//                    messageMap, UtilHttp.getLocale(request));
+//            request.setAttribute(CommonConstants.EVENT_MESSAGE, errMsg);
+//            return CommonConstants.ERROR;
 			String errMsg = "Unable to create new records in ExamMaster entity: " + e.toString();
 			request.setAttribute(CommonConstants.EVENT_MESSAGE, errMsg);
 			request.setAttribute(CommonConstants.EVENT_ERROR_MESSAGE, "error");
