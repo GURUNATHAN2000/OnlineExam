@@ -37,7 +37,8 @@ public class LoginEvent {
 		// request.getSession().getAttribute("userLogin");
 
 		// passing request & response to the LoginWorker.login event to handle the login
-		String result =  LoginWorker.login(request, response);;
+		String result = LoginWorker.login(request, response);
+		;
 
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		Locale locale = UtilHttp.getLocale(request);
@@ -56,7 +57,6 @@ public class LoginEvent {
 		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, errors, request, locale,
 				"MandatoryFieldErrMsgLoginForm", resource_error, false);
 		request.setAttribute("hasFormErrors", hasFormErrors);
-		
 
 		// check whether requesting person is ADMIN or USER
 		try {
@@ -67,9 +67,9 @@ public class LoginEvent {
 				// Define the conditions
 				EntityCondition partyIdCondition = EntityCondition.makeCondition(CommonConstants.PARTY_ID,
 						userLogin.get(CommonConstants.PARTY_ID));
-				
+
 				request.setAttribute(CommonConstants.PARTY_ID, userLogin.get(CommonConstants.PARTY_ID));
-				
+
 				GenericValue party = EntityQuery.use(delegator).from("Person")
 						.where(CommonConstants.PARTY_ID, userLogin.get(CommonConstants.PARTY_ID)).cache().queryOne();
 				String userNameLogin = party.get("firstName") + " " + party.get("lastName");

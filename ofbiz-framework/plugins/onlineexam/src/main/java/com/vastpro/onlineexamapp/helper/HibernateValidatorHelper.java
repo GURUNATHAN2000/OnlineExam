@@ -24,9 +24,9 @@ import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.entity.util.EntityQuery;
 
-public class HibernateHelper {
+public class HibernateValidatorHelper {
 
-	private static String module = HibernateHelper.class.getName();
+	private static String module = HibernateValidatorHelper.class.getName();
 
 	private static Validator getDefaultValidator() {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
