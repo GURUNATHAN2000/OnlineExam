@@ -19,17 +19,6 @@ under the License.
 -->
 
 <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://ofbiz.apache.org/dtds/ofbiz-properties.xsd">
-<<<<<<<< HEAD:ofbiz-framework/plugins/onlineexam/config/OnlineExamErrorUiLabels.xml
- 
-    <property key="MandatoryFieldErrMsgLoginForm">
-        <value xml:lang="en">Mandatory Field Missing in Login Form --</value>
-    </property>
-    <property key="strongPasswordMsg.errorMsg">
-        <value xml:lang="en">STRONG PASSWORD REQUIRED</value>
-    </property>
-    <property key="invalidEmailFormat.errorMsg">
-        <value xml:lang="en">USERNAME FORMAT INVALID</value>
-========
     <property key="OnlineexamApplication">
         <value xml:lang="en">Onlineexam Application</value>
     </property>
@@ -46,6 +35,5 @@ under the License.
     </property>
     <property key="MandatoryFieldErrMsgLoginForm">
         <value xml:lang="en">Mandatory Field Missing in Login Form --</value>
->>>>>>>> 5a744c3bc9412dbef7ea92c22a6badfe3286b693:ofbiz-framework/plugins/bin/onlineexam/config/OnlineexamUiLabels.xml
     </property>
 </resource>

@@ -36,4 +36,10 @@ under the License.
     <property key="MandatoryFieldErrMsgLoginForm">
         <value xml:lang="en">Mandatory Field Missing in Login Form --</value>
     </property>
+    <property key="strongPasswordMsg.errorMsg">
+        <value xml:lang="en">STRONG PASSWORD REQUIRED</value>
+    </property>
+    <property key="invalidEmailFormat.errorMsg">
+        <value xml:lang="en">USERNAME FORMAT INVALID</value>
+    </property>
 </resource>
