@@ -1,6 +1,5 @@
 package com.vastpro.onlineexamapp.events;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -67,11 +66,8 @@ public class QuestionMasterEvent {
 
 			// hibernate validation
 			QuestionValidator questionForm = HibernateValidatorHelper.populateBeanFromMap(combinedMap, QuestionValidator.class);
-			// Debug.log("===================QUESTIONFORM =======================",
-			// questionForm);
 			Set<ConstraintViolation<QuestionValidator>> errors = HibernateValidatorHelper.checkValidationErrors(questionForm,
 					QuestionFormCheck.class);
-			// Debug.log("=============ERRORS=================", errors);
 			boolean hasFormErrors = HibernateValidatorHelper.validateFormSubmission(delegator, errors, request, locale,
 					"MandatoryFieldsAreEmpty", resource_error, false);
 

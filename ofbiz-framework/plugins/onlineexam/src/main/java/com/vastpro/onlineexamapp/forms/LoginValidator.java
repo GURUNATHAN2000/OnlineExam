@@ -12,26 +12,40 @@ public class LoginValidator {
 	@NotEmpty(message = "USERNAME EMPTY", groups = { LoginFormCheck.class })
 	@Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", message = "invalidEmailFormat.errorMsg", groups = {
 			LoginFormCheck.class })
-	private String username;
+	private String USERNAME;
 
 	@NotEmpty(message = "PASSWORD EMPTY", groups = { LoginFormCheck.class })
 	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "strongPasswordMsg.errorMsg", groups = {
 			LoginFormCheck.class })
-	private String password;
+	private String PASSWORD;
 
-	public String getUsername() {
-		return username;
+	/**
+	 * @return the uSERNAME
+	 */
+	public String getUSERNAME() {
+		return USERNAME;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	/**
+	 * @param uSERNAME the uSERNAME to set
+	 */
+	public void setUSERNAME(String uSERNAME) {
+		USERNAME = uSERNAME;
 	}
 
-	public String getPassword() {
-		return password;
+	/**
+	 * @return the pASSWORD
+	 */
+	public String getPASSWORD() {
+		return PASSWORD;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	/**
+	 * @param pASSWORD the pASSWORD to set
+	 */
+	public void setPASSWORD(String pASSWORD) {
+		PASSWORD = pASSWORD;
 	}
+
+	
 }

@@ -55,20 +55,21 @@ public class ExamMasterEvent {
 
 		try {
 
-			Map<String, Object> result = dispatcher.runSync("insertExam", UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin,
-					ExamConstants.EXAM_NAME, examName, ExamConstants.DESCRIPTION, description,
-					ExamConstants.CREATION_DATE, creationDate, ExamConstants.EXPIRATION_DATE, expirationDate,
-					ExamConstants.NO_OF_QUESTIONS, noOfQuestions, ExamConstants.DURATION_MINUTES, durationMinutes,
-					ExamConstants.PASS_PERCENTAGE, passPercentage, ExamConstants.QUESTIONS_RANDOMIZED,
-					questionsRandomized, ExamConstants.ANSWER_MUST, answersMust, ExamConstants.ENABLE_NEGATIVE_MARK,
-					enableNegativeMark, ExamConstants.NEGATIVE_MARK_VALUE, negativeMarkValue));
+			Map<String, Object> result = dispatcher.runSync("insertExam",
+					UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, ExamConstants.EXAM_NAME, examName,
+							ExamConstants.DESCRIPTION, description, ExamConstants.CREATION_DATE, creationDate,
+							ExamConstants.EXPIRATION_DATE, expirationDate, ExamConstants.NO_OF_QUESTIONS, noOfQuestions,
+							ExamConstants.DURATION_MINUTES, durationMinutes, ExamConstants.PASS_PERCENTAGE,
+							passPercentage, ExamConstants.QUESTIONS_RANDOMIZED, questionsRandomized,
+							ExamConstants.ANSWER_MUST, answersMust, ExamConstants.ENABLE_NEGATIVE_MARK,
+							enableNegativeMark, ExamConstants.NEGATIVE_MARK_VALUE, negativeMarkValue));
 
 			// Hibernate validation with the help of Hibernate Validator Helper class
 			ExamMasterValidator examMasterForm = HibernateValidatorHelper.populateBeanFromMap(combinedMap,
 					ExamMasterValidator.class);
 
-			Set<ConstraintViolation<ExamMasterValidator>> errors = HibernateValidatorHelper.checkValidationErrors(examMasterForm,
-					ExamMasterFormCheck.class);
+			Set<ConstraintViolation<ExamMasterValidator>> errors = HibernateValidatorHelper
+					.checkValidationErrors(examMasterForm, ExamMasterFormCheck.class);
 
 			boolean hasFormErrors = HibernateValidatorHelper.validateFormSubmission(delegator, errors, request, locale,
 					"MandatoryFieldErrMsgRegisterForm", resource_error, false);
@@ -110,8 +111,8 @@ public class ExamMasterEvent {
 
 		try {
 
-			dispatcher.runSync("updateExam", UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, ExamConstants.EXAM_ID, examId,
-					ExamConstants.EXAM_NAME, examName, ExamConstants.DESCRIPTION, description,
+			dispatcher.runSync("updateExam", UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, ExamConstants.EXAM_ID,
+					examId, ExamConstants.EXAM_NAME, examName, ExamConstants.DESCRIPTION, description,
 					ExamConstants.CREATION_DATE, creationDate, ExamConstants.EXPIRATION_DATE, expirationDate,
 					ExamConstants.NO_OF_QUESTIONS, noOfQuestions, ExamConstants.DURATION_MINUTES, durationMinutes,
 					ExamConstants.PASS_PERCENTAGE, passPercentage, ExamConstants.QUESTIONS_RANDOMIZED,
@@ -124,7 +125,7 @@ public class ExamMasterEvent {
 			request.setAttribute(CommonConstants.EVENT_ERROR_MESSAGE, "error");
 			return CommonConstants.ERROR;
 		}
-		
+
 		request.setAttribute(CommonConstants.EVENT_MESSAGE, "ExamMaster details updated successfully.");
 		request.setAttribute(CommonConstants.EVENT_SUCCESS_MESSAGE, "success");
 		return CommonConstants.SUCCESS;
@@ -134,19 +135,33 @@ public class ExamMasterEvent {
 
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USERLOGIN);
-		// Delegator delegator = (Delegator) request.getAttribute("delegator");
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
 
 		String examId = request.getParameter(ExamConstants.EXAM_ID);
 
 		try {
 
-			Map<String, Object> result = dispatcher.runSync("deleteExam",
-					UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, ExamConstants.EXAM_ID, examId));
+			List<GenericValue> listOfExams = EntityQuery.use(delegator).from(EntityConstants.USER_EXAM_MAPPING_MASTER)
+					.where(ExamConstants.EXAM_ID, examId).cache().queryList();
+
+			Map<String, Object> result = ServiceUtil.returnSuccess();
+			for (GenericValue exam : listOfExams) {
+				if (ServiceUtil.isSuccess(result)) {
+					result = dispatcher.runSync("deleteExamFromUserExamMappingMaster",
+							UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, ExamConstants.EXAM_ID, examId,
+									CommonConstants.PARTY_ID, exam.get(CommonConstants.PARTY_ID)));
+				}
+			}
+
+			if (ServiceUtil.isSuccess(result)) {
+				result = dispatcher.runSync("deleteExam",
+						UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, ExamConstants.EXAM_ID, examId));
+			}
 			if (ServiceUtil.isSuccess(result)) {
 				displayAllExam(request, response);
 			}
 
-		} catch (GenericServiceException e) {
+		} catch (GenericServiceException | GenericEntityException e) {
 			String errMsg = "Unable to delete the records in ExamMaster entity: " + e.toString();
 			request.setAttribute(CommonConstants.EVENT_MESSAGE, errMsg);
 			request.setAttribute(CommonConstants.EVENT_ERROR_MESSAGE, "error");
@@ -164,7 +179,8 @@ public class ExamMasterEvent {
 		// request.getSession().getAttribute("userLogin");
 
 		try {
-			List<GenericValue> listOfExam = EntityQuery.use(delegator).from(EntityConstants.EXAM_MASTER).cache().queryList();
+			List<GenericValue> listOfExam = EntityQuery.use(delegator).from(EntityConstants.EXAM_MASTER).cache()
+					.queryList();
 			if (UtilValidate.isNotEmpty(listOfExam)) {
 				request.setAttribute("listExam", listOfExam);
 			}

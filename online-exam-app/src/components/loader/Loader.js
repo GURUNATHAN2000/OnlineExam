@@ -5,13 +5,13 @@ const Loader = () => {
   console.log("vanakam");
   return (
     <div className="overlay">
-      <div class="text-center">
-        <button class="btn btn-outline-light" type="button" disabled>
+      <div className="text-center">
+        <button className="btn btn-outline-light" type="button" disabled>
           <span
-            class="spinner-border  spinner-border-sm"
+            className="spinner-border  spinner-border-sm"
             role="status"
             aria-hidden="true"></span>
-          <span class="sr-only "> Loading...</span>
+          <span className="sr-only "> Loading...</span>
         </button>
       </div>
     </div>

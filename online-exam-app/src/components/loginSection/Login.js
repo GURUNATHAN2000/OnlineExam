@@ -89,12 +89,17 @@ const Login = (props) => {
         function set() {
           dispatch(setName(data.userNameLogin));
           //props.setName();
-          props.setPartyId();
+          props.setPartyId(data.partyId);
+          // console.log("hai");
+          sessionStorage.setItem("userName", data.userNameLogin);
+          sessionStorage.setItem("partyId", data.partyId);
+          // console.log("bye");
+          //dispatch(setPartyId());
         }
         // console.log("roleTypeId :: ", data.roleTypeId);
       })
       .catch((err) => {
-        setIsLoading(true);
+        setIsLoading(false);
         console.log("ERROR FROM LOGIN FETCH :: ", err);
       });
   };

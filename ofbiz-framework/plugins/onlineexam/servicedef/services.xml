@@ -132,4 +132,11 @@
 			optional="false"></auto-attributes>
 	</service>
 
+	<!-- delete an Exam from userExamMapping-->
+	<service name="deleteExamFromUserExamMappingMaster" default-entity-name="UserExamMappingMaster"
+		engine="entity-auto" invoke="delete" auth="true">
+		<description>Delete Exam from userExamMapping</description>
+		<auto-attributes include="pk" mode="IN"
+			optional="false" />
+	</service>
 </services>

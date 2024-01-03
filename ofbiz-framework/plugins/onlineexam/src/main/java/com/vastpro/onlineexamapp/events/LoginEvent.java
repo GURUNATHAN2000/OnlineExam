@@ -10,7 +10,6 @@ import javax.validation.ConstraintViolation;
 
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilHttp;
-import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
@@ -34,46 +33,44 @@ public class LoginEvent {
 	public static String doLogin(HttpServletRequest request, HttpServletResponse response) {
 
 		Debug.logInfo("=========LOGIN EVENT STARTED SUCCESSFULLY======", module);
+		String result = CommonConstants.SUCCESS;
+
 		// GenericValue userLogin = (GenericValue)
 		// request.getSession().getAttribute("userLogin");
-
-		// passing request & response to the LoginWorker.login event to handle the login
-		String result =  LoginWorker.login(request, response);;
 
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		Locale locale = UtilHttp.getLocale(request);
 
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
-		String usernameDummy = (String) combinedMap.get("USERNAME");
-		String username = usernameDummy.toLowerCase();
-		String password = (String) combinedMap.get("PASSWORD");
-		Map<String, Object> userLoginMap = UtilMisc.toMap(CommonConstants.USERNAME, username, CommonConstants.PASSWORD, password);
 
 		// doing hibernate validation with the help of hibernate helper class
-		LoginValidator loginForm = HibernateValidatorHelper.populateBeanFromMap(userLoginMap, LoginValidator.class);
+		LoginValidator loginForm = HibernateValidatorHelper.populateBeanFromMap(combinedMap, LoginValidator.class);
 		Set<ConstraintViolation<LoginValidator>> errors = HibernateValidatorHelper.checkValidationErrors(loginForm,
 				LoginFormCheck.class);
 
 		boolean hasFormErrors = HibernateValidatorHelper.validateFormSubmission(delegator, errors, request, locale,
 				"MandatoryFieldErrMsgLoginForm", resource_error, false);
 		request.setAttribute("hasFormErrors", hasFormErrors);
-		
 
+		// passing request & response to the LoginWorker.login event to handle the login
+		result = LoginWorker.login(request, response);
+		String username = combinedMap.get("USERNAME").toString().toLowerCase();
 		// check whether requesting person is ADMIN or USER
 		try {
-			GenericValue userLogin = EntityQuery.use(delegator).from(EntityConstants.USER_LOGIN).where(CommonConstants.USER_LOGIN_ID, username).cache()
-					.queryFirst();
+			GenericValue userLogin = EntityQuery.use(delegator).from(EntityConstants.USER_LOGIN)
+					.where(CommonConstants.USER_LOGIN_ID, username).cache().queryFirst();
 			if (UtilValidate.isNotEmpty(userLogin)) {
 
 				// Define the conditions
 				EntityCondition partyIdCondition = EntityCondition.makeCondition(CommonConstants.PARTY_ID,
 						userLogin.get(CommonConstants.PARTY_ID));
-				
+
 				request.setAttribute(CommonConstants.PARTY_ID, userLogin.get(CommonConstants.PARTY_ID));
-				
+
 				GenericValue party = EntityQuery.use(delegator).from(EntityConstants.PERSON)
 						.where(CommonConstants.PARTY_ID, userLogin.get(CommonConstants.PARTY_ID)).cache().queryOne();
-				String userNameLogin = party.get(CommonConstants.FIRST_NAME) + " " + party.get(CommonConstants.LAST_NAME);
+				String userNameLogin = party.get(CommonConstants.FIRST_NAME) + " "
+						+ party.get(CommonConstants.LAST_NAME);
 
 				request.setAttribute(CommonConstants.USER_NAME_LOGIN, userNameLogin);
 
@@ -90,7 +87,14 @@ public class LoginEvent {
 
 				if (UtilValidate.isNotEmpty(partyRole)) {
 					request.setAttribute(CommonConstants.ROLE_TYPE_ID, partyRole.get(CommonConstants.ROLE_TYPE_ID));
+					request.setAttribute(CommonConstants.EVENT_SUCCESS_MESSAGE, CommonConstants.SUCCESS);
+				} else {
+					request.setAttribute(CommonConstants.EVENT_ERROR_MESSAGE, "PARTYROLE IS NULL");
+					result = CommonConstants.ERROR;
 				}
+			} else {
+				request.setAttribute(CommonConstants.EVENT_ERROR_MESSAGE, "USERLOGIN IS NULL");
+				result = CommonConstants.ERROR;
 			}
 		} catch (GenericEntityException e) {
 			e.printStackTrace();

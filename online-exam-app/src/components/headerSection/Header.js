@@ -3,14 +3,17 @@ import React from "react";
 import { RiAdminFill, RiLogoutBoxRLine, RiUserFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 
-import logo from "../../img/vastpro-logo-right.png";
 import "./Header.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 const Header = ({ page, name, partyId }) => {
   const userName = useSelector((state) => state.name);
-  sessionStorage.setItem("userName", userName);
+
+  // userName == "USER"
+  //   ? sessionStorage.setItem("userName", userName)
+  //   : console.log("username :: ", userName);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -36,7 +39,7 @@ const Header = ({ page, name, partyId }) => {
       })
       .then((data) => {
         console.log("data:: ", data);
-        // //data._ERROR_MESSAGE_ ? handleError(data) : handleRoleType(data);
+        // data._ERROR_MESSAGE_ ? handleError(data) : handleRoleType(data);
         // handleRoleType(data);
         // props.setName(data.userNameLogin);
         // props.setPartyId(data.partyId);
@@ -53,7 +56,7 @@ const Header = ({ page, name, partyId }) => {
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <img
-            src={logo}
+            src="vastpro-logo-right.png"
             alt="LOGO"
             className="custom-logo p-2"
             height="50px"
@@ -91,7 +94,7 @@ const Header = ({ page, name, partyId }) => {
                   title="ADMIN">
                   ADMIN
                   <br />
-                  ID : {partyId}
+                  ID : {sessionStorage.getItem("partyId")}
                 </p>
               </Link>
 
@@ -181,7 +184,7 @@ const Header = ({ page, name, partyId }) => {
                   data-bs-placement="top"
                   title="USER">
                   {sessionStorage.getItem("userName")} <br />
-                  ID : {partyId}
+                  ID : {sessionStorage.getItem("partyId")}
                 </p>
               </Link>
 

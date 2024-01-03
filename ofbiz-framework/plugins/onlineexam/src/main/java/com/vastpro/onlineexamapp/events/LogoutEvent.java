@@ -12,8 +12,9 @@ public class LogoutEvent {
 
 	public static String doLogout(HttpServletRequest request, HttpServletResponse response) {
 
-		Debug.logInfo("=========LOGIN EVENT STARTED SUCCESSFULLY======", module);
+		Debug.logInfo("=========LOGOUT EVENT STARTED SUCCESSFULLY======", module);
 		String result = LoginWorker.logout(request, response);
+		Debug.logInfo("=========LOGOUT EVENT ENDED   SUCCESSFULLY======", module);
 		return result;
 	}
 	
