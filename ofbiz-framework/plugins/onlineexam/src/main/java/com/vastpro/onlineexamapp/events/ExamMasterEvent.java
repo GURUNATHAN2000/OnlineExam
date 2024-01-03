@@ -13,6 +13,7 @@ import javax.validation.ConstraintViolation;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilHttp;
 import org.apache.ofbiz.base.util.UtilMisc;
+import org.apache.ofbiz.base.util.UtilProperties;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
@@ -29,10 +30,25 @@ import com.vastpro.onlineexamapp.util.CommonConstants;
 import com.vastpro.onlineexamapp.util.EntityConstants;
 import com.vastpro.onlineexamapp.util.ExamConstants;
 
+/**
+ * Handles ExamMaster event.
+ * @author Sreelash
+ */
 public class ExamMasterEvent {
+
+	// Logging module name
 	public static final String module = ExamMasterEvent.class.getName();
+
+	// Resource bundle for error messages
 	public static String resource_error = "OnlineexamUiLabels";
 
+	/**
+	 * This method will inserts a new exam from ExamMaster entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String insertExam(HttpServletRequest request, HttpServletResponse response) {
 
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
@@ -80,6 +96,11 @@ public class ExamMasterEvent {
 			}
 
 		} catch (GenericServiceException e) {
+//			Map<String, String> messageMap = UtilMisc.toMap("errorMessage", e.getMessage());
+//            String errMsg = UtilProperties.getMessage(RESOURCE, "loginevents.following_error_occurred_during_login",
+//                    messageMap, UtilHttp.getLocale(request));
+//            request.setAttribute(CommonConstants.EVENT_MESSAGE, errMsg);
+//            return CommonConstants.ERROR;
 			String errMsg = "Unable to create new records in ExamMaster entity: " + e.toString();
 			request.setAttribute(CommonConstants.EVENT_MESSAGE, errMsg);
 			request.setAttribute(CommonConstants.EVENT_ERROR_MESSAGE, "error");
@@ -91,6 +112,14 @@ public class ExamMasterEvent {
 		return CommonConstants.SUCCESS;
 	}
 
+	/**
+	 * This method will updates an existing exam for that related examId from
+	 * ExamMaster entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String updateExam(HttpServletRequest request, HttpServletResponse response) {
 
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
@@ -131,13 +160,22 @@ public class ExamMasterEvent {
 		return CommonConstants.SUCCESS;
 	}
 
+	/**
+	 * This method will deletes an exam for that related examId from ExamMaster
+	 * entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String deleteExam(HttpServletRequest request, HttpServletResponse response) {
 
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USERLOGIN);
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 
-		String examId = request.getParameter(ExamConstants.EXAM_ID);
+		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+		String examId = (String) combinedMap.get(ExamConstants.EXAM_ID);
 
 		try {
 
@@ -172,6 +210,13 @@ public class ExamMasterEvent {
 		return CommonConstants.SUCCESS;
 	}
 
+	/**
+	 * This method will displays a list of all exams in the ExamMaster entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String displayAllExam(HttpServletRequest request, HttpServletResponse response) {
 		Debug.logInfo("=========displayAllExam EVENT STARTED SUCCESSFULLY======", module);
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);

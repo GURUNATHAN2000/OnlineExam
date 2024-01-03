@@ -64,7 +64,8 @@ const Topic = () => {
       if (result.isConfirmed) {
         axios
           .get(
-            `https://localhost:8443/onlineexam/control/delete-topic?topicId=${topicId}`,
+            "https://localhost:8443/onlineexam/control/delete-topic",
+            { topicId: topicId },
             { withCredentials: true }
           )
           .then((response) => {
@@ -131,7 +132,8 @@ const Topic = () => {
 
                         <button
                           className="btn btn-outline-danger m-1 btn-sm "
-                          onClick={() => handleDelete(topic.topicId)}>
+                          onClick={() => handleDelete(topic.topicId)}
+                        >
                           Delete
                         </button>
                       </td>

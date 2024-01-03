@@ -19,8 +19,19 @@ import com.vastpro.onlineexamapp.util.CommonConstants;
 import com.vastpro.onlineexamapp.util.ExamConstants;
 import com.vastpro.onlineexamapp.util.UserExamMappingConstants;
 
+/**
+ * Handles UserExamMappingMaster event
+ * @author DELL
+ */
 public class UserExamMappingMasterEvent {
 	
+	/**
+	 * This method will creates a new user from UserExamMappingMaster entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String insertUserExamMapping(HttpServletRequest request, HttpServletResponse response) {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
@@ -63,6 +74,14 @@ public class UserExamMappingMasterEvent {
 		return CommonConstants.SUCCESS;
 
 	}
+	
+	/**
+	 * This method will assign exam to the user .
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String getAssignedExams(HttpServletRequest request, HttpServletResponse response) {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);

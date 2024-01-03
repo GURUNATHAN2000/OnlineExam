@@ -25,6 +25,11 @@ import com.vastpro.onlineexamapp.helper.HibernateValidatorHelper;
 import com.vastpro.onlineexamapp.util.CommonConstants;
 import com.vastpro.onlineexamapp.util.EntityConstants;
 
+/**
+ * 
+ * @author Gurunathan
+ *
+ */
 public class LoginEvent {
 
 	public static final String module = LoginEvent.class.getName();

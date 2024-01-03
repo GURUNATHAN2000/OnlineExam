@@ -17,7 +17,22 @@ import com.vastpro.onlineexamapp.util.ExamTopicMappingConstants;
 import com.vastpro.onlineexamapp.util.TopicConstants;
 //import com.vastpro.onlineexamapp.util.TopicConstants;
 
+/**
+ * Handles ExamTopicMaster event.
+ * 
+ * @author Sreelash
+ */
 public class ExamTopicMappingMasterEvent {
+
+	/**
+	 * This method will have topics defined and for each of these topics, there will
+	 * be a pass percentage defined and all other configurations specific to that
+	 * exam.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String editTopicMapping(HttpServletRequest request, HttpServletResponse response) {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
@@ -32,8 +47,8 @@ public class ExamTopicMappingMasterEvent {
 		try {
 
 			Map<String, Object> runSync = dispatcher.runSync("ExamTopicMapping",
-					UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, ExamConstants.EXAM_ID, examId, TopicConstants.TOPIC_ID, topicId,
-							ExamTopicMappingConstants.PERCENTAGE, percentage,
+					UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, ExamConstants.EXAM_ID, examId,
+							TopicConstants.TOPIC_ID, topicId, ExamTopicMappingConstants.PERCENTAGE, percentage,
 							ExamTopicMappingConstants.TOPIC_PASS_PERCENTAGE, topicPassPercentage,
 							ExamTopicMappingConstants.QUESTIONS_PER_EXAM, questionsPerExam));
 
