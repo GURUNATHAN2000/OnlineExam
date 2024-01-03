@@ -30,10 +30,25 @@ import com.vastpro.onlineexamapp.util.CommonConstants;
 import com.vastpro.onlineexamapp.util.EntityConstants;
 import com.vastpro.onlineexamapp.util.ExamConstants;
 
+/**
+ * Handles ExamMaster event.
+ * @author Sreelash
+ */
 public class ExamMasterEvent {
+
+	// Logging module name
 	public static final String module = ExamMasterEvent.class.getName();
+
+	// Resource bundle for error messages
 	public static String resource_error = "OnlineexamUiLabels";
 
+	/**
+	 * This method will inserts a new exam from ExamMaster entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String insertExam(HttpServletRequest request, HttpServletResponse response) {
 
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
@@ -56,20 +71,21 @@ public class ExamMasterEvent {
 
 		try {
 
-			Map<String, Object> result = dispatcher.runSync("insertExam", UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin,
-					ExamConstants.EXAM_NAME, examName, ExamConstants.DESCRIPTION, description,
-					ExamConstants.CREATION_DATE, creationDate, ExamConstants.EXPIRATION_DATE, expirationDate,
-					ExamConstants.NO_OF_QUESTIONS, noOfQuestions, ExamConstants.DURATION_MINUTES, durationMinutes,
-					ExamConstants.PASS_PERCENTAGE, passPercentage, ExamConstants.QUESTIONS_RANDOMIZED,
-					questionsRandomized, ExamConstants.ANSWER_MUST, answersMust, ExamConstants.ENABLE_NEGATIVE_MARK,
-					enableNegativeMark, ExamConstants.NEGATIVE_MARK_VALUE, negativeMarkValue));
+			Map<String, Object> result = dispatcher.runSync("insertExam",
+					UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, ExamConstants.EXAM_NAME, examName,
+							ExamConstants.DESCRIPTION, description, ExamConstants.CREATION_DATE, creationDate,
+							ExamConstants.EXPIRATION_DATE, expirationDate, ExamConstants.NO_OF_QUESTIONS, noOfQuestions,
+							ExamConstants.DURATION_MINUTES, durationMinutes, ExamConstants.PASS_PERCENTAGE,
+							passPercentage, ExamConstants.QUESTIONS_RANDOMIZED, questionsRandomized,
+							ExamConstants.ANSWER_MUST, answersMust, ExamConstants.ENABLE_NEGATIVE_MARK,
+							enableNegativeMark, ExamConstants.NEGATIVE_MARK_VALUE, negativeMarkValue));
 
 			// Hibernate validation with the help of Hibernate Validator Helper class
 			ExamMasterValidator examMasterForm = HibernateValidatorHelper.populateBeanFromMap(combinedMap,
 					ExamMasterValidator.class);
 
-			Set<ConstraintViolation<ExamMasterValidator>> errors = HibernateValidatorHelper.checkValidationErrors(examMasterForm,
-					ExamMasterFormCheck.class);
+			Set<ConstraintViolation<ExamMasterValidator>> errors = HibernateValidatorHelper
+					.checkValidationErrors(examMasterForm, ExamMasterFormCheck.class);
 
 			boolean hasFormErrors = HibernateValidatorHelper.validateFormSubmission(delegator, errors, request, locale,
 					"MandatoryFieldErrMsgRegisterForm", resource_error, false);
@@ -96,6 +112,14 @@ public class ExamMasterEvent {
 		return CommonConstants.SUCCESS;
 	}
 
+	/**
+	 * This method will updates an existing exam for that related examId from
+	 * ExamMaster entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String updateExam(HttpServletRequest request, HttpServletResponse response) {
 
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
@@ -116,8 +140,8 @@ public class ExamMasterEvent {
 
 		try {
 
-			dispatcher.runSync("updateExam", UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, ExamConstants.EXAM_ID, examId,
-					ExamConstants.EXAM_NAME, examName, ExamConstants.DESCRIPTION, description,
+			dispatcher.runSync("updateExam", UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, ExamConstants.EXAM_ID,
+					examId, ExamConstants.EXAM_NAME, examName, ExamConstants.DESCRIPTION, description,
 					ExamConstants.CREATION_DATE, creationDate, ExamConstants.EXPIRATION_DATE, expirationDate,
 					ExamConstants.NO_OF_QUESTIONS, noOfQuestions, ExamConstants.DURATION_MINUTES, durationMinutes,
 					ExamConstants.PASS_PERCENTAGE, passPercentage, ExamConstants.QUESTIONS_RANDOMIZED,
@@ -130,19 +154,28 @@ public class ExamMasterEvent {
 			request.setAttribute(CommonConstants.EVENT_ERROR_MESSAGE, "error");
 			return CommonConstants.ERROR;
 		}
-		
+
 		request.setAttribute(CommonConstants.EVENT_MESSAGE, "ExamMaster details updated successfully.");
 		request.setAttribute(CommonConstants.EVENT_SUCCESS_MESSAGE, "success");
 		return CommonConstants.SUCCESS;
 	}
 
+	/**
+	 * This method will deletes an exam for that related examId from ExamMaster
+	 * entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String deleteExam(HttpServletRequest request, HttpServletResponse response) {
 
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USERLOGIN);
 		// Delegator delegator = (Delegator) request.getAttribute("delegator");
 
-		String examId = request.getParameter(ExamConstants.EXAM_ID);
+		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+		String examId = (String) combinedMap.get(ExamConstants.EXAM_ID);
 
 		try {
 
@@ -163,6 +196,13 @@ public class ExamMasterEvent {
 		return CommonConstants.SUCCESS;
 	}
 
+	/**
+	 * This method will displays a list of all exams in the ExamMaster entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String displayAllExam(HttpServletRequest request, HttpServletResponse response) {
 		Debug.logInfo("=========displayAllExam EVENT STARTED SUCCESSFULLY======", module);
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
@@ -170,7 +210,8 @@ public class ExamMasterEvent {
 		// request.getSession().getAttribute("userLogin");
 
 		try {
-			List<GenericValue> listOfExam = EntityQuery.use(delegator).from(EntityConstants.EXAM_MASTER).cache().queryList();
+			List<GenericValue> listOfExam = EntityQuery.use(delegator).from(EntityConstants.EXAM_MASTER).cache()
+					.queryList();
 			if (UtilValidate.isNotEmpty(listOfExam)) {
 				request.setAttribute("listExam", listOfExam);
 			}

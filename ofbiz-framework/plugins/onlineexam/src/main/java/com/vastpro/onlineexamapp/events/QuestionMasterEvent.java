@@ -30,11 +30,27 @@ import com.vastpro.onlineexamapp.util.EntityConstants;
 import com.vastpro.onlineexamapp.util.QuestionConstants;
 import com.vastpro.onlineexamapp.util.TopicConstants;
 
+/**
+ * Handles QuestionMaster event.
+ * 
+ * @author Gokul
+ */
 public class QuestionMasterEvent {
 
+	// Logging module name
 	public static final String module = QuestionMasterEvent.class.getName();
+
+	// Resource bundle for error messages
 	public static String resource_error = "OnlineexamUiLabels";
 
+	/**
+	 * This method will creates a questions for that related topic name from the
+	 * QuestionMaster entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String createQuestion(HttpServletRequest request, HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
@@ -57,20 +73,23 @@ public class QuestionMasterEvent {
 		String negativeMarkValue = (String) combinedMap.get(QuestionConstants.NEGATIVE_MARK_VALUE);
 
 		try {
-			Map<String, Object> result = dispatcher.runSync("createQuestionMaster", UtilMisc.toMap(CommonConstants.USERLOGIN,
-					userLogin, QuestionConstants.QUESTION_DETAIL, questionDetail, QuestionConstants.OPTION_A, optionA,
-					QuestionConstants.OPTION_B, optionB, QuestionConstants.OPTION_C, optionC,
-					QuestionConstants.OPTION_D, optionD, QuestionConstants.OPTION_E, optionE, QuestionConstants.ANSWER,
-					answer, QuestionConstants.NUM_ANSWERS, numAnswers, QuestionConstants.QUESTION_TYPE, questionType,
-					QuestionConstants.DIFFICULTY_LEVEL, difficultyLevel, QuestionConstants.ANSWER_VALUE, answerValue,
-					TopicConstants.TOPIC_ID, topicId, QuestionConstants.NEGATIVE_MARK_VALUE, negativeMarkValue));
+			Map<String, Object> result = dispatcher.runSync("createQuestionMaster",
+					UtilMisc.toMap(CommonConstants.USERLOGIN, userLogin, QuestionConstants.QUESTION_DETAIL,
+							questionDetail, QuestionConstants.OPTION_A, optionA, QuestionConstants.OPTION_B, optionB,
+							QuestionConstants.OPTION_C, optionC, QuestionConstants.OPTION_D, optionD,
+							QuestionConstants.OPTION_E, optionE, QuestionConstants.ANSWER, answer,
+							QuestionConstants.NUM_ANSWERS, numAnswers, QuestionConstants.QUESTION_TYPE, questionType,
+							QuestionConstants.DIFFICULTY_LEVEL, difficultyLevel, QuestionConstants.ANSWER_VALUE,
+							answerValue, TopicConstants.TOPIC_ID, topicId, QuestionConstants.NEGATIVE_MARK_VALUE,
+							negativeMarkValue));
 
-			// hibernate validation
-			QuestionValidator questionForm = HibernateValidatorHelper.populateBeanFromMap(combinedMap, QuestionValidator.class);
+			// Hibernate validation with the help of Hibernate Validator Helper class
+			QuestionValidator questionForm = HibernateValidatorHelper.populateBeanFromMap(combinedMap,
+					QuestionValidator.class);
 			// Debug.log("===================QUESTIONFORM =======================",
 			// questionForm);
-			Set<ConstraintViolation<QuestionValidator>> errors = HibernateValidatorHelper.checkValidationErrors(questionForm,
-					QuestionFormCheck.class);
+			Set<ConstraintViolation<QuestionValidator>> errors = HibernateValidatorHelper
+					.checkValidationErrors(questionForm, QuestionFormCheck.class);
 			// Debug.log("=============ERRORS=================", errors);
 			boolean hasFormErrors = HibernateValidatorHelper.validateFormSubmission(delegator, errors, request, locale,
 					"MandatoryFieldsAreEmpty", resource_error, false);
@@ -94,7 +113,14 @@ public class QuestionMasterEvent {
 
 	}
 
-	// UPDATING QUESTION MASTER
+	/**
+	 * This method will updates an existing question for that related questionId
+	 * from QuestionMaster entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String updateQuestion(HttpServletRequest request, HttpServletResponse response) {
 
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
@@ -136,14 +162,22 @@ public class QuestionMasterEvent {
 
 	}
 
+	/**
+	 * This method will deletes an question for that related questionId from
+	 * QuestionMaster entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String deleteQuestion(HttpServletRequest request, HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USERLOGIN);
-		
+
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		String questionId = (String) combinedMap.get(QuestionConstants.QUESTION_ID);
-		System.out.println("=========================="+ questionId);
+		System.out.println("==========================" + questionId);
 
 		try {
 			Debug.logInfo("=======delete question master event using service deleteQuestionMaster=========", module);
@@ -161,13 +195,22 @@ public class QuestionMasterEvent {
 		return CommonConstants.SUCCESS;
 	}
 
+	/**
+	 * This method will displays all the question listing from the QuestionMaster
+	 * entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String findAllQuestions(HttpServletRequest request, HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USERLOGIN);
 
 		try {
-			List<GenericValue> questionList = EntityQuery.use(delegator).from(EntityConstants.QUESTION_MASTER).cache().queryList();
+			List<GenericValue> questionList = EntityQuery.use(delegator).from(EntityConstants.QUESTION_MASTER).cache()
+					.queryList();
 			if (UtilValidate.isNotEmpty(questionList)) {
 				request.setAttribute("listQuestions", questionList);
 			}

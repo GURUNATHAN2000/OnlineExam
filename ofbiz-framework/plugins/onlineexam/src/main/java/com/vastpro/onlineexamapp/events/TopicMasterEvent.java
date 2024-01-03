@@ -30,11 +30,26 @@ import com.vastpro.onlineexamapp.util.CommonConstants;
 import com.vastpro.onlineexamapp.util.EntityConstants;
 import com.vastpro.onlineexamapp.util.TopicConstants;
 
+/**
+ * Handles TopicMaster event.
+ * 
+ * @author Gokul
+ */
 public class TopicMasterEvent {
 
+	// Logging module name
 	public static final String module = TopicMasterEvent.class.getName();
+
+	// Resource bundle for error messages
 	public static String resource_error = "OnlineexamUiLabels";
 
+	/**
+	 * This method will creates a topic name from TopicMaster entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String enterTopic(HttpServletRequest request, HttpServletResponse response) {
 
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
@@ -78,14 +93,22 @@ public class TopicMasterEvent {
 		return CommonConstants.SUCCESS;
 	}
 
+	/**
+	 * This method will deletes an topic name for that related topicId from
+	 * TopicMaster entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String deleteTopic(HttpServletRequest request, HttpServletResponse response) {
 
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USERLOGIN);
 		// Delegator delegator = (Delegator) request.getAttribute("delegator");
-		
+
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
-		
+
 		String topicId = (String) combinedMap.get(TopicConstants.TOPIC_ID);
 
 		try {
@@ -106,7 +129,13 @@ public class TopicMasterEvent {
 		return CommonConstants.SUCCESS;
 	}
 
-	// findAll
+	/**
+	 * This method will displays all the topic listing from TopicMaster entity.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @return Result status (SUCCESS or ERROR)
+	 */
 	public static String findAllTopics(HttpServletRequest request, HttpServletResponse response) {
 
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
@@ -115,7 +144,8 @@ public class TopicMasterEvent {
 		// GenericValue userLogin = (GenericValue) request.getAttribute("userlogin");
 
 		try {
-			List<GenericValue> topicList = EntityQuery.use(delegator).from(EntityConstants.TOPIC_MASTER).cache().queryList();
+			List<GenericValue> topicList = EntityQuery.use(delegator).from(EntityConstants.TOPIC_MASTER).cache()
+					.queryList();
 
 			if (UtilValidate.isNotEmpty(topicList)) {
 				request.setAttribute("listTopics", topicList);

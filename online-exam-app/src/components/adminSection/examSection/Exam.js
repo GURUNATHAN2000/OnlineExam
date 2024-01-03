@@ -53,6 +53,7 @@ const Exam = () => {
   };
 
   const handleDelete = (examId) => {
+    console.log(`examId for delete: ${examId}`);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -149,13 +150,15 @@ const Exam = () => {
                             className="btn btn-outline-success m-1 btn-sm"
                             data-bs-toggle="modal"
                             data-bs-target="#modalForm"
-                            onClick={() => handleAddTopic(exam)}>
+                            onClick={() => handleAddTopic(exam)}
+                          >
                             Add Topic
                           </button>
 
                           <button
                             className="btn btn-outline-danger m-1 btn-sm"
-                            onClick={() => handleDelete(exam.examId)}>
+                            onClick={() => handleDelete(exam.examId)}
+                          >
                             Delete
                           </button>
 
@@ -167,7 +170,8 @@ const Exam = () => {
                             data-bs-target="#modalFormView"
                             onClick={() => {
                               handleDetails(exam);
-                            }}>
+                            }}
+                          >
                             Details
                           </button>
                         </td>

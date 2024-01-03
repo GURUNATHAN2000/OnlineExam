@@ -17,10 +17,22 @@ import org.apache.ofbiz.service.LocalDispatcher;
 import com.vastpro.onlineexamapp.util.CommonConstants;
 import com.vastpro.onlineexamapp.util.EntityConstants;
 
+/**
+ * Handles UserMaster event.
+ * 
+ * @author Gurunathan
+ */
 public class UserMasterEvent {
 
+	// Logging module name
 	public static final String module = UserMasterEvent.class.getName();
 
+	/**
+	 * This method used to get all the user details
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	public static String getUsers(HttpServletRequest request, HttpServletResponse response) {
 		Debug.logInfo("=========getUsers EVENT STARTED SUCCESSFULLY======", module);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
