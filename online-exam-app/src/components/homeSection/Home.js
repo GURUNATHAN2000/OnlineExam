@@ -4,7 +4,7 @@ const Home = ({ setPage }) => {
   useEffect(() => {
     setPage("home");
     // setIsLoading(false);
-  },[]);
+  }, []);
 
   return (
     <div className="card">

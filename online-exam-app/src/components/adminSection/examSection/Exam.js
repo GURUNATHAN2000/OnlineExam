@@ -7,6 +7,7 @@ import Header from "../Header";
 import EditModal from "./EditModal";
 import ViewDetailsModal from "./ViewDetailsModal";
 import Loader from "../../loader/Loader";
+import { FailureAlert } from "../../alert/FailureAlert";
 
 export const ExamContext = createContext(null);
 
@@ -44,11 +45,10 @@ const Exam = () => {
   }, []);
 
   const handleError = () => {
-    Swal.fire({
-      icon: "error",
-      title: "Your Session Has Expired..!",
-      text: "you've to login to use this service",
-    });
+    FailureAlert(
+      "Your Session Has Expired..!",
+      "you've to login to use this service"
+    );
     navigate("/login");
   };
 
@@ -150,15 +150,13 @@ const Exam = () => {
                             className="btn btn-outline-success m-1 btn-sm"
                             data-bs-toggle="modal"
                             data-bs-target="#modalForm"
-                            onClick={() => handleAddTopic(exam)}
-                          >
+                            onClick={() => handleAddTopic(exam)}>
                             Add Topic
                           </button>
 
                           <button
                             className="btn btn-outline-danger m-1 btn-sm"
-                            onClick={() => handleDelete(exam.examId)}
-                          >
+                            onClick={() => handleDelete(exam.examId)}>
                             Delete
                           </button>
 
@@ -170,8 +168,7 @@ const Exam = () => {
                             data-bs-target="#modalFormView"
                             onClick={() => {
                               handleDetails(exam);
-                            }}
-                          >
+                            }}>
                             Details
                           </button>
                         </td>

@@ -1,7 +1,6 @@
 package com.vastpro.onlineexamapp.events;
 
 import java.util.List;
-
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +12,6 @@ import javax.validation.ConstraintViolation;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilHttp;
 import org.apache.ofbiz.base.util.UtilMisc;
-import org.apache.ofbiz.base.util.UtilProperties;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;

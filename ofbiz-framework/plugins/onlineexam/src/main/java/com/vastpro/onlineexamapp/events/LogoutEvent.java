@@ -14,6 +14,7 @@ public class LogoutEvent {
 
 		Debug.logInfo("=========LOGOUT EVENT STARTED SUCCESSFULLY======", module);
 		String result = LoginWorker.logout(request, response);
+		request.setAttribute("result", result);
 		Debug.logInfo("=========LOGOUT EVENT ENDED   SUCCESSFULLY======", module);
 		return result;
 	}

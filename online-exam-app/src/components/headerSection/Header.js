@@ -1,19 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { RiAdminFill, RiLogoutBoxRLine, RiUserFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 
+import logo from "../../img/vastpro-logo-right.png";
+
 import "./Header.css";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-const Header = ({ page, name, partyId }) => {
-  const userName = useSelector((state) => state.name);
-
-  // userName == "USER"
-  //   ? sessionStorage.setItem("userName", userName)
-  //   : console.log("username :: ", userName);
-
+const Header = ({ page, name, setName, partyId }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,7 +23,7 @@ const Header = ({ page, name, partyId }) => {
 
   const handleLogout = () => {
     axios
-      .post(
+      .get(
         "https://" +
           window.location.hostname +
           ":8443/onlineexam/control/logout",
@@ -38,12 +34,9 @@ const Header = ({ page, name, partyId }) => {
         return res.data;
       })
       .then((data) => {
-        console.log("data:: ", data);
-        // data._ERROR_MESSAGE_ ? handleError(data) : handleRoleType(data);
-        // handleRoleType(data);
-        // props.setName(data.userNameLogin);
-        // props.setPartyId(data.partyId);
-        // console.log("roleTypeId :: ", data.roleTypeId);
+        data.result === "success"
+          ? navigate("/")
+          : console.log("data:: ", data);
       })
       .catch((err) => {
         // setIsLoading(false);
@@ -56,7 +49,7 @@ const Header = ({ page, name, partyId }) => {
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <img
-            src="vastpro-logo-right.png"
+            src={logo}
             alt="LOGO"
             className="custom-logo p-2"
             height="50px"
@@ -92,9 +85,8 @@ const Header = ({ page, name, partyId }) => {
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
                   title="ADMIN">
-                  ADMIN
+                  {name + " (ADMIN)"}
                   <br />
-                  ID : {sessionStorage.getItem("partyId")}
                 </p>
               </Link>
 
@@ -144,17 +136,19 @@ const Header = ({ page, name, partyId }) => {
                 </li>
 
                 <li className="nav-item">
-                  <button
+                  {/* <button
                     className="btn btn-outline-light btn-sm mx-3 p-2"
-                    onClick={handleClick}
-                    value="logout">
-                    <RiLogoutBoxRLine
-                      className="mb-1"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="LOGOUT"
-                    />
-                  </button>
+                    onClick={handleLogout}
+                    value="logout"> */}
+                  <RiLogoutBoxRLine
+                    className="mt-2 pt-1"
+                    size={20}
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="LOGOUT"
+                    onClick={handleLogout}
+                  />
+                  {/* </button> */}
                 </li>
               </ul>
             </div>
@@ -183,8 +177,9 @@ const Header = ({ page, name, partyId }) => {
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
                   title="USER">
-                  {sessionStorage.getItem("userName")} <br />
-                  ID : {sessionStorage.getItem("partyId")}
+                  {/* {sessionStorage.getItem("userName")} <br />
+                  ID : {sessionStorage.getItem("partyId")} */}
+                  {name + " (USER)"}
                 </p>
               </Link>
 
@@ -211,24 +206,39 @@ const Header = ({ page, name, partyId }) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <button
+                  {/* <button
                     className="btn btn-outline-light btn-sm mx-3 p-2"
-                    onClick={handleClick}
-                    value="logout">
-                    <RiLogoutBoxRLine
-                      className="mb-1"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="LOGOUT"
-                    />
-                  </button>
+                    
+                    value="logout"> */}
+                  <RiLogoutBoxRLine
+                    className="mt-2 pt-1"
+                    size={20}
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="LOGOUT"
+                    onClick={handleLogout}
+                  />
+                  {/* </button> */}
                 </li>
               </ul>
             </div>
           </>
         ) : //to set header for home page
 
-        page === "home" ? (
+        page === "register" ? (
+          <div className="col-md-1 col-3 mx-2">
+            <button
+              type="button"
+              className="btn btn-outline-light"
+              onClick={handleClick}
+              value="login"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Click here to LOGIN">
+              LOGIN
+            </button>
+          </div>
+        ) : page === "home" ? (
           <div className="row">
             <div className="col-5">
               <button
@@ -257,20 +267,7 @@ const Header = ({ page, name, partyId }) => {
             </div>
           </div>
         ) : (
-          page === "register" && (
-            <div className="col-md-1 col-3 mx-2">
-              <button
-                type="button"
-                className="btn btn-outline-light"
-                onClick={handleClick}
-                value="login"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                title="Click here to LOGIN">
-                LOGIN
-              </button>
-            </div>
-          )
+          <></>
         )}
       </div>
     </nav>

@@ -87,11 +87,11 @@ const ExamMaster = () => {
               showConfirmButton: false,
               timer: 1000,
             });
-        console.log("examMap", data.listExam);
+        // console.log("examMap", data.listExam);
 
         data.listExam
           ? setExams(data.listExam)
-          : console.log("error in fetch (data.examMap)");
+          : console.log("error in fetch (data.examMap)", data);
         document.getElementById("examMasterForm").reset();
       })
       .catch((error) => {
@@ -128,8 +128,7 @@ const ExamMaster = () => {
           <textarea
             className="form-control"
             id="description"
-            name="description"
-          ></textarea>
+            name="description"></textarea>
         </div>
 
         <div className="col-md-6">
@@ -213,8 +212,7 @@ const ExamMaster = () => {
           <select
             className="form-control"
             name="questionsRandomized"
-            defaultValue="Y"
-          >
+            defaultValue="Y">
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>
@@ -239,8 +237,7 @@ const ExamMaster = () => {
           <select
             className="form-control"
             name="enableNegativeMark"
-            defaultValue="N"
-          >
+            defaultValue="N">
             <option>Select your answer</option>
             <option>Y</option>
             <option>N</option>

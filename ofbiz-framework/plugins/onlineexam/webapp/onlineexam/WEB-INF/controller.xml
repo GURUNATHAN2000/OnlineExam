@@ -35,6 +35,16 @@
 	</request-map>
 
 	<!-- Online Exam Controller -->
+	
+	<!-- getUserName -->
+	<request-map uri="getUserName">
+		<security https="true" auth="false" />
+		<event type="java"
+			path="com.vastpro.onlineexamapp.events.GetUserNameEvent" invoke="getUserName" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
+	</request-map>
+	
 	<!-- login -->
 	<request-map uri="userlogin">
 		<security https="true" auth="false" />

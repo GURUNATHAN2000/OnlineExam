@@ -24,12 +24,47 @@ import UserDashboard from "./components/userSection/UserDashboard";
 import UserReport from "./components/userSection/UserReport";
 import Loader from "./components/loader/Loader";
 import { store } from "./components/store";
+import { FailureAlert } from "./components/alert/FailureAlert";
+import axios from "axios";
 
 function App() {
   // const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState("");
   const [name, setName] = useState("");
   const [partyId, setPartyId] = useState("");
+
+  useEffect(() => {
+    page === "user" || page === "admin"
+      ? axios
+          .get(
+            "https://" +
+              window.location.hostname +
+              ":8443/onlineexam/control/getUserName",
+            { withCredentials: true }
+          )
+          .then((res) => {
+            // setIsLoading(false);
+            return res.data;
+          })
+          .then((data) => {
+            console.log("data :: ", data);
+            data.userNameLogin
+              ? setName(data.userNameLogin)
+              : console.log("data:1: ", data);
+          })
+          .catch((err) => {
+            // setIsLoading(false);
+
+            if (err.message === "Network Error") {
+              FailureAlert(
+                "SERVER NOT RESPONDING...!",
+                "Please try after some time"
+              );
+            }
+            console.log("ERROR FROM LOGIN FETCH :: ", err);
+          })
+      : console.log("page :: ", page);
+  }, [page]);
 
   return (
     <Provider store={store}>

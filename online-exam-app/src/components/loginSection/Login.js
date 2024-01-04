@@ -8,6 +8,7 @@ import { validateLoginForm } from "./LoginValidator";
 import Loader from "../loader/Loader";
 import { useDispatch } from "react-redux";
 import { setName } from "../redux/NameAction";
+import { FailureAlert } from "../alert/FailureAlert";
 
 const Login = (props) => {
   const [noError, setNoError, currentRef] = useStateRef(true);
@@ -100,6 +101,10 @@ const Login = (props) => {
       })
       .catch((err) => {
         setIsLoading(false);
+
+        if (err.message === "Network Error") {
+          FailureAlert("SERVER NOT RESPONDING!", "Please try after some time");
+        }
         console.log("ERROR FROM LOGIN FETCH :: ", err);
       });
   };

@@ -32,7 +32,9 @@ const Topic = () => {
       .then((data) => {
         //console.log(data.listTopics);
         //console.log("data:", data);
-        setTopics(data.listTopics);
+        data.listTopics
+          ? setTopics(data.listTopics)
+          : console.log("data::", data);
       })
       .catch((error) => {
         setIsLoading(false);
@@ -132,8 +134,7 @@ const Topic = () => {
 
                         <button
                           className="btn btn-outline-danger m-1 btn-sm "
-                          onClick={() => handleDelete(topic.topicId)}
-                        >
+                          onClick={() => handleDelete(topic.topicId)}>
                           Delete
                         </button>
                       </td>

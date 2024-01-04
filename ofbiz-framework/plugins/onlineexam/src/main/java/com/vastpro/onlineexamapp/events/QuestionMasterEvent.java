@@ -82,12 +82,7 @@ public class QuestionMasterEvent {
 							answerValue, TopicConstants.TOPIC_ID, topicId, QuestionConstants.NEGATIVE_MARK_VALUE,
 							negativeMarkValue));
 
-<<<<<<< HEAD
-			// hibernate validation
-			QuestionValidator questionForm = HibernateValidatorHelper.populateBeanFromMap(combinedMap, QuestionValidator.class);
-			Set<ConstraintViolation<QuestionValidator>> errors = HibernateValidatorHelper.checkValidationErrors(questionForm,
-					QuestionFormCheck.class);
-=======
+
 			// Hibernate validation with the help of Hibernate Validator Helper class
 			QuestionValidator questionForm = HibernateValidatorHelper.populateBeanFromMap(combinedMap,
 					QuestionValidator.class);
@@ -96,7 +91,6 @@ public class QuestionMasterEvent {
 			Set<ConstraintViolation<QuestionValidator>> errors = HibernateValidatorHelper
 					.checkValidationErrors(questionForm, QuestionFormCheck.class);
 			// Debug.log("=============ERRORS=================", errors);
->>>>>>> addab6260bd81a7af5355b981ae6a3ff5fb36d15
 			boolean hasFormErrors = HibernateValidatorHelper.validateFormSubmission(delegator, errors, request, locale,
 					"MandatoryFieldsAreEmpty", resource_error, false);
 

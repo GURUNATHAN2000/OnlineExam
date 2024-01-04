@@ -60,24 +60,18 @@ public class LoginEvent {
 		// passing request & response to the LoginWorker.login event to handle the login
 		result = LoginWorker.login(request, response);
 		String username = combinedMap.get("USERNAME").toString().toLowerCase();
+		
 		// check whether requesting person is ADMIN or USER
 		try {
-			GenericValue userLogin = EntityQuery.use(delegator).from(EntityConstants.USER_LOGIN)
+			GenericValue UserLogin = EntityQuery.use(delegator).from(EntityConstants.USER_LOGIN)
 					.where(CommonConstants.USER_LOGIN_ID, username).cache().queryFirst();
-			if (UtilValidate.isNotEmpty(userLogin)) {
+			if (UtilValidate.isNotEmpty(UserLogin)) {
 
 				// Define the conditions
 				EntityCondition partyIdCondition = EntityCondition.makeCondition(CommonConstants.PARTY_ID,
-						userLogin.get(CommonConstants.PARTY_ID));
+						UserLogin.get(CommonConstants.PARTY_ID));
 
-				request.setAttribute(CommonConstants.PARTY_ID, userLogin.get(CommonConstants.PARTY_ID));
-
-				GenericValue party = EntityQuery.use(delegator).from(EntityConstants.PERSON)
-						.where(CommonConstants.PARTY_ID, userLogin.get(CommonConstants.PARTY_ID)).cache().queryOne();
-				String userNameLogin = party.get(CommonConstants.FIRST_NAME) + " "
-						+ party.get(CommonConstants.LAST_NAME);
-
-				request.setAttribute(CommonConstants.USER_NAME_LOGIN, userNameLogin);
+				request.setAttribute(CommonConstants.PARTY_ID, UserLogin.get(CommonConstants.PARTY_ID));
 
 				EntityCondition adminCondition = EntityCondition.makeCondition(CommonConstants.ROLE_TYPE_ID, "ADMIN");
 				EntityCondition userCondition = EntityCondition.makeCondition(CommonConstants.ROLE_TYPE_ID,

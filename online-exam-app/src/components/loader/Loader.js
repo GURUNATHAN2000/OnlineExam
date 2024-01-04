@@ -2,7 +2,6 @@ import React from "react";
 import "./Loader.css";
 
 const Loader = () => {
-  console.log("vanakam");
   return (
     <div className="overlay">
       <div className="text-center">
